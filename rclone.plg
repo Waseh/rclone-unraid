@@ -39,7 +39,7 @@ Thanks to stignz for his great guide: https://lime-technology.com/forum/index.ph
 <FILE Run="/bin/bash" Method="install">
 <INLINE>
 # version could be 'current' also
-rcloneversion=v1.33-85-g6846a1cβ
+rcloneversion=v1.33-83-g8710741%CE%B2
 rclonefile=rclone-$rcloneversion-linux-amd64.zip
 
 if [ -d /usr/local/emhttp/plugins/&name; ]; then
