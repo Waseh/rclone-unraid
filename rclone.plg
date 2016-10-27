@@ -43,6 +43,9 @@ rcloneVersion=v1.33-85-g6846a1cβ
 rcloneFile=rclone-$rcloneVersion-linux-amd64.zip
 rcloneInstall=rclone-vcurrent-linux-amd64.zip
 
+echo "$rcloneVersion"
+echo "$rcloneFile"
+
 if [ -d /usr/local/emhttp/plugins/&name; ]; then
   rm -rf /usr/local/emhttp/plugins/&name;
 fi;
@@ -58,6 +61,7 @@ if [ -f /boot/config/plugins/&name;/install/rclone-*-linux-amd64.zip ]; then
 fi;
 wget http://beta.rclone.org/v1.33-85-g6846a1c/$rcloneFile -O /boot/config/plugins/&name;/install/$rcloneInstall
 
+echo -d /boot/config/plugins/&name;/install/rclone-v*/
 if [ -d /boot/config/plugins/&name;/install/rclone-v*/ ]; then
   rm -rf /boot/config/plugins/&name;/install/rclone-v*/
 fi;
