@@ -84,7 +84,6 @@ echo ""
 </INLINE>
 </FILE>
 
-
 <FILE Run="/bin/bash" Method="remove">
 <INLINE>
 rm -rf /boot/config/plugins/&name;/install
