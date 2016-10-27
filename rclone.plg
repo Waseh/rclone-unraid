@@ -41,6 +41,7 @@ Thanks to stignz for his great guide: https://lime-technology.com/forum/index.ph
 # version could be 'current' also
 rcloneVersion=v1.33-85-g6846a1cβ
 rcloneFile=rclone-$rcloneVersion-linux-amd64.zip
+rcloneInstall=rclone-vcurrent-linux-amd64.zip
 
 if [ -d /usr/local/emhttp/plugins/&name; ]; then
   rm -rf /usr/local/emhttp/plugins/&name;
@@ -55,12 +56,12 @@ curl -o /boot/config/plugins/&name;/install/ca-certificates.crt https://raw.gith
 if [ -f /boot/config/plugins/&name;/install/rclone-*-linux-amd64.zip ]; then
   rm -f /boot/config/plugins/&name;/install/rclone-*-linux-amd64.zip
 fi;
-wget http://beta.rclone.org/v1.33-85-g6846a1c/$rcloneFile -O /boot/config/plugins/&name;/install/$rcloneFile
+wget http://beta.rclone.org/v1.33-85-g6846a1c/$rcloneFile -O /boot/config/plugins/&name;/install/$rcloneInstall
 
 if [ -d /boot/config/plugins/&name;/install/rclone-v*/ ]; then
   rm -rf /boot/config/plugins/&name;/install/rclone-v*/
 fi;
-unzip /boot/config/plugins/&name;/install/$rcloneFile -d /boot/config/plugins/&name;/install/
+unzip /boot/config/plugins/&name;/install/$rcloneInstall -d /boot/config/plugins/&name;/install/
 	
 cp /boot/config/plugins/&name;/install/rclone-v*/rclone /usr/sbin/
 chown root:root /usr/sbin/rclone
