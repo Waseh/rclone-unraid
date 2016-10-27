@@ -55,7 +55,7 @@ curl -o /boot/config/plugins/&name;/install/ca-certificates.crt https://raw.gith
 if [ -f /boot/config/plugins/&name;/install/rclone-*-linux-amd64.zip ]; then
   rm -f /boot/config/plugins/&name;/install/rclone-*-linux-amd64.zip
 fi;
-wget http://downloads.rclone.org/$rcloneFile -O /boot/config/plugins/&name;/install/$rcloneFile
+wget http://beta.rclone.org/v1.33-85-g6846a1c/$rcloneFile -O /boot/config/plugins/&name;/install/$rcloneFile
 
 if [ -d /boot/config/plugins/&name;/install/rclone-v*/ ]; then
   rm -rf /boot/config/plugins/&name;/install/rclone-v*/
