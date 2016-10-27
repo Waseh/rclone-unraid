@@ -143,13 +143,6 @@ Go to http://rclone.org/ for more information.
 <FILE Name="/boot/config/plugins/&name;/~daily_backup.cron">
 <INLINE>
 # daily backup of test folder to blackblaze b2 mytest bucket (with log option)
-#0 0 * * * /boot/config/plugins/&name;/rclone_helper --log sync /mnt/user/Public/test b2:mytest &amp;&gt; /dev/null
-</INLINE>
-</FILE>
-
-<FILE Name="/boot/config/plugins/&name;/~daily_backup.cron">
-<INLINE>
-# daily backup of test folder to blackblaze b2 mytest bucket (with log option)
 #0 0 * * * /usr/sbin/myrclone --log sync /mnt/user/Public/test b2:mytest &amp;&gt; /dev/null
 </INLINE>
 </FILE>
