@@ -39,7 +39,7 @@ Thanks to stignz for his great guide: https://lime-technology.com/forum/index.ph
 <FILE Run="/bin/bash" Method="install">
 <INLINE>
 # version could be 'current' also
-rcloneversion=v1.33-83-g8710741%CE%B2
+rcloneversion=v1.33-83-g6846a1cβ
 rclonefile=rclone-$rcloneversion-linux-amd64.zip
 
 if [ -d /usr/local/emhttp/plugins/&name; ]; then
@@ -56,11 +56,11 @@ if [ -f /boot/config/plugins/&name;/install/rclone-*-linux-amd64.zip ]; then
   rm -f /boot/config/plugins/&name;/install/rclone-*-linux-amd64.zip
 fi;
 
-wget http://beta.rclone.org/v1.33-85-g6846a1c/$rcloneFile -O /boot/config/plugins/&name;/install/$rclonefile
-wget http://beta.rclone.org/v1.33-85-g6846a1c/$rcloneFile -O /boot/config/plugins/&name;/install/$rclonefile
-wget http://beta.rclone.org/v1.33-85-g6846a1c/$rcloneFile -O /boot/config/plugins/&name;/install/$rclonefile
-wget http://beta.rclone.org/v1.33-85-g6846a1c/$rcloneFile -O /boot/config/plugins/&name;/install/$rclonefile
-wget http://beta.rclone.org/v1.33-85-g6846a1c/$rcloneFile -O /boot/config/plugins/&name;/install/$rclonefile
+# insanely unstable 
+# wget http://beta.rclone.org/v1.33-85-g6846a1c/$rcloneFile -O /boot/config/plugins/&name;/install/$rclonefile
+
+#Temp fix
+cp /boot/rclone-v1.33-85-Beta-linux-amd64.zip /boot/config/plugins/&name;/install/$rclonefile
 
 if [ -d /boot/config/plugins/&name;/install/rclone-v*/ ]; then
   rm -rf /boot/config/plugins/&name;/install/rclone-v*/
