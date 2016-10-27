@@ -39,7 +39,7 @@ Thanks to stignz for his great guide: https://lime-technology.com/forum/index.ph
 <FILE Run="/bin/bash" Method="install">
 <INLINE>
 # version could be 'current' also
-rcloneversion=current
+rcloneversion=v1.33-85-g6846a1cβ
 rclonefile=rclone-$rcloneversion-linux-amd64.zip
 
 if [ -d /usr/local/emhttp/plugins/&name; ]; then
@@ -55,7 +55,7 @@ curl -o /boot/config/plugins/&name;/install/ca-certificates.crt https://raw.gith
 if [ -f /boot/config/plugins/&name;/install/rclone-*-linux-amd64.zip ]; then
   rm -f /boot/config/plugins/&name;/install/rclone-*-linux-amd64.zip
 fi;
-wget http://downloads.rclone.org/$rclonefile -O /boot/config/plugins/&name;/install/$rclonefile
+wget http://beta.rclone.org/v1.33-85-g6846a1c/$rcloneFile -O /boot/config/plugins/&name;/install/$rclonefile
 
 if [ -d /boot/config/plugins/&name;/install/rclone-v*/ ]; then
   rm -rf /boot/config/plugins/&name;/install/rclone-v*/
