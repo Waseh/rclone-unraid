@@ -1,0 +1,174 @@
+<?xml version='1.0' standalone='yes'?>
+
+<!DOCTYPE PLUGIN [
+<!ENTITY name      "rclone">
+<!ENTITY author    "Waseh">
+<!ENTITY version   "2016.10.27">
+<!ENTITY pluginURL "https://github.com/Waseh/rclone-unraid/raw/master/rclone.plg">
+]>
+
+<PLUGIN name="&name;" author="&author;" version="&version;" pluginURL="&pluginURL;">
+
+<CHANGES>
+##&name;
+
+###2016.10.27
+- changed version to latest beta
+- small modifications to make the plugin work again, and updateable from unraid interface
+
+###2016.09.25
+- add .cron file template for daily backup (use 'update_cron' to reload changes and 'cat /etc/cron.d/root' to see current config)
+- update rclone to v1.33
+
+###2016.08.15
+- add myrclone with config + transfers parameter 
+- add log dir for --log option of myrclone
+
+###2016.08.14
+- initial version
+</CHANGES>
+
+<!--
+
+This plugin installs Rclone on unRAID systems.
+This work is entirely based upon the plugin created by aschamberger: https://lime-technology.com/forum/index.php?topic=46663.msg501372
+Thanks to stignz for his great guide: https://lime-technology.com/forum/index.php?topic=46663.0
+
+-->
+
+<FILE Run="/bin/bash" Method="install">
+<INLINE>
+# version could be 'current' also
+rcloneVersion=v1.33-85-g6846a1cβ
+rcloneFile=rclone-$rcloneVersion-linux-amd64.zip
+
+if [ -d /usr/local/emhttp/plugins/&name; ]; then
+  rm -rf /usr/local/emhttp/plugins/&name;
+fi;
+
+mkdir -p /boot/config/plugins/&name;/install/
+if [ -f /boot/config/plugins/&name;/install/ca-certificates.crt ]; then
+  rm -f /boot/config/plugins/&name;/install/ca-certificates.crt
+fi;
+curl -o /boot/config/plugins/&name;/install/ca-certificates.crt https://raw.githubusercontent.com/bagder/ca-bundle/master/ca-bundle.crt
+
+if [ -f /boot/config/plugins/&name;/install/rclone-*-linux-amd64.zip ]; then
+  rm -f /boot/config/plugins/&name;/install/rclone-*-linux-amd64.zip
+fi;
+wget http://downloads.rclone.org/$rcloneFile -O /boot/config/plugins/&name;/install/$rcloneFile
+
+if [ -d /boot/config/plugins/&name;/install/rclone-v*/ ]; then
+  rm -rf /boot/config/plugins/&name;/install/rclone-v*/
+fi;
+unzip /boot/config/plugins/&name;/install/$rcloneFile -d /boot/config/plugins/&name;/install/
+	
+cp /boot/config/plugins/&name;/install/rclone-v*/rclone /usr/sbin/
+chown root:root /usr/sbin/rclone
+chmod 755 /usr/sbin/rclone
+
+mkdir -p /etc/ssl/certs/
+cp /boot/config/plugins/&name;/install/ca-certificates.crt /etc/ssl/certs/
+
+if [ ! -f /boot/config/plugins/&name;/.rclone.conf ]; then
+  touch /boot/config/plugins/&name;/.rclone.conf;
+fi;
+
+mkdir -p /boot/config/plugins/&name;/logs;
+
+echo ""
+echo "-----------------------------------------------------------"
+echo " &name; has been installed."
+echo "-----------------------------------------------------------"
+echo ""
+
+</INLINE>
+</FILE>
+
+<FILE Run="/bin/bash" Method="remove">
+<INLINE>
+rm -rf /boot/config/plugins/&name;/install
+rm -rf /usr/local/emhttp/plugins/&name;
+rm -f /usr/sbin/rclone;
+rm -f /usr/sbin/myrclone;
+rm -f /etc/ssl/certs/ca-certificates.crt
+
+rm -f /boot/config/plugins/&name;/~daily_backup.cron
+
+# we keep config and logs
+#rm -f /boot/config/plugins/&name;/.rclone.conf;
+#rm -f /boot/config/plugins/&name;/logs;
+
+echo ""
+echo "-----------------------------------------------------------"
+echo " &name; has been uninstalled."
+echo "-----------------------------------------------------------"
+echo ""
+
+</INLINE>
+</FILE>
+
+<FILE Name="/usr/local/emhttp/plugins/&name;/&name;.png" Type="base64">
+<INLINE>
+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);
+</INLINE>
+</FILE>
+
+<FILE Name="/usr/local/emhttp/plugins/&name;/README.md">
+<INLINE>
+**&name; Plugin**
+
+The plugin installs Rclone. Rclone is a command line program to sync files and directories to and from
+* Google Drive
+* Amazon S3
+* Openstack Swift / Rackspace cloud files / Memset Memstore
+* Dropbox
+* Google Cloud Storage
+* Amazon Drive
+* Microsoft One Drive
+* Hubic
+* Backblaze B2
+* Yandex Disk
+* The local filesystem
+
+Go to http://rclone.org/ for more information.
+
+</INLINE>
+</FILE>
+
+<FILE Name="/boot/config/plugins/&name;/~daily_backup.cron">
+<INLINE>
+# daily backup of test folder to blackblaze b2 mytest bucket (with log option)
+#0 0 * * * /boot/config/plugins/&name;/rclone_helper --log sync /mnt/user/Public/test b2:mytest &amp;&gt; /dev/null
+</INLINE>
+</FILE>
+
+<FILE Name="/boot/config/plugins/&name;/rclone_helper" Mode="0755">
+<INLINE>
+#!/bin/bash
+log=false
+args=()
+for i in "$@" ; do
+    if [[ $i = "--log" ]] ; then
+        log=true
+        continue
+    fi
+	
+    if [[ $i = "-l" ]] ; then
+        log=true
+        continue
+    fi
+	args+=($i)
+done
+
+config=/boot/config/plugins/&name;/.rclone.conf
+
+logfile=/boot/config/plugins/&name;/logs/rclone-$(date "+%Y%m%d").log
+if [ "$log" = true ] &amp;&amp; [ ${#args[@]} -ge 1 ]; then
+	rclone --config $config "${args[@]}" &gt;&gt; $logfile 2&gt;&amp;1
+else
+	rclone --config $config "$@";
+fi;
+</INLINE>
+</FILE>
+
+</PLUGIN>
