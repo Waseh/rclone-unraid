@@ -147,7 +147,14 @@ Go to http://rclone.org/ for more information.
 </INLINE>
 </FILE>
 
-<FILE Name="/boot/config/plugins/&name;/rclone_helper" Mode="0755">
+<FILE Name="/boot/config/plugins/&name;/~daily_backup.cron">
+<INLINE>
+# daily backup of test folder to blackblaze b2 mytest bucket (with log option)
+#0 0 * * * /usr/sbin/myrclone --log sync /mnt/user/Public/test b2:mytest &amp;&gt; /dev/null
+</INLINE>
+</FILE>
+
+<FILE Name="/usr/sbin/myrclone" Mode="0755">
 <INLINE>
 #!/bin/bash
 log=false
@@ -157,7 +164,6 @@ for i in "$@" ; do
         log=true
         continue
     fi
-	
     if [[ $i = "-l" ]] ; then
         log=true
         continue
@@ -166,12 +172,12 @@ for i in "$@" ; do
 done
 
 config=/boot/config/plugins/&name;/.rclone.conf
-
+transfers=16
 logfile=/boot/config/plugins/&name;/logs/rclone-$(date "+%Y%m%d").log
 if [ "$log" = true ] &amp;&amp; [ ${#args[@]} -ge 1 ]; then
-	rclone --config $config "${args[@]}" &gt;&gt; $logfile 2&gt;&amp;1
+	rclone --config $config --transfers $transfers "${args[@]}" &gt;&gt; $logfile 2&gt;&amp;1
 else
-	rclone --config $config "$@";
+	rclone --config $config --transfers $transfers "$@";
 fi;
 </INLINE>
 </FILE>
