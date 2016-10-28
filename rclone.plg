@@ -3,7 +3,7 @@
 <!DOCTYPE PLUGIN [
 <!ENTITY name      "rclone">
 <!ENTITY author    "Waseh">
-<!ENTITY version   "2016.10.27-5">
+<!ENTITY version   "2016.10.28">
 <!ENTITY pluginURL "https://github.com/Waseh/rclone-unraid/raw/master/rclone.plg">
 ]>
 
@@ -11,6 +11,9 @@
 
 <CHANGES>
 ##&name;
+
+###2016.10.28
+- Removed cronjob - Use Userscripts plugin instead
 
 ###2016.10.27
 - changed version to latest beta
@@ -140,12 +143,12 @@ Go to http://rclone.org/ for more information.
 </INLINE>
 </FILE>
 
-<FILE Name="/boot/config/plugins/&name;/~daily_backup.cron">
-<INLINE>
+#<FILE Name="/boot/config/plugins/&name;/~daily_backup.cron">
+#<INLINE>
 # daily backup of test folder to blackblaze b2 mytest bucket (with log option)
 #0 0 * * * /usr/sbin/myrclone --log sync /mnt/user/Public/test b2:mytest &amp;&gt; /dev/null
-</INLINE>
-</FILE>
+#</INLINE>
+#</FILE>
 
 <FILE Name="/usr/sbin/myrclone" Mode="0755">
 <INLINE>
