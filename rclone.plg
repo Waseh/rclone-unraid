@@ -14,6 +14,7 @@
 
 ###2016.10.28
 - Removed cronjob - Use Userscripts plugin instead
+- Moved log to cache drive
 
 ###2016.10.27
 - changed version to latest beta
@@ -81,7 +82,7 @@ if [ ! -f /boot/config/plugins/&name;/.rclone.conf ]; then
   touch /boot/config/plugins/&name;/.rclone.conf;
 fi;
 
-mkdir -p /boot/config/plugins/&name;/logs;
+#mkdir -p /boot/config/plugins/&name;/logs;
 
 echo ""
 echo "-----------------------------------------------------------"
@@ -169,7 +170,7 @@ done
 
 config=/boot/config/plugins/&name;/.rclone.conf
 transfers=16
-logfile=/boot/config/plugins/&name;/logs/rclone-$(date "+%Y%m%d").log
+logfile=/mnt/cache/appdata/rclone_plugin/rclone-$(date "+%Y%m%d").log
 if [ "$log" = true ] &amp;&amp; [ ${#args[@]} -ge 1 ]; then
 	rclone --config $config --transfers $transfers "${args[@]}" &gt;&gt; $logfile 2&gt;&amp;1
 else
