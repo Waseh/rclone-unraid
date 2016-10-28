@@ -82,7 +82,7 @@ if [ ! -f /boot/config/plugins/&name;/.rclone.conf ]; then
   touch /boot/config/plugins/&name;/.rclone.conf;
 fi;
 
-#mkdir -p /boot/config/plugins/&name;/logs;
+mkdir -p /mnt/cache/appdata/rclone_plugin/;
 
 echo ""
 echo "-----------------------------------------------------------"
