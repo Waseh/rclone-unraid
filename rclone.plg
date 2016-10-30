@@ -20,16 +20,6 @@
 - changed version to latest beta
 - small modifications to make the plugin work again, and updateable from unraid interface
 
-###2016.09.25
-- add .cron file template for daily backup (use 'update_cron' to reload changes and 'cat /etc/cron.d/root' to see current config)
-- update rclone to v1.33
-
-###2016.08.15
-- add myrclone with config + transfers parameter 
-- add log dir for --log option of myrclone
-
-###2016.08.14
-- initial version
 </CHANGES>
 
 <!--
