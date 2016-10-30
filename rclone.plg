@@ -50,7 +50,7 @@ if [ -f /boot/config/plugins/&name;/install/rclone-*-linux-amd64.zip ]; then
   rm -f /boot/config/plugins/&name;/install/rclone-*-linux-amd64.zip
 fi;
 
-#wget -r -l1 -np -nd "http://beta.rclone.org/&rcloneversion/" -P /boot/config/plugins/&name;/ -O -A "rclone-*-linux-amd64.zip"
+# wget -r -l1 -np -nd "http://beta.rclone.org/&rcloneversion/" -P /boot/config/plugins/&name;/ -O -A "rclone-*-linux-amd64.zip"
 
 if [ -d /boot/config/plugins/&name;/install/rclone-v*/ ]; then
   rm -rf /boot/config/plugins/&name;/install/rclone-v*/
