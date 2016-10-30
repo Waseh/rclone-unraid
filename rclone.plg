@@ -43,7 +43,7 @@ Thanks to stignz for his great guide: https://lime-technology.com/forum/index.ph
 <FILE Run="/bin/bash" Method="install">
 <INLINE>
 # version could be 'current' also
-rcloneversion=v1.33-83-g6846a1cβ
+rcloneversion=v1.33-85-g6846a1c
 rclonefile=rclone-$rcloneversion-linux-amd64.zip
 
 if [ -d /usr/local/emhttp/plugins/&name; ]; then
@@ -61,7 +61,7 @@ if [ -f /boot/config/plugins/&name;/install/rclone-*-linux-amd64.zip ]; then
 fi;
 
 # insanely unstable 
-# wget http://beta.rclone.org/v1.33-85-g6846a1c/$rcloneFile -O /boot/config/plugins/&name;/install/$rclonefile
+# wget -r -l1 -np "http://beta.rclone.org/&rcloneversion/" -P /boot/config/plugins/&name;/ -A "rclone-*-linux-amd64.zip"
 
 #Temp fix
 cp /boot/rclone-v1.33-85-Beta-linux-amd64.zip /boot/config/plugins/&name;/install/$rclonefile
