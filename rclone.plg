@@ -60,16 +60,12 @@ if [ -f /boot/config/plugins/&name;/install/rclone-*-linux-amd64.zip ]; then
   rm -f /boot/config/plugins/&name;/install/rclone-*-linux-amd64.zip
 fi;
 
-# insanely unstable 
-# wget -r -l1 -np "http://beta.rclone.org/&rcloneversion/" -P /boot/config/plugins/&name;/ -A "rclone-*-linux-amd64.zip"
-
-#Temp fix
-cp /boot/rclone-v1.33-85-Beta-linux-amd64.zip /boot/config/plugins/&name;/install/$rclonefile
+wget -r -l1 -np -nd "http://beta.rclone.org/&rcloneversion/" -P /boot/config/plugins/&name;/ -A "rclone-*-linux-amd64.zip"
 
 if [ -d /boot/config/plugins/&name;/install/rclone-v*/ ]; then
   rm -rf /boot/config/plugins/&name;/install/rclone-v*/
 fi;
-unzip /boot/config/plugins/&name;/install/$rclonefile -d /boot/config/plugins/&name;/install/
+unzip /boot/config/plugins/&name;/install/rclone-*-linux-amd64.zip -d /boot/config/plugins/&name;/install/
 	
 cp /boot/config/plugins/&name;/install/rclone-v*/rclone /usr/sbin/
 chown root:root /usr/sbin/rclone
