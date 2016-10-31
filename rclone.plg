@@ -20,7 +20,7 @@
 - Moved log to cache drive
 
 ###2016.10.27
-- small modifications to make the plugin work again, and updateable from unraid interface
+- Small modifications to make the plugin work again, and updateable from unraid interface
 
 </CHANGES>
 
@@ -34,7 +34,6 @@ Thanks to stignz for his great guide: https://lime-technology.com/forum/index.ph
 
 <FILE Run="/bin/bash" Method="install">
 <INLINE>
-# version could be 'current' also
 rcloneversion=current
 rclonefile=rclone-$rcloneversion-linux-amd64
 
