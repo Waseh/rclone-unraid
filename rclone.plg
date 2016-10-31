@@ -118,7 +118,7 @@ iVBORw0KGgoAAAANSUhEUgAAAGAAAABgCAYAAADimHc4AAAABGdBTUEAALGOfPtRkwAAACBjSFJNAACH
 
 <FILE Name="/usr/local/emhttp/plugins/&name;/README.md">
 <INLINE>
-**&name; Plugin**
+**&name;**
 
 The plugin installs Rclone. Rclone is a command line program to sync files and directories to and from
 * Google Drive
