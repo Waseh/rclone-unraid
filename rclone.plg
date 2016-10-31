@@ -54,7 +54,7 @@ if [ -f /boot/config/plugins/&name;/install/rclone-*-linux-amd64.zip ]; then
   rm -f /boot/config/plugins/&name;/install/rclone-*-linux-amd64.zip
 fi;
 
-wget http://beta.rclone.org/v1.33-89-ge65059e/rclone-v1.33-89-ge65059eβ-linux-amd64.zip -O /boot/config/plugins/&name;/install/$rclonefile
+wget http://beta.rclone.org/v1.33-89-ge65059e/rclone-v1.33-89-ge65059eβ-linux-amd64.zip /boot/config/plugins/&name;/install/$rclonefile
 #if [ -s /boot/config/plugins/&name;/install/$rclonefile ]; then
 # wget http://beta.rclone.org/$rcloneversion/$rcloneFile -O /boot/config/plugins/&name;/install/$rclonefile
 #fi
