@@ -12,16 +12,17 @@
 <CHANGES>
 ##&name;
 
+###2016.11.02
+- More intuitive calling of rclone - Use rclone instead of myrclone
+- More minor changes in preperation of official release
+
 ###2016.10.31
 - New beta version
 - Other minor improvements
 
-###2016.10.28
-- Removed cronjob - Using Userscripts plugin instead
-
 ###2016.10.27
-- changed version to latest beta
-- small modifications to make the plugin work again, and updateable from unraid interface
+- Changed version to latest beta
+- Small modifications to make the plugin work again, and updateable from unraid interface
 
 </CHANGES>
 
