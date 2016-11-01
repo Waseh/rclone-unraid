@@ -17,7 +17,6 @@
 
 ###2016.10.28
 - Removed cronjob - Using Userscripts plugin instead
-- Moved log to cache drive
 
 ###2016.10.27
 - Small modifications to make the plugin work again, and updateable from unraid interface
