@@ -14,13 +14,14 @@
 
 ###2016.11.03
 - First official release
+- New beta version of rclone
 
 ###2016.11.02
 - More intuitive calling of rclone - Use rclone instead of myrclone
 - More minor changes in preperation of official release
 
 ###2016.10.31
-- New beta version
+- New beta version of rclone
 - Other minor improvements
 
 ###2016.10.27
@@ -40,7 +41,7 @@ Thanks to stignz for his great guide: https://lime-technology.com/forum/index.ph
 <FILE Run="/bin/bash" Method="install">
 <INLINE>
 # version could be 'current' also
-rcloneversion=v1.33-89-ge65059e
+rcloneversion=v1.33-93-g11301a6
 rclonefile=rclone-$rcloneversionβ-linux-amd64
 
 if [ -d /usr/local/emhttp/plugins/&name; ]; then
