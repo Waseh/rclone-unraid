@@ -16,7 +16,7 @@
 - Minor improvements
 
 ###2016.10.28
-- Removed cronjob - Using Userscripts plugin instead
+- Removed cronjob
 
 ###2016.10.27
 - Small modifications to make the plugin work again, and updateable from unraid interface
