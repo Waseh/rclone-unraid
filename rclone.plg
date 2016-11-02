@@ -3,7 +3,7 @@
 <!DOCTYPE PLUGIN [
 <!ENTITY name      "rclone">
 <!ENTITY author    "Waseh">
-<!ENTITY version   "2016.10.31">
+<!ENTITY version   "2016.11.02">
 <!ENTITY pluginURL "https://github.com/Waseh/rclone-unraid/raw/beta/rclone.plg">
 ]>
 
@@ -11,6 +11,10 @@
 
 <CHANGES>
 ##&name;
+
+###2016.11.02
+- More intuitive calling of rclone - Use rclone instead of myrclone
+- More minor changes in preperation of official release
 
 ###2016.10.31
 - Minor improvements
