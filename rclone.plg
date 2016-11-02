@@ -57,9 +57,9 @@ if [ -d /boot/config/plugins/&name;/install/rclone-v*/ ]; then
 fi;
 unzip /boot/config/plugins/&name;/install/rclone-*-linux-amd64.zip -d /boot/config/plugins/&name;/install/
 	
-cp /boot/config/plugins/&name;/install/rclone-v*/rclone /usr/sbin/
-chown root:root /usr/sbin/rclone
-chmod 755 /usr/sbin/rclone
+cp /boot/config/plugins/&name;/install/rclone-v*/rclone /usr/sbin/rcloneorig
+chown root:root /usr/sbin/rcloneorig
+chmod 755 /usr/sbin/rclonercloneorig
 
 mkdir -p /etc/ssl/certs/
 cp /boot/config/plugins/&name;/install/ca-certificates.crt /etc/ssl/certs/
@@ -83,8 +83,8 @@ echo ""
 <INLINE>
 rm -rf /boot/config/plugins/&name;/install
 rm -rf /usr/local/emhttp/plugins/&name;
+rm -f /usr/sbin/rcloneorig;
 rm -f /usr/sbin/rclone;
-rm -f /usr/sbin/myrclone;
 rm -f /etc/ssl/certs/ca-certificates.crt
 
 rm -f /boot/config/plugins/&name;/~daily_backup.cron
@@ -130,7 +130,7 @@ Go to http://rclone.org/ for more information.
 </INLINE>
 </FILE>
 
-<FILE Name="/usr/sbin/myrclone" Mode="0755">
+<FILE Name="/usr/sbin/rclone" Mode="0755">
 <INLINE>
 #!/bin/bash
 log=false
@@ -148,12 +148,11 @@ for i in "$@" ; do
 done
 
 config=/boot/config/plugins/&name;/.rclone.conf
-transfers=16
 logfile=/boot/config/plugins/&name;/logs/rclone-$(date "+%Y%m%d").log
 if [ "$log" = true ] &amp;&amp; [ ${#args[@]} -ge 1 ]; then
-	rclone --config $config --transfers $transfers "${args[@]}" &gt;&gt; $logfile 2&gt;&amp;1
+	rcloneorig --config $config "${args[@]}" &gt;&gt; $logfile 2&gt;&amp;1
 else
-	rclone --config $config --transfers $transfers "$@";
+	rcloneorig --config $config "$@";
 fi;
 </INLINE>
 </FILE>
