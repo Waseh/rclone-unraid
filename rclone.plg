@@ -4,7 +4,7 @@
 <!ENTITY name      "rclone">
 <!ENTITY author    "Waseh">
 <!ENTITY version   "2016.11.02">
-<!ENTITY pluginURL "https://github.com/Waseh/rclone-unraid/raw/beta/rclone.plg">
+<!ENTITY pluginURL "https://raw.githubusercontent.com/Waseh/rclone-unraid/master/rclone.plg">
 ]>
 
 <PLUGIN name="&name;" author="&author;" version="&version;" pluginURL="&pluginURL;">
