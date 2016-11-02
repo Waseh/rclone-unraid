@@ -3,7 +3,7 @@
 <!DOCTYPE PLUGIN [
 <!ENTITY name      "rclone-beta">
 <!ENTITY author    "Waseh">
-<!ENTITY version   "2016.11.02">
+<!ENTITY version   "2016.11.03">
 <!ENTITY pluginURL "https://raw.githubusercontent.com/Waseh/rclone-unraid/beta/rclone.plg">
 ]>
 
@@ -11,6 +11,9 @@
 
 <CHANGES>
 ##&name;
+
+###2016.11.02
+- First official release
 
 ###2016.11.02
 - More intuitive calling of rclone - Use rclone instead of myrclone
@@ -90,8 +93,6 @@ rm -rf /usr/local/emhttp/plugins/&name;
 rm -f /usr/sbin/rcloneorig;
 rm -f /usr/sbin/rclone;
 rm -f /etc/ssl/certs/ca-certificates.crt
-
-rm -f /boot/config/plugins/&name;/~daily_backup.cron
 
 # we keep config and logs
 #rm -f /boot/config/plugins/&name;/.rclone.conf;
