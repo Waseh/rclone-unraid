@@ -3,7 +3,7 @@
 <!DOCTYPE PLUGIN [
 <!ENTITY name      "rclone-beta">
 <!ENTITY author    "Waseh">
-<!ENTITY version   "2016.11.03">
+<!ENTITY version   "2016.11.04">
 <!ENTITY pluginURL "https://raw.githubusercontent.com/Waseh/rclone-unraid/beta/rclone.plg">
 ]>
 
@@ -11,6 +11,9 @@
 
 <CHANGES>
 ##&name;
+
+###2016.11.04
+- New beta version of rclone (v1.33-99-g452c681)
 
 ###2016.11.03
 - First official release
@@ -41,7 +44,7 @@ Thanks to stignz for his great guide: https://lime-technology.com/forum/index.ph
 <FILE Run="/bin/bash" Method="install">
 <INLINE>
 # version could be 'current' also
-rcloneversion=v1.33-93-g11301a6
+rcloneversion=v1.33-99-g452c681
 rclonefile=rclone-$rcloneversionβ-linux-amd64
 
 if [ -d /usr/local/emhttp/plugins/&name; ]; then
