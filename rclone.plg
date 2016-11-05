@@ -8,7 +8,7 @@
 <!ENTITY rcloneversion	"v1.33-107-gff41b0d">
 <!ENTITY rclonefile  	"rclone-&rcloneversion;β-linux-amd64">
 <!ENTITY rcloneurl	"http://beta.rclone.org/&rcloneversion;/&rclonefile;.zip">
-<!ENTITY md5         	"5a52fd3594a8c48c5b63b3b30102ad95">
+<!ENTITY md5         	"a8760307c0075c8a77f7ca923c688760">
 ]>
 
 <PLUGIN name="&name;" author="&author;" version="&version;" pluginURL="&pluginURL;">
