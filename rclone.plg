@@ -7,6 +7,7 @@
 <!ENTITY pluginURL 	"https://raw.githubusercontent.com/Waseh/rclone-unraid/dev/rclone.plg">
 <!ENTITY rcloneversion	"v1.33-99-g452c681">
 <!ENTITY rclonefile  	"rclone-&rcloneversion;β-linux-amd64">
+<!ENTITY rcloneurl	"http://beta.rclone.org/&rcloneversion;/&rclonefile;.zip"
 <!ENTITY md5         	"357e993b372ed47b80d0e21171cc20dd">
 ]>
 
@@ -48,7 +49,7 @@ Thanks to stignz for his great guide: https://lime-technology.com/forum/index.ph
 Get the rclone zip.
 -->
 <FILE Name="/boot/config/plugins/&name;/install/&rclonefile;.zip">
-<URL>"http://beta.rclone.org/&rcloneversion;/&rclonefile;.zip"</URL>
+<URL>$rcloneurl;</URL>
 <MD5>&md5;</MD5>
 </FILE>
 
