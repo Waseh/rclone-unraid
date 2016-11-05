@@ -66,9 +66,9 @@ if [ -f /boot/config/plugins/&name;/install/ca-certificates.crt ]; then
 fi;
 curl -o /boot/config/plugins/&name;/install/ca-certificates.crt https://raw.githubusercontent.com/bagder/ca-bundle/master/ca-bundle.crt
 
-if [ -f /boot/config/plugins/&name;/install/rclone-*-linux-amd64.zip ]; then
-  rm -f /boot/config/plugins/&name;/install/rclone-*-linux-amd64.zip
-fi;
+#if [ -f /boot/config/plugins/&name;/install/rclone-*-linux-amd64.zip ]; then
+#  rm -f /boot/config/plugins/&name;/install/rclone-*-linux-amd64.zip
+#fi;
 
 if [ -d /boot/config/plugins/&name;/install/rclone-v*/ ]; then
   rm -rf /boot/config/plugins/&name;/install/rclone-v*/
