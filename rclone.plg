@@ -6,7 +6,7 @@
 <!ENTITY version   	"2016.11.04">
 <!ENTITY pluginURL 	"https://raw.githubusercontent.com/Waseh/rclone-unraid/dev/rclone.plg">
 <!ENTITY rcloneversion	"v1.33-99-g452c681">
-<!ENTITY rclonefile  	"rclone-&rcloneversion;β-linux-amd64">
+<!ENTITY rclonefile  	"rclone-&rcloneversion;%CE%B2-linux-amd64">
 <!ENTITY rcloneurl	"http://beta.rclone.org/&rcloneversion;/&rclonefile;.zip"
 <!ENTITY md5         	"357e993b372ed47b80d0e21171cc20dd">
 ]>
