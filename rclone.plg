@@ -16,7 +16,7 @@
 <CHANGES>
 ##&name;
 
-###2016.11.04
+###2016.11.05
 - New beta version of rclone (v1.33-106-ge162377)
 - MD5 check of rclone zip
 
