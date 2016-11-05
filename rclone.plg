@@ -49,7 +49,7 @@ Thanks to stignz for his great guide: https://lime-technology.com/forum/index.ph
 Get the rclone zip.
 -->
 <FILE Name="/boot/config/plugins/&name;/install/&rclonefile;.zip">
-<URL>$rcloneurl;</URL>
+<URL>&rcloneurl;</URL>
 <MD5>&md5;</MD5>
 </FILE>
 
