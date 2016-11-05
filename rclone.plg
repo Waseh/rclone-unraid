@@ -50,6 +50,7 @@ Get the rclone zip.
 -->
 <FILE Name="/boot/config/plugins/&name;/install/&rclonefile;.zip">
 <URL>&rcloneurl;</URL>
+<MD5>&md5;</MD5>
 </FILE>
 
 <FILE Run="/bin/bash" Method="install">
