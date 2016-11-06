@@ -5,16 +5,20 @@
 <!ENTITY author    	"Waseh">
 <!ENTITY version   	"2016.11.05a">
 <!ENTITY pluginURL 	"https://raw.githubusercontent.com/Waseh/rclone-unraid/master/rclone.plg">
-<!ENTITY rcloneversion	"v1.33-107-gff41b0d">
-<!ENTITY rclonefile  	"rclone-&rcloneversion;β-linux-amd64">
-<!ENTITY rcloneurl	"http://beta.rclone.org/&rcloneversion;/&rclonefile;.zip">
-<!ENTITY md5         	"a8760307c0075c8a77f7ca923c688760">
+<!ENTITY rcloneversion	"v1.34">
+<!ENTITY rclonefile  	"rclone-&rcloneversion;-linux-amd64">
+<!ENTITY rcloneurl	"http://downloads.rclone.org/&rclonefile;.zip">
+<!ENTITY md5         	"5a51f7a7dfdd8c8a415611bd090a1ffe">
 ]>
 
 <PLUGIN name="&name;" author="&author;" version="&version;" pluginURL="&pluginURL;">
 
 <CHANGES>
 ##&name;
+
+###2016.11.06
+- First release of plugin for rclone stable branch
+- New version of rclone (v1.34)
 
 ###2016.11.02
 - More intuitive calling of rclone - Use rclone instead of myrclone
