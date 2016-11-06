@@ -52,6 +52,7 @@ Get the rclone zip.
 </FILE>
 
 <FILE Run="/bin/bash" Method="install">
+<INLINE>
 
 if [ -d /usr/local/emhttp/plugins/&name; ]; then
   rm -rf /usr/local/emhttp/plugins/&name;
