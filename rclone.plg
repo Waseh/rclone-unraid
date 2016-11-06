@@ -16,7 +16,7 @@
 <CHANGES>
 ##&name;
 
-###2016.11.05a
+###2016.11.06
 - New beta version of rclone (v1.34-02-g5f320cc)
 - Check to see if stable branch installed
 
