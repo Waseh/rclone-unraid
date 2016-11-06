@@ -19,6 +19,7 @@
 ###2016.11.06
 - First release of plugin for rclone stable branch
 - New version of rclone (v1.34)
+- Check to see if Beta branch installed 
 
 ###2016.11.02
 - More intuitive calling of rclone - Use rclone instead of myrclone
@@ -42,6 +43,23 @@ This work is entirely based upon the plugin created by aschamberger: https://lim
 Thanks to stignz for his great guide: https://lime-technology.com/forum/index.php?topic=46663.0
 
 -->
+
+<!--
+Check if beta is installed.
+-->
+<FILE Run="/bin/bash">
+<INLINE>
+if [ -d /usr/local/emhttp/plugins/rclone-beta ]; then
+echo ""
+echo ""
+echo "----------Beta Branch installed----------"
+echo "Uninstall Beta branch to install Stable!"
+echo ""
+echo ""
+exit 1
+fi
+</INLINE>
+</FILE>
 
 <!--
 Get the rclone zip.
