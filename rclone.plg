@@ -3,7 +3,7 @@
 <!DOCTYPE PLUGIN [
 <!ENTITY name      	"rclone">
 <!ENTITY author    	"Waseh">
-<!ENTITY version   	"2016.11.05a">
+<!ENTITY version   	"2016.11.06">
 <!ENTITY pluginURL 	"https://raw.githubusercontent.com/Waseh/rclone-unraid/master/rclone.plg">
 <!ENTITY rcloneversion	"v1.34">
 <!ENTITY rclonefile  	"rclone-&rcloneversion;-linux-amd64">
