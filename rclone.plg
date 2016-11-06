@@ -65,7 +65,7 @@ if [ -d /usr/local/emhttp/plugins/rclone ]; then
 echo ""
 echo ""
 echo "----------Stable Branch installed----------"
-echo "Uninstall Stable branch to install Stable!"
+echo "Uninstall Stable branch to install Beta!"
 echo ""
 echo ""
 exit 1
