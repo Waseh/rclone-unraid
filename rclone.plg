@@ -1,12 +1,6 @@
 <?xml version='1.0' standalone='yes'?>
 
 <!DOCTYPE PLUGIN [
-<<<<<<< HEAD
-<!ENTITY name      "rclone">
-<!ENTITY author    "Waseh">
-<!ENTITY version   "2016.11.02">
-<!ENTITY pluginURL "https://raw.githubusercontent.com/Waseh/rclone-unraid/master/rclone.plg">
-=======
 <!ENTITY name      	"rclone-beta">
 <!ENTITY author    	"Waseh">
 <!ENTITY version   	"2016.11.05a">
@@ -15,7 +9,6 @@
 <!ENTITY rclonefile  	"rclone-&rcloneversion;β-linux-amd64">
 <!ENTITY rcloneurl	"http://beta.rclone.org/&rcloneversion;/&rclonefile;.zip">
 <!ENTITY md5         	"a8760307c0075c8a77f7ca923c688760">
->>>>>>> refs/remotes/origin/beta
 ]>
 
 <PLUGIN name="&name;" author="&author;" version="&version;" pluginURL="&pluginURL;">
@@ -23,7 +16,6 @@
 <CHANGES>
 ##&name;
 
-<<<<<<< HEAD
 ###2016.11.02
 - More intuitive calling of rclone - Use rclone instead of myrclone
 - More minor changes in preperation of official release
@@ -35,32 +27,6 @@
 - Removed cronjob
 
 ###2016.10.27
-=======
-###2016.11.05a
-- New beta version of rclone (v1.33-107-gff41b0d)
-
-###2016.11.05
-- New beta version of rclone (v1.33-106-ge162377)
-- MD5 check of rclone zip
-
-###2016.11.04
-- New beta version of rclone (v1.33-99-g452c681)
-
-###2016.11.03
-- First official release
-- New beta version of rclone
-
-###2016.11.02
-- More intuitive calling of rclone - Use rclone instead of myrclone
-- More minor changes in preperation of official release
-
-###2016.10.31
-- New beta version of rclone
-- Other minor improvements
-
-###2016.10.27
-- Changed version to latest beta
->>>>>>> refs/remotes/origin/beta
 - Small modifications to make the plugin work again, and updateable from unraid interface
 
 </CHANGES>
@@ -82,12 +48,6 @@ Get the rclone zip.
 </FILE>
 
 <FILE Run="/bin/bash" Method="install">
-<INLINE>
-<<<<<<< HEAD
-rcloneversion=current
-rclonefile=rclone-$rcloneversion-linux-amd64
-=======
->>>>>>> refs/remotes/origin/beta
 
 if [ -d /usr/local/emhttp/plugins/&name; ]; then
   rm -rf /usr/local/emhttp/plugins/&name;
@@ -98,22 +58,6 @@ if [ -f /boot/config/plugins/&name;/install/ca-certificates.crt ]; then
 fi;
 curl -o /boot/config/plugins/&name;/install/ca-certificates.crt https://raw.githubusercontent.com/bagder/ca-bundle/master/ca-bundle.crt
 
-<<<<<<< HEAD
-if [ -f /boot/config/plugins/&name;/install/rclone-*-linux-amd64.zip ]; then
-  rm -f /boot/config/plugins/&name;/install/rclone-*-linux-amd64.zip
-fi;
-
-wget http://downloads.rclone.org/$rclonefile.zip -O /boot/config/plugins/&name;/install/$rclonefile.zip
-
-if [ -d /boot/config/plugins/&name;/install/rclone-v*/ ]; then
-  rm -rf /boot/config/plugins/&name;/install/rclone-v*/
-fi;
-unzip /boot/config/plugins/&name;/install/rclone-*-linux-amd64.zip -d /boot/config/plugins/&name;/install/
-	
-cp /boot/config/plugins/&name;/install/rclone-v*/rclone /usr/sbin/rcloneorig
-chown root:root /usr/sbin/rcloneorig
-chmod 755 /usr/sbin/rclonercloneorig
-=======
 if [ -d /boot/config/plugins/&name;/install/rclone-v*/ ]; then
   rm -rf /boot/config/plugins/&name;/install/rclone-v*/
 fi;
@@ -122,7 +66,6 @@ unzip /boot/config/plugins/&name;/install/rclone.zip -d /boot/config/plugins/&na
 cp /boot/config/plugins/&name;/install/rclone-v*/rclone /usr/sbin/rcloneorig
 chown root:root /usr/sbin/rcloneorig
 chmod 755 /usr/sbin/rcloneorig
->>>>>>> refs/remotes/origin/beta
 
 mkdir -p /etc/ssl/certs/
 cp /boot/config/plugins/&name;/install/ca-certificates.crt /etc/ssl/certs/
