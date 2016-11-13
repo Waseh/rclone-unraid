@@ -136,7 +136,7 @@ fi;
 
 mkdir -p /boot/config/plugins/&name;/logs;
 mkdir -p /boot/config/plugins/rclone-beta/scripts;
-cp /boot/config/plugins/rclone-beta/install/scripts/* /boot/config/plugins/rclone-beta/scripts/ -R -v -n;
+cp /boot/config/plugins/rclone-beta/install/scripts/* /boot/config/plugins/rclone-beta/scripts/ -R -n;
 
 echo ""
 echo "-----------------------------------------------------------"
@@ -155,7 +155,7 @@ rm -f /usr/sbin/rcloneorig;
 rm -f /usr/sbin/rclone;
 rm -f /etc/ssl/certs/ca-certificates.crt
 
-removepkg rclone-&version;-bundle 2>/dev/null
+removepkg rclone-&version;-bundle >/dev/null 2>&1
 
 # we keep config and logs
 #rm -f /boot/config/plugins/&name;/.rclone.conf;
