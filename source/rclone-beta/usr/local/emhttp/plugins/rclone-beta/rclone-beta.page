@@ -1,5 +1,6 @@
 Menu="Utilities"
 Title="rclone-beta"
+Icon="rclone-beta.png"
 ---
 <?PHP
 /* Copyright 2005-2016, Lime Technology
