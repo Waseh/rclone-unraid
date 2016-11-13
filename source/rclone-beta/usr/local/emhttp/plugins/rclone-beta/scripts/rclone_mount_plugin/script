@@ -1,0 +1,4 @@
+#!/bin/bash
+mkdir -p /mnt/disks/Cloud
+rclone mount --max-read-ahead 1024k --allow-other unraidbackup: /mnt/disks/Cloud &
+echo "-----Done----"
