@@ -103,25 +103,6 @@ Get bundle.
 <MD5>&md5bundle;</MD5>
 </FILE>
 
-
-<!--
-Preinstall script.
--->
-<FILE Run="/usr/bin/php">
-<INLINE>
-<![CDATA[
-<?
-  $flashContents = @array_diff(@scandir("/boot/config/plugins/rclone-beta/scripts"),array(".",".."));
-  if ( ! $flashContents ) {
-    exec("mkdir -p /boot/config/plugins/rclone-beta/scripts");
-    exec("cp /boot/config/plugins/rclone-beta/install/scripts/* /boot/config/plugins/rclone-beta/scripts/ -R -v -n");
-  }
-?>
-]]>
-</INLINE>
-</FILE>
-
-
 <!--
 Install script.
 -->
@@ -154,6 +135,8 @@ if [ ! -f /boot/config/plugins/&name;/.rclone.conf ]; then
 fi;
 
 mkdir -p /boot/config/plugins/&name;/logs;
+mkdir -p /boot/config/plugins/rclone-beta/scripts;
+cp /boot/config/plugins/rclone-beta/install/scripts/* /boot/config/plugins/rclone-beta/scripts/ -R -v -n;
 
 echo ""
 echo "-----------------------------------------------------------"
@@ -172,7 +155,7 @@ rm -f /usr/sbin/rcloneorig;
 rm -f /usr/sbin/rclone;
 rm -f /etc/ssl/certs/ca-certificates.crt
 
-removepkg rclone-&version;-bundle
+removepkg rclone-&version;-bundle 2>/dev/null
 
 # we keep config and logs
 #rm -f /boot/config/plugins/&name;/.rclone.conf;
