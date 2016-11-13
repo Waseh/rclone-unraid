@@ -7,11 +7,11 @@
 
 # Local mountpoint
 mntpoint="/local/path" 		# It's recommended to mount your remote share in /mnt/disks/subfolder - 
-                            # This is the only way to make it accesible to dockers
+                                # This is the only way to make it accesible to dockers
 
 # Remote share
 remoteshare="remote:path" 	# If you want to share the root of your remote share you have to 
-                            # define it as "remote:" eg. "acd:" or "gdrive:" 
+                                # define it as "remote:" eg. "acd:" or "gdrive:" 
 
 
 #---------------------------------------------------------------------------------------------------------------------

@@ -3,14 +3,14 @@
 <!DOCTYPE PLUGIN [
 <!ENTITY name      		"rclone-beta">
 <!ENTITY author    		"Waseh">
-<!ENTITY version   		"2016.11.13">
+<!ENTITY version   		"2016.11.14">
 <!ENTITY pluginURL 		"https://raw.githubusercontent.com/Waseh/rclone-unraid/beta/plugin/rclone.plg">
 <!ENTITY bundleURL  		"https://raw.githubusercontent.com/Waseh/rclone-unraid/beta/archive/rclone-beta-&version;-x86_64-1.txz">
 <!ENTITY rcloneversion		"v1.34-11-gbf243f3">
 <!ENTITY rclonefile  		"rclone-&rcloneversion;β-linux-amd64">
 <!ENTITY rcloneurl		"http://beta.rclone.org/&rcloneversion;/&rclonefile;.zip">
 <!ENTITY md5         		"d1b51832e0520fdb163ba16e80a5d9f3">
-<!ENTITY md5bundle     		"29f8a509f5601cbb30856fee873d97d2">
+<!ENTITY md5bundle     		"062b8d600541117d4afa59a1f0d35332">
 ]>
 
 <PLUGIN name="&name;" author="&author;" version="&version;" pluginURL="&pluginURL;">
@@ -18,7 +18,7 @@
 <CHANGES>
 ##&name;
 
-###2016.11.13
+###2016.11.14
 - Beta version of webgui
 - Beta version of included template scripts
 - New beta version of rclone (v1.34-11-gbf243f3)
@@ -112,12 +112,10 @@ Preinstall script.
 <![CDATA[
 <?
   $flashContents = @array_diff(@scandir("/boot/config/plugins/rclone-beta/scripts"),array(".",".."));
-  
   if ( ! $flashContents ) {
     exec("mkdir -p /boot/config/plugins/rclone-beta/scripts");
-    exec("cp /usr/local/emhttp/plugins/rclone-beta/scripts/* /boot/config/plugins/rclone-beta/scripts/ -R -v -n");
+    exec("cp /boot/config/plugins/rclone-beta/install/scripts/* /boot/config/plugins/rclone-beta/scripts/ -R -v -n");
   }
-  exec("rm -rf /usr/local/emhttp/plugins/rclone-beta/scripts");
 ?>
 ]]>
 </INLINE>

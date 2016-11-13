@@ -16,6 +16,8 @@ Icon="rclone-beta.png"
 ?>
 > Use this page to make changes to your `rclone.conf` file as well as the different included scripts.
 >
+> To setup rclone for the first time execute the command `rclone config` in command line.
+>
 > The **Move to User Scripts** button will move the active script to the User Scripts Plugin overwriting any previous version of the included script.
 
 <script>
@@ -31,6 +33,7 @@ alert("Script moved");
 
 <?
 $choice = "1";
+exec("cp /boot/config/plugins/rclone-beta/install/scripts/* /boot/config/plugins/rclone-beta/scripts/ -R -v -n")
 ?>
 
 File to edit:
