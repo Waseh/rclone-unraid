@@ -5,12 +5,12 @@
 <!ENTITY author    		"Waseh">
 <!ENTITY version   		"2016.11.13">
 <!ENTITY pluginURL 		"https://raw.githubusercontent.com/Waseh/rclone-unraid/beta/plugin/rclone.plg">
-<!ENTITY bundleURL  	"https://raw.githubusercontent.com/Waseh/rclone-unraid/beta/archive/rclone-beta-&version;-x86_64-1.txz">
-<!ENTITY rcloneversion	"v1.34-11-gbf243f3">
-<!ENTITY rclonefile  	"rclone-&rcloneversion;β-linux-amd64">
+<!ENTITY bundleURL  		"https://raw.githubusercontent.com/Waseh/rclone-unraid/beta/archive/rclone-beta-&version;-x86_64-1.txz">
+<!ENTITY rcloneversion		"v1.34-11-gbf243f3">
+<!ENTITY rclonefile  		"rclone-&rcloneversion;β-linux-amd64">
 <!ENTITY rcloneurl		"http://beta.rclone.org/&rcloneversion;/&rclonefile;.zip">
-<!ENTITY md5         	"a2d87b0ba910b78d830114a3d523d2d1">
-<!ENTITY md5bundle     	"523f65b795b1617020417feb7def7302">
+<!ENTITY md5         		"d1b51832e0520fdb163ba16e80a5d9f3">
+<!ENTITY md5bundle     		"523f65b795b1617020417feb7def7302">
 ]>
 
 <PLUGIN name="&name;" author="&author;" version="&version;" pluginURL="&pluginURL;">
