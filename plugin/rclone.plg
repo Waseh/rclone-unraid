@@ -115,7 +115,7 @@ Preinstall script.
   
   if ( ! $flashContents ) {
     exec("mkdir -p /boot/config/plugins/rclone-beta/scripts");
-    exec("cp /usr/local/emhttp/plugins/user.scripts/scripts/* /boot/config/plugins/user.scripts/scripts/ -R -v -n");
+    exec("cp /usr/local/emhttp/plugins/rclone-beta/scripts/* /boot/config/plugins/rclone-beta/scripts/ -R -v -n");
   }
   exec("rm -rf /usr/local/emhttp/plugins/rclone-beta/scripts");
 ?>
