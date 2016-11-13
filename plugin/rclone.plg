@@ -169,10 +169,12 @@ echo ""
 <FILE Run="/bin/bash" Method="remove">
 <INLINE>
 rm -rf /boot/config/plugins/&name;/install
-rm -rf /usr/local/emhttp/plugins/&name;
+#rm -rf /usr/local/emhttp/plugins/&name;
 rm -f /usr/sbin/rcloneorig;
 rm -f /usr/sbin/rclone;
 rm -f /etc/ssl/certs/ca-certificates.crt
+
+removepkg rclone-&version;-bundle
 
 # we keep config and logs
 #rm -f /boot/config/plugins/&name;/.rclone.conf;
