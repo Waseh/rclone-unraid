@@ -155,7 +155,9 @@ rm -f /usr/sbin/rcloneorig;
 rm -f /usr/sbin/rclone;
 rm -f /etc/ssl/certs/ca-certificates.crt
 
-removepkg rclone-&version;-bundle 2> /dev/null
+{
+removepkg rclone-&version;-bundle
+} &> /dev/null
 
 # we keep config and logs
 #rm -f /boot/config/plugins/&name;/.rclone.conf;
