@@ -150,7 +150,6 @@ echo ""
 <FILE Run="/bin/bash" Method="remove">
 <INLINE>
 rm -rf /boot/config/plugins/&name;/install
-#rm -rf /usr/local/emhttp/plugins/&name;
 rm -f /usr/sbin/rcloneorig;
 rm -f /usr/sbin/rclone;
 rm -f /etc/ssl/certs/ca-certificates.crt
