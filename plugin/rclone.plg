@@ -3,7 +3,9 @@
 <!DOCTYPE PLUGIN [
 <!ENTITY name      		"rclone-beta">
 <!ENTITY author    		"Waseh">
-<!ENTITY version   		"2016.11.14">
+<!ENTITY version   		"2016.11.14a">
+<!ENTITY bundleversion   	"2016.11.14">
+<!ENTITY launch    		"Settings/rclone-beta">
 <!ENTITY pluginURL 		"https://raw.githubusercontent.com/Waseh/rclone-unraid/beta/plugin/rclone.plg">
 <!ENTITY bundleURL  		"https://raw.githubusercontent.com/Waseh/rclone-unraid/beta/archive/rclone-beta-&version;-x86_64-1.txz">
 <!ENTITY rcloneversion		"v1.34-11-gbf243f3">
@@ -13,10 +15,13 @@
 <!ENTITY md5bundle     		"062b8d600541117d4afa59a1f0d35332">
 ]>
 
-<PLUGIN name="&name;" author="&author;" version="&version;" pluginURL="&pluginURL;">
+<PLUGIN name="&name;" author="&author;" version="&version;" launch="&launch;" pluginURL="&pluginURL;">
 
 <CHANGES>
 ##&name;
+
+###2016.11.14a
+- Go to webgui from plugin page
 
 ###2016.11.14
 - Beta version of webgui
@@ -98,7 +103,7 @@ Get the rclone zip.
 <!--
 Get bundle.
 -->
-<FILE Name="/boot/config/plugins/&name;/install/rclone-&version;-bundle.txz" Run="upgradepkg --install-new">
+<FILE Name="/boot/config/plugins/&name;/install/rclone-&bundleversion;-bundle.txz" Run="upgradepkg --install-new">
 <URL>&bundleURL;</URL>
 <MD5>&md5bundle;</MD5>
 </FILE>
