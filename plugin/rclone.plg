@@ -7,7 +7,7 @@
 <!ENTITY bundleversion   	"2016.11.14">
 <!ENTITY launch    		"Settings/rclone-beta">
 <!ENTITY pluginURL 		"https://raw.githubusercontent.com/Waseh/rclone-unraid/beta/plugin/rclone.plg">
-<!ENTITY bundleURL  		"https://raw.githubusercontent.com/Waseh/rclone-unraid/beta/archive/rclone-beta-&version;-x86_64-1.txz">
+<!ENTITY bundleURL  		"https://raw.githubusercontent.com/Waseh/rclone-unraid/beta/archive/rclone-beta-&bundleversion;-x86_64-1.txz">
 <!ENTITY rcloneversion		"v1.34-13-gd8b7156">
 <!ENTITY rclonefile  		"rclone-&rcloneversion;β-linux-amd64">
 <!ENTITY rcloneurl		"http://beta.rclone.org/&rcloneversion;/&rclonefile;.zip">
@@ -127,7 +127,7 @@ if [ -d /boot/config/plugins/&name;/install/rclone-v*/ ]; then
 fi;
 
 rm -f $(ls /boot/config/plugins/&name;/install/rclone*.zip 2>/dev/null | grep -v '&rcloneversion;')
-rm -f $(ls /boot/config/plugins/&name;/install/rclone*.txz 2>/dev/null | grep -v '&version;')
+rm -f $(ls /boot/config/plugins/&name;/install/rclone*.txz 2>/dev/null | grep -v '&bundleversion;')
 
 unzip /boot/config/plugins/&name;/install/rclone-&rcloneversion;.zip -d /boot/config/plugins/&name;/install/
 	
