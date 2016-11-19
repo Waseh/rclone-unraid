@@ -51,23 +51,34 @@ if (isset($_POST['choice'])) {$choice = $_POST['choice'];}
 
 if ($choice == "1") {
     $file = "/boot/config/plugins/rclone-beta/.rclone.conf";
+    $defaultfile = "/boot/config/plugins/rclone-beta/.rclone.conf";
 
 } elseif ($choice == "2") {
     $file = "/boot/config/plugins/rclone-beta/scripts/rclone_custom_plugin/script";
     $folderpath = "/boot/config/plugins/rclone-beta/scripts/rclone_custom_plugin";
+    $defaultfile = "/boot/config/plugins/rclone-beta/install/scripts/rclone_custom_plugin/script";
 
 } elseif ($choice == "3") {
     $file = "/boot/config/plugins/rclone-beta/scripts/rclone_mount_plugin/script";
     $folderpath = "/boot/config/plugins/rclone-beta/scripts/rclone_mount_plugin";
+    $defaultfile = "/boot/config/plugins/rclone-beta/install/scripts/rclone_mount_plugin/script";
 
 } elseif ($choice == "4") {
     $file = "/boot/config/plugins/rclone-beta/scripts/rclone_unmount_plugin/script";
     $folderpath = "/boot/config/plugins/rclone-beta/scripts/rclone_unmount_plugin";
+    $defaultfile = "/boot/config/plugins/rclone-beta/install/scripts/rclone_unmount_plugin/script";
 }
 
 $text = file_get_contents($file);
+$default_text = @file_get_contents($defaultfile);
+if ($default_text === false) $default_text = $text;
 ?>
 
+<script>
+function setDefault(form) {
+  form.elements['text'].value = <?=json_encode($default_text);?>;
+}
+</script>
 
 <form markdown="1" method="POST" action="/update.php" target="progressFrame">
 <input type="hidden" name="#include" value="/webGui/include/update.file.php">
@@ -77,9 +88,12 @@ $text = file_get_contents($file);
 : <textarea spellcheck="false" cols="80" rows="22" maxlength="2048" name="text" style="font-family:bitstream;width:66%"><?=$text;?></textarea>
 
 &nbsp;
-: <input type="submit" value="Apply"/><input type="button" value="Done" onclick="done()">
+: <input type="submit" value="Apply"/><input type="button" value="Done" onclick="done()"><input type="button" value="Default" onclick="setDefault(this.form)">
 
 > Click the **Apply** button to commit the current edits.  Click **Reset** to
 > undo any changes you make (before Saving). Click **Done** to exit this page.
-
+>
+> Click the **Default** button to initialize the edit box with the
+> factory-default contents.  You still need to click **Apply** in order to
+>commit the change.
 </form>
