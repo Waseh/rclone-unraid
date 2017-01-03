@@ -8,10 +8,10 @@
 <!ENTITY launch    		"Settings/rclone-beta">
 <!ENTITY pluginURL 		"https://raw.githubusercontent.com/Waseh/rclone-unraid/beta/plugin/rclone.plg">
 <!ENTITY bundleURL  		"https://raw.githubusercontent.com/Waseh/rclone-unraid/beta/archive/rclone-beta-&bundleversion;-x86_64-1.txz">
-<!ENTITY rcloneversion		"v1.34-49-ge79a5de">
+<!ENTITY rcloneversion		"v1.35-10-g3b0f944">
 <!ENTITY rclonefile  		"rclone-&rcloneversion;β-linux-amd64">
 <!ENTITY rcloneurl		"http://beta.rclone.org/&rcloneversion;/&rclonefile;.zip">
-<!ENTITY md5         		"127497b834422de572db40f3529e77be">
+<!ENTITY md5         		"a2e855ac435700d9b9e8214c53581401">
 <!ENTITY md5bundle     		"d0e08a44127b71580fadeb903087080b">
 ]>
 
