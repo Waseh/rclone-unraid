@@ -1,0 +1,99 @@
+Menu="Utilities"
+Title="rclone"
+Icon="rclone.png"
+---
+<?PHP
+/* Copyright 2005-2016, Lime Technology
+ * Copyright 2012-2016, Bergware International.
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License version 2,
+ * as published by the Free Software Foundation.
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ */
+?>
+> Use this page to make changes to your `rclone.conf` file as well as the different included scripts.
+>
+> To setup rclone for the first time execute the command `rclone config` in command line.
+>
+> The **Move to User Scripts** button will move the active script to the User Scripts Plugin overwriting any previous version of the included script.
+
+<script>
+function copyscript(path) {
+      $.ajax({
+           type: "POST",
+           url: '/plugins/rclone/copy.php',
+           data:{action:'copy', path:path},
+      });
+alert("Script moved"); 
+}
+</script>
+
+<?
+$choice = "1";
+exec("cp /boot/config/plugins/rclone/install/scripts/* /boot/config/plugins/rclone/scripts/ -R -v -n")
+?>
+
+File to edit:
+<form action="" method="post"> 
+<select name="choice" onchange="this.form.submit();"> 
+<option value="1" <?php echo (isset($_POST['choice']) && $_POST['choice'] == '1') ? 'selected="selected"' : ''; ?>>Config</option>
+<option value="2" <?php echo (isset($_POST['choice']) && $_POST['choice'] == '2') ? 'selected="selected"' : ''; ?>>Rclone Custom Script</option>
+<option value="3" <?php echo (isset($_POST['choice']) && $_POST['choice'] == '3') ? 'selected="selected"' : ''; ?>>Mount Script</option> 
+<option value="4" <?php echo (isset($_POST['choice']) && $_POST['choice'] == '4') ? 'selected="selected"' : ''; ?>>Unmount Script</option>
+</select> 
+</form> 
+
+<?
+if (isset($_POST['choice'])) {$choice = $_POST['choice'];}
+
+if ($choice == "1") {
+    $file = "/boot/config/plugins/rclone/.rclone.conf";
+    $defaultfile = "/boot/config/plugins/rclone/.rclone.conf";
+
+} elseif ($choice == "2") {
+    $file = "/boot/config/plugins/rclone/scripts/rclone_custom_plugin/script";
+    $folderpath = "/boot/config/plugins/rclone/scripts/rclone_custom_plugin";
+    $defaultfile = "/boot/config/plugins/rclone/install/scripts/rclone_custom_plugin/script";
+
+} elseif ($choice == "3") {
+    $file = "/boot/config/plugins/rclone/scripts/rclone_mount_plugin/script";
+    $folderpath = "/boot/config/plugins/rclone/scripts/rclone_mount_plugin";
+    $defaultfile = "/boot/config/plugins/rclone/install/scripts/rclone_mount_plugin/script";
+
+} elseif ($choice == "4") {
+    $file = "/boot/config/plugins/rclone/scripts/rclone_unmount_plugin/script";
+    $folderpath = "/boot/config/plugins/rclone/scripts/rclone_unmount_plugin";
+    $defaultfile = "/boot/config/plugins/rclone/install/scripts/rclone_unmount_plugin/script";
+}
+
+$text = file_get_contents($file);
+$default_text = @file_get_contents($defaultfile);
+if ($default_text === false) $default_text = $text;
+?>
+
+<script>
+function setDefault(form) {
+  form.elements['text'].value = <?=json_encode($default_text);?>;
+}
+</script>
+
+<form markdown="1" method="POST" action="/update.php" target="progressFrame">
+<input type="hidden" name="#include" value="/webGui/include/update.file.php">
+: <input type="hidden" name="#file" value="<?=$file;?>">
+
+<input type="button" value="Move to User Scripts" <?php if ($file == '/boot/config/plugins/rclone/.rclone.conf'){ ?> disabled <?php   } ?> onclick="copyscript('<?php echo $folderpath; ?>')">
+: <textarea spellcheck="false" cols="80" rows="22" maxlength="2048" name="text" style="font-family:bitstream;width:66%"><?=$text;?></textarea>
+
+&nbsp;
+: <input type="submit" value="Apply"/><input type="button" value="Done" onclick="done()"><input type="button" value="Default" onclick="setDefault(this.form)">
+
+> Click the **Apply** button to commit the current edits.  Click **Reset** to
+> undo any changes you make (before Saving). Click **Done** to exit this page.
+>
+> Click the **Default** button to initialize the edit box with the
+> factory-default contents.  You still need to click **Apply** in order to
+>commit the change.
+</form>

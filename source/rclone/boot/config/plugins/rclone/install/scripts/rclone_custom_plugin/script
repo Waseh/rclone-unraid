@@ -1,0 +1,7 @@
+#!/bin/bash
+#----------------------------------------------------------------------------
+# Here you can add your own custom script eg.                                |
+# rclone copy /local/path remote:path # copies /local/path to the remote     |
+# rclone sync /local/path remote:path # syncs /local/path to the remote      |
+#----------------------------------------------------------------------------
+

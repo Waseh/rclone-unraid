@@ -3,9 +3,15 @@
 <!DOCTYPE PLUGIN [
 <!ENTITY name      	"rclone">
 <!ENTITY author    	"Waseh">
+<<<<<<< HEAD
 <!ENTITY version   	"2016.11.08">
 <!ENTITY pluginURL 	"https://raw.githubusercontent.com/Waseh/rclone-unraid/master/rclone.plg">
 <!ENTITY rcloneversion	"v1.34">
+=======
+<!ENTITY version   	"2017.01.05">
+<!ENTITY pluginURL 	"https://raw.githubusercontent.com/Waseh/rclone-unraid/master/plugin/rclone.plg">
+<!ENTITY rcloneversion	"v1.35">
+>>>>>>> refs/remotes/origin/dev
 <!ENTITY rclonefile  	"rclone-&rcloneversion;-linux-amd64">
 <!ENTITY rcloneurl	"http://downloads.rclone.org/&rclonefile;.zip">
 <!ENTITY md5         	"5a51f7a7dfdd8c8a415611bd090a1ffe">
@@ -16,9 +22,22 @@
 <CHANGES>
 ##&name;
 
+<<<<<<< HEAD
 ###2016.11.08
 - Fixed update routine
 
+=======
+###2017.01.05
+- New version of rclone (v1.35)
+
+###2016.11.14
+- Beta version of webgui
+- Beta version of included template scripts
+
+###2016.11.08
+- Fixed update routine
+
+>>>>>>> refs/remotes/origin/dev
 ###2016.11.06
 - First release of plugin for rclone stable branch
 - New version of rclone (v1.34)
