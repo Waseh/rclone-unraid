@@ -1,18 +1,18 @@
 <?xml version='1.0' standalone='yes'?>
 
 <!DOCTYPE PLUGIN [
-<!ENTITY name      		"rclone-beta">
+<!ENTITY name      		"rclone">
 <!ENTITY author    		"Waseh">
-<!ENTITY version   		"2017.01.03">
-<!ENTITY bundleversion   	"2016.11.19">
-<!ENTITY launch    		"Settings/rclone-beta">
-<!ENTITY pluginURL 		"https://raw.githubusercontent.com/Waseh/rclone-unraid/beta/plugin/rclone.plg">
-<!ENTITY bundleURL  		"https://raw.githubusercontent.com/Waseh/rclone-unraid/beta/archive/rclone-beta-&bundleversion;-x86_64-1.txz">
-<!ENTITY rcloneversion		"v1.35-10-g3b0f944">
-<!ENTITY rclonefile  		"rclone-&rcloneversion;β-linux-amd64">
-<!ENTITY rcloneurl		"http://beta.rclone.org/&rcloneversion;/&rclonefile;.zip">
-<!ENTITY md5         		"a2e855ac435700d9b9e8214c53581401">
-<!ENTITY md5bundle     		"d0e08a44127b71580fadeb903087080b">
+<!ENTITY version   		"2017.01.05">
+<!ENTITY bundleversion   	"2017.01.05">
+<!ENTITY launch    		"Settings/rclone">
+<!ENTITY pluginURL 		"https://raw.githubusercontent.com/Waseh/rclone-unraid/master/plugin/rclone.plg">
+<!ENTITY bundleURL  		"https://raw.githubusercontent.com/Waseh/rclone-unraid/master/archive/rclone-&bundleversion;-x86_64-1.txz">
+<!ENTITY rcloneversion		"v1.35">
+<!ENTITY rclonefile  		"rclone-&rcloneversion-linux-amd64">
+<!ENTITY rcloneurl		"http://downloads.rclone.org/&rclonefile;.zip">
+<!ENTITY md5         		"398d20b3c849e5c20d0a9c1db8d25bfd">
+<!ENTITY md5bundle     		"9f62e2d59a56e631e3644ce10706ba77">
 ]>
 
 <PLUGIN name="&name;" author="&author;" version="&version;" launch="&launch;" pluginURL="&pluginURL;">
@@ -20,68 +20,35 @@
 <CHANGES>
 ##&name;
 
-###2017.01.03
-- New beta version of rclone (v1.35-10-g3b0f944)
+<CHANGES>
+##&name;
 
-###2016.12.05
-- New beta version of rclone (v1.34-49-ge79a5de)
-
-###2016.11.28
-- New beta version of rclone (v1.34-38-g7929b6e)
-
-###2016.11.21
-- New beta version of rclone (v1.34-23-gc41b67e)
-- /mnt/disks folder now created on install
-
-###2016.11.19
-- New beta version of rclone (v1.34-22-g0b562bc)
-- Default button in GUI to return scripts to default state
-
-###2016.11.15
-- New beta version of rclone (v1.34-11-gbf243f3)
-
-###2016.11.14a
-- Go to webgui from plugin page
+###2017.01.05
+- New version of rclone (v1.35)
 
 ###2016.11.14
 - Beta version of webgui
 - Beta version of included template scripts
-- New beta version of rclone (v1.34-11-gbf243f3)
 
 ###2016.11.08
 - Fixed update routine
 
-###2016.11.07
-- New beta version of rclone (v1.34-04-g4105da2)
-
 ###2016.11.06
-- New beta version of rclone (v1.34-02-g5f320cc)
-- Check to see if stable branch installed
-
-###2016.11.05a
-- New beta version of rclone (v1.33-107-gff41b0d)
-
-###2016.11.05
-- New beta version of rclone (v1.33-106-ge162377)
-- MD5 check of rclone zip
-
-###2016.11.04
-- New beta version of rclone (v1.33-99-g452c681)
-
-###2016.11.03
-- First official release
-- New beta version of rclone
+- First release of plugin for rclone stable branch
+- New version of rclone (v1.34)
+- Check to see if Beta branch installed 
 
 ###2016.11.02
 - More intuitive calling of rclone - Use rclone instead of myrclone
 - More minor changes in preperation of official release
 
 ###2016.10.31
-- New beta version of rclone
-- Other minor improvements
+- Minor improvements
+
+###2016.10.28
+- Removed cronjob
 
 ###2016.10.27
-- Changed version to latest beta
 - Small modifications to make the plugin work again, and updateable from unraid interface
 
 </CHANGES>
@@ -95,15 +62,15 @@ Thanks to stignz for his great guide: https://lime-technology.com/forum/index.ph
 -->
 
 <!--
-Check if stable is installed.
+Check if beta is installed.
 -->
 <FILE Run="/bin/bash">
 <INLINE>
-if [ -d /usr/local/emhttp/plugins/rclone ]; then
+if [ -d /usr/local/emhttp/plugins/rclone-beta ]; then
 echo ""
 echo ""
-echo "----------Stable Branch installed----------"
-echo "Uninstall Stable branch to install Beta!"
+echo "----------Beta Branch installed----------"
+echo "Uninstall Beta branch to install Stable!"
 echo ""
 echo ""
 exit 1
@@ -160,8 +127,8 @@ if [ ! -f /boot/config/plugins/&name;/.rclone.conf ]; then
 fi;
 
 mkdir -p /boot/config/plugins/&name;/logs;
-mkdir -p /boot/config/plugins/rclone-beta/scripts;
-cp /boot/config/plugins/rclone-beta/install/scripts/* /boot/config/plugins/rclone-beta/scripts/ -R -n;
+mkdir -p /boot/config/plugins/rclone/scripts;
+cp /boot/config/plugins/rclone/install/scripts/* /boot/config/plugins/rclone/scripts/ -R -n;
 
 mkdir -p /mnt/disks/;
 

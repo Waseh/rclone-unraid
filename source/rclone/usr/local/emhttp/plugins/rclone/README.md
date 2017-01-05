@@ -1,4 +1,4 @@
-**rclone-beta**
+**rclone**
 
 The plugin installs Rclone. Rclone is a command line program to sync files and directories to and from
 * Google Drive

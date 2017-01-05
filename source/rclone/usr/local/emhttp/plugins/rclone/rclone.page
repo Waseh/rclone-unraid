@@ -1,6 +1,6 @@
 Menu="Utilities"
-Title="rclone-beta"
-Icon="rclone-beta.png"
+Title="rclone"
+Icon="rclone.png"
 ---
 <?PHP
 /* Copyright 2005-2016, Lime Technology
@@ -24,7 +24,7 @@ Icon="rclone-beta.png"
 function copyscript(path) {
       $.ajax({
            type: "POST",
-           url: '/plugins/rclone-beta/copy.php',
+           url: '/plugins/rclone/copy.php',
            data:{action:'copy', path:path},
       });
 alert("Script moved"); 
@@ -33,7 +33,7 @@ alert("Script moved");
 
 <?
 $choice = "1";
-exec("cp /boot/config/plugins/rclone-beta/install/scripts/* /boot/config/plugins/rclone-beta/scripts/ -R -v -n")
+exec("cp /boot/config/plugins/rclone/install/scripts/* /boot/config/plugins/rclone/scripts/ -R -v -n")
 ?>
 
 File to edit:
@@ -50,23 +50,23 @@ File to edit:
 if (isset($_POST['choice'])) {$choice = $_POST['choice'];}
 
 if ($choice == "1") {
-    $file = "/boot/config/plugins/rclone-beta/.rclone.conf";
-    $defaultfile = "/boot/config/plugins/rclone-beta/.rclone.conf";
+    $file = "/boot/config/plugins/rclone/.rclone.conf";
+    $defaultfile = "/boot/config/plugins/rclone/.rclone.conf";
 
 } elseif ($choice == "2") {
-    $file = "/boot/config/plugins/rclone-beta/scripts/rclone_custom_plugin/script";
-    $folderpath = "/boot/config/plugins/rclone-beta/scripts/rclone_custom_plugin";
-    $defaultfile = "/boot/config/plugins/rclone-beta/install/scripts/rclone_custom_plugin/script";
+    $file = "/boot/config/plugins/rclone/scripts/rclone_custom_plugin/script";
+    $folderpath = "/boot/config/plugins/rclone/scripts/rclone_custom_plugin";
+    $defaultfile = "/boot/config/plugins/rclone/install/scripts/rclone_custom_plugin/script";
 
 } elseif ($choice == "3") {
-    $file = "/boot/config/plugins/rclone-beta/scripts/rclone_mount_plugin/script";
-    $folderpath = "/boot/config/plugins/rclone-beta/scripts/rclone_mount_plugin";
-    $defaultfile = "/boot/config/plugins/rclone-beta/install/scripts/rclone_mount_plugin/script";
+    $file = "/boot/config/plugins/rclone/scripts/rclone_mount_plugin/script";
+    $folderpath = "/boot/config/plugins/rclone/scripts/rclone_mount_plugin";
+    $defaultfile = "/boot/config/plugins/rclone/install/scripts/rclone_mount_plugin/script";
 
 } elseif ($choice == "4") {
-    $file = "/boot/config/plugins/rclone-beta/scripts/rclone_unmount_plugin/script";
-    $folderpath = "/boot/config/plugins/rclone-beta/scripts/rclone_unmount_plugin";
-    $defaultfile = "/boot/config/plugins/rclone-beta/install/scripts/rclone_unmount_plugin/script";
+    $file = "/boot/config/plugins/rclone/scripts/rclone_unmount_plugin/script";
+    $folderpath = "/boot/config/plugins/rclone/scripts/rclone_unmount_plugin";
+    $defaultfile = "/boot/config/plugins/rclone/install/scripts/rclone_unmount_plugin/script";
 }
 
 $text = file_get_contents($file);
@@ -84,7 +84,7 @@ function setDefault(form) {
 <input type="hidden" name="#include" value="/webGui/include/update.file.php">
 : <input type="hidden" name="#file" value="<?=$file;?>">
 
-<input type="button" value="Move to User Scripts" <?php if ($file == '/boot/config/plugins/rclone-beta/.rclone.conf'){ ?> disabled <?php   } ?> onclick="copyscript('<?php echo $folderpath; ?>')">
+<input type="button" value="Move to User Scripts" <?php if ($file == '/boot/config/plugins/rclone/.rclone.conf'){ ?> disabled <?php   } ?> onclick="copyscript('<?php echo $folderpath; ?>')">
 : <textarea spellcheck="false" cols="80" rows="22" maxlength="2048" name="text" style="font-family:bitstream;width:66%"><?=$text;?></textarea>
 
 &nbsp;
