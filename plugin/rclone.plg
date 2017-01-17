@@ -167,7 +167,6 @@ if [ ! -f /boot/config/plugins/&name;/.rclone.conf ]; then
 fi;
 ln -sfT /boot/config/plugins/&name;/.rclone.conf /root/.rclone.conf
 
-mkdir -p /boot/config/plugins/&name;/logs;
 mkdir -p /boot/config/plugins/&name;/scripts;
 cp /boot/config/plugins/&name;/install/scripts/* /boot/config/plugins/&name;/scripts/ -R -n;
 
