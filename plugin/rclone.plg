@@ -22,6 +22,7 @@
 
 ###2017.01.17
 - New beta version of rclone (v1.35-33-g47ebd07)
+- Wrapper removed
 
 ###2017.01.05
 - New beta version of rclone (v1.35-13-ge1a49ca)
