@@ -3,7 +3,7 @@
 <!DOCTYPE PLUGIN [
 <!ENTITY name      		"rclone-beta">
 <!ENTITY author    		"Waseh">
-<!ENTITY version   		"2017.01.17">
+<!ENTITY version   		"2017.01.17a">
 <!ENTITY bundleversion   	"2016.11.19">
 <!ENTITY launch    		"Settings/rclone-beta">
 <!ENTITY pluginURL 		"https://raw.githubusercontent.com/Waseh/rclone-unraid/beta/plugin/rclone.plg">
@@ -19,6 +19,10 @@
 
 <CHANGES>
 ##&name;
+
+###2017.01.17a
+- New beta version of rclone (v1.35-33-g47ebd07)
+- Reverting previous patch
 
 ###2017.01.17
 - New beta version of rclone (v1.35-33-g47ebd07)
@@ -155,9 +159,9 @@ rm -f $(ls /boot/config/plugins/&name;/install/rclone*.txz 2>/dev/null | grep -v
 
 unzip /boot/config/plugins/&name;/install/rclone-&rcloneversion;.zip -d /boot/config/plugins/&name;/install/
 	
-cp /boot/config/plugins/&name;/install/rclone-v*/rclone /usr/sbin/rclone
-chown root:root /usr/sbin/rclone
-chmod 755 /usr/sbin/rclone
+cp /boot/config/plugins/&name;/install/rclone-v*/rclone /usr/sbin/rcloneorig
+chown root:root /usr/sbin/rcloneorig
+chmod 755 /usr/sbin/rcloneorig
 
 mkdir -p /etc/ssl/certs/
 cp /boot/config/plugins/&name;/install/ca-certificates.crt /etc/ssl/certs/
@@ -165,10 +169,10 @@ cp /boot/config/plugins/&name;/install/ca-certificates.crt /etc/ssl/certs/
 if [ ! -f /boot/config/plugins/&name;/.rclone.conf ]; then
   touch /boot/config/plugins/&name;/.rclone.conf;
 fi;
-ln -sfT /boot/config/plugins/&name;/.rclone.conf /root/.rclone.conf
 
-mkdir -p /boot/config/plugins/&name;/scripts;
-cp /boot/config/plugins/&name;/install/scripts/* /boot/config/plugins/&name;/scripts/ -R -n;
+mkdir -p /boot/config/plugins/&name;/logs;
+mkdir -p /boot/config/plugins/rclone-beta/scripts;
+cp /boot/config/plugins/rclone-beta/install/scripts/* /boot/config/plugins/rclone-beta/scripts/ -R -n;
 
 mkdir -p /mnt/disks/;
 
@@ -184,8 +188,8 @@ echo ""
 <FILE Run="/bin/bash" Method="remove">
 <INLINE>
 rm -rf /boot/config/plugins/&name;/install
+rm -f /usr/sbin/rcloneorig;
 rm -f /usr/sbin/rclone;
-rm -f /root/.rclone.conf;
 rm -f /etc/ssl/certs/ca-certificates.crt
 
 removepkg rclone-&bundleversion;-bundle >/dev/null
@@ -202,4 +206,32 @@ echo ""
 
 </INLINE>
 </FILE>
+
+<FILE Name="/usr/sbin/rclone" Mode="0755">
+<INLINE>
+#!/bin/bash
+log=false
+args=()
+for i in "$@" ; do
+    if [[ $i = "--log" ]] ; then
+        log=true
+        continue
+    fi
+    if [[ $i = "-l" ]] ; then
+        log=true
+        continue
+    fi
+	args+=($i)
+done
+
+config=/boot/config/plugins/&name;/.rclone.conf
+logfile=/boot/config/plugins/&name;/logs/rclone-$(date "+%Y%m%d").log
+if [ "$log" = true ] &amp;&amp; [ ${#args[@]} -ge 1 ]; then
+	rcloneorig --config $config "${args[@]}" &gt;&gt; $logfile 2&gt;&amp;1
+else
+	rcloneorig --config $config "$@";
+fi;
+</INLINE>
+</FILE>
+
 </PLUGIN>
