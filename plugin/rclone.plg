@@ -3,7 +3,7 @@
 <!DOCTYPE PLUGIN [
 <!ENTITY name      		"rclone">
 <!ENTITY author    		"Waseh">
-<!ENTITY version   		"2017.01.05">
+<!ENTITY version   		"2017.01.17">
 <!ENTITY bundleversion   	"2017.01.05">
 <!ENTITY launch    		"Settings/rclone">
 <!ENTITY pluginURL 		"https://raw.githubusercontent.com/Waseh/rclone-unraid/master/plugin/rclone.plg">
@@ -19,6 +19,9 @@
 
 <CHANGES>
 ##&name;
+
+###2017.01.17
+- Wrapper script removed
 
 ###2017.01.05
 - New version of rclone (v1.35)
@@ -112,11 +115,50 @@ rm -f $(ls /boot/config/plugins/&name;/install/rclone*.txz 2>/dev/null | grep -v
 
 unzip /boot/config/plugins/&name;/install/rclone-&rcloneversion;.zip -d /boot/config/plugins/&name;/install/
 	
-cp /boot/config/plugins/&name;/install/rclone-v*/rclone /usr/sbin/rcloneorig
-chown root:root /usr/sbin/rcloneorig
-chmod 755 /usr/sbin/rcloneorig
+cp /boot/config/plugins/&name;/install/rclone-v*/rclone /usr/sbin/rclone
+chown root:root /usr/sbin/rclone
+chmod 755 /usr/sbin/rclone
 
 mkdir -p /etc/ssl/certs/
 cp /boot/config/plugins/&name;/install/ca-certificates.crt /etc/ssl/certs/
 
+if [ ! -f /boot/config/plugins/&name;/.rclone.conf ]; then
+  touch /boot/config/plugins/&name;/.rclone.conf;
+fi;
+ln -sfT /boot/config/plugins/&name;/.rclone.conf /root/.rclone.conf
+
+mkdir -p /boot/config/plugins/&name;/scripts;
+cp /boot/config/plugins/&name;/install/scripts/* /boot/config/plugins/&name;/scripts/ -R -n;
+
+mkdir -p /mnt/disks/;
+
+echo ""
+echo "-----------------------------------------------------------"
+echo " &name; has been installed."
+echo "-----------------------------------------------------------"
+echo ""
+
+</INLINE>
+</FILE>
+
+<FILE Run="/bin/bash" Method="remove">
+<INLINE>
+rm -rf /boot/config/plugins/&name;/install
+rm -f /usr/sbin/rclone;
+rm -f /root/.rclone.conf;
+rm -f /etc/ssl/certs/ca-certificates.crt
+
+removepkg rclone-&bundleversion;-bundle >/dev/null
+
+# we keep config and logs
+#rm -f /boot/config/plugins/&name;/.rclone.conf;
+#rm -f /boot/config/plugins/&name;/logs;
+
+echo ""
+echo "-----------------------------------------------------------"
+echo " &name; has been uninstalled."
+echo "-----------------------------------------------------------"
+echo ""
+
+</INLINE>
 </PLUGIN>
