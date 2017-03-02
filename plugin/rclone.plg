@@ -3,15 +3,15 @@
 <!DOCTYPE PLUGIN [
 <!ENTITY name      		"rclone-beta">
 <!ENTITY author    		"Waseh">
-<!ENTITY version   		"2017.02.19a">
+<!ENTITY version   		"2017.03.02">
 <!ENTITY bundleversion   	"2016.11.19">
 <!ENTITY launch    		"Settings/rclone-beta">
 <!ENTITY pluginURL 		"https://raw.githubusercontent.com/Waseh/rclone-unraid/beta/plugin/rclone.plg">
 <!ENTITY bundleURL  		"https://raw.githubusercontent.com/Waseh/rclone-unraid/beta/archive/rclone-beta-&bundleversion;-x86_64-1.txz">
-<!ENTITY rcloneversion		"v1.35-123-g6e0e1ad">
+<!ENTITY rcloneversion		"v1.35-151-g1d42a34">
 <!ENTITY rclonefile  		"rclone-&rcloneversion;β-linux-amd64">
 <!ENTITY rcloneurl		"http://beta.rclone.org/&rcloneversion;/&rclonefile;.zip">
-<!ENTITY md5         		"b260c6e3fa832f76c40a36bd0db12d36">
+<!ENTITY md5         		"090b08beca35d637ee8ac1d3e6d6dfef">
 <!ENTITY md5bundle     		"d0e08a44127b71580fadeb903087080b">
 ]>
 
@@ -19,6 +19,9 @@
 
 <CHANGES>
 ##&name;
+
+###2017.03.02
+- New beta version of rclone (v1.35-151-g1d42a34) with buffer support. See: https://forum.rclone.org/t/new-feature-buffer-size/1083
 
 ###2017.02.19a
 - New beta version of rclone (v1.35-123-g6e0e1ad)
