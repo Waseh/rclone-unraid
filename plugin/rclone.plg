@@ -3,15 +3,15 @@
 <!DOCTYPE PLUGIN [
 <!ENTITY name      		"rclone">
 <!ENTITY author    		"Waseh">
-<!ENTITY version   		"2017.01.17a">
+<!ENTITY version   		"2017.03.19">
 <!ENTITY bundleversion   	"2017.01.05">
 <!ENTITY launch    		"Settings/rclone">
 <!ENTITY pluginURL 		"https://raw.githubusercontent.com/Waseh/rclone-unraid/master/plugin/rclone.plg">
 <!ENTITY bundleURL  		"https://raw.githubusercontent.com/Waseh/rclone-unraid/master/archive/rclone-&bundleversion;-x86_64-1.txz">
-<!ENTITY rcloneversion		"v1.35">
+<!ENTITY rcloneversion		"v1.36">
 <!ENTITY rclonefile  		"rclone-&rcloneversion;-linux-amd64">
 <!ENTITY rcloneurl		"http://downloads.rclone.org/&rclonefile;.zip">
-<!ENTITY md5         		"398d20b3c849e5c20d0a9c1db8d25bfd">
+<!ENTITY md5         		"8382a91a46ab1d3167b616935fe09e33">
 <!ENTITY md5bundle     		"3a2125ad6e70ffbd1f8cad24e27035b2">
 ]>
 
@@ -19,6 +19,9 @@
 
 <CHANGES>
 ##&name;
+
+###2017.03.19
+- New version of rclone (v1.36)
 
 ###2017.01.17a
 - Reverting previous patch
