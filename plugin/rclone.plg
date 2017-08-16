@@ -170,6 +170,12 @@ rm -f $(ls /boot/config/plugins/&name;/install/rclone*.txz 2>/dev/null | grep -v
 unzip /boot/config/plugins/&name;/install/rclone-&rcloneversion;.zip -d /boot/config/plugins/&name;/install/
 	
 cp /boot/config/plugins/&name;/install/rclone-v*/rclone /usr/sbin/rcloneorig
+
+if [ "$?" -ne "0" ]; then
+  echo "Copy failed - rclone running"
+  exit 1
+fi
+
 chown root:root /usr/sbin/rcloneorig
 chmod 755 /usr/sbin/rcloneorig
 
