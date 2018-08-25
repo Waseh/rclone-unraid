@@ -3,7 +3,7 @@
 <!DOCTYPE PLUGIN [
 <!ENTITY name      		"rclone-beta">
 <!ENTITY author    		"Waseh">
-<!ENTITY version   		"2017.09.23">
+<!ENTITY version   		"2018.08.25">
 <!ENTITY bundleversion   	"2016.11.19">
 <!ENTITY launch    		"Settings/rclone-beta">
 <!ENTITY pluginURL 		"https://raw.githubusercontent.com/Waseh/rclone-unraid/beta/plugin/rclone.plg">
@@ -169,7 +169,6 @@ fi;
 
 unzip /boot/config/plugins/&name;/install/rclone-&rcloneversion;.zip -d /boot/config/plugins/&name;/install/
 
-rm -f $(ls /boot/config/plugins/&name;/install/rclone*.zip 2>/dev/null)
 rm -f $(ls /boot/config/plugins/&name;/install/rclone*.txz 2>/dev/null | grep -v '&bundleversion;')
 
 cp /boot/config/plugins/&name;/install/rclone-v*/rclone /usr/sbin/rcloneorig
