@@ -1,0 +1,193 @@
+<?xml version='1.0' standalone='yes'?>
+
+<!DOCTYPE PLUGIN [
+<!ENTITY name      		"rclone">
+<!ENTITY author    		"Waseh">
+<!ENTITY version   		"2017.01.05">
+<!ENTITY bundleversion   	"2017.01.05">
+<!ENTITY launch    		"Settings/rclone">
+<!ENTITY pluginURL 		"https://raw.githubusercontent.com/Waseh/rclone-unraid/master/plugin/rclone.plg">
+<!ENTITY bundleURL  		"https://raw.githubusercontent.com/Waseh/rclone-unraid/master/archive/rclone-&bundleversion;-x86_64-1.txz">
+<!ENTITY rcloneversion		"v1.35">
+<!ENTITY rclonefile  		"rclone-&rcloneversion;β-linux-amd64">
+<!ENTITY rcloneurl		"http://downloads.rclone.org/&rclonefile;.zip">
+<!ENTITY md5         		"398d20b3c849e5c20d0a9c1db8d25bfd">
+<!ENTITY md5bundle     		"">
+]>
+
+<PLUGIN name="&name;" author="&author;" version="&version;" launch="&launch;" pluginURL="&pluginURL;">
+
+<CHANGES>
+##&name;
+
+<CHANGES>
+##&name;
+
+###2017.01.05
+- New version of rclone (v1.35)
+
+###2016.11.14
+- Beta version of webgui
+- Beta version of included template scripts
+
+###2016.11.08
+- Fixed update routine
+
+###2016.11.06
+- First release of plugin for rclone stable branch
+- New version of rclone (v1.34)
+- Check to see if Beta branch installed 
+
+###2016.11.02
+- More intuitive calling of rclone - Use rclone instead of myrclone
+- More minor changes in preperation of official release
+
+###2016.10.31
+- Minor improvements
+
+###2016.10.28
+- Removed cronjob
+
+###2016.10.27
+- Small modifications to make the plugin work again, and updateable from unraid interface
+
+</CHANGES>
+
+<!--
+
+This plugin installs Rclone on unRAID systems.
+This work is entirely based upon the plugin created by aschamberger: https://lime-technology.com/forum/index.php?topic=46663.msg501372
+Thanks to stignz for his great guide: https://lime-technology.com/forum/index.php?topic=46663.0
+
+-->
+
+<!--
+Check if beta is installed.
+-->
+<FILE Run="/bin/bash">
+<INLINE>
+if [ -d /usr/local/emhttp/plugins/rclone-beta ]; then
+echo ""
+echo ""
+echo "----------Beta Branch installed----------"
+echo "Uninstall Beta branch to install Stable!"
+echo ""
+echo ""
+exit 1
+fi
+</INLINE>
+</FILE>
+
+<!--
+Get the rclone zip.
+-->
+<FILE Name="/boot/config/plugins/&name;/install/rclone-&rcloneversion;.zip">
+<URL>&rcloneurl;</URL>
+<MD5>&md5;</MD5>
+</FILE>
+
+
+<!--
+Get bundle.
+-->
+<FILE Name="/boot/config/plugins/&name;/install/rclone-&bundleversion;-bundle.txz" Run="upgradepkg --install-new">
+<URL>&bundleURL;</URL>
+<MD5>&md5bundle;</MD5>
+</FILE>
+
+<!--
+Install script.
+-->
+<FILE Run="/bin/bash" Method="install">
+<INLINE>
+
+if [ -f /boot/config/plugins/&name;/install/ca-certificates.crt ]; then
+  rm -f /boot/config/plugins/&name;/install/ca-certificates.crt
+fi;
+curl -o /boot/config/plugins/&name;/install/ca-certificates.crt https://raw.githubusercontent.com/bagder/ca-bundle/master/ca-bundle.crt
+
+if [ -d /boot/config/plugins/&name;/install/rclone-v*/ ]; then
+  rm -rf /boot/config/plugins/&name;/install/rclone-v*/
+fi;
+
+rm -f $(ls /boot/config/plugins/&name;/install/rclone*.zip 2>/dev/null | grep -v '&rcloneversion;')
+rm -f $(ls /boot/config/plugins/&name;/install/rclone*.txz 2>/dev/null | grep -v '&bundleversion;')
+
+unzip /boot/config/plugins/&name;/install/rclone-&rcloneversion;.zip -d /boot/config/plugins/&name;/install/
+	
+cp /boot/config/plugins/&name;/install/rclone-v*/rclone /usr/sbin/rcloneorig
+chown root:root /usr/sbin/rcloneorig
+chmod 755 /usr/sbin/rcloneorig
+
+mkdir -p /etc/ssl/certs/
+cp /boot/config/plugins/&name;/install/ca-certificates.crt /etc/ssl/certs/
+
+if [ ! -f /boot/config/plugins/&name;/.rclone.conf ]; then
+  touch /boot/config/plugins/&name;/.rclone.conf;
+fi;
+
+mkdir -p /boot/config/plugins/&name;/logs;
+mkdir -p /boot/config/plugins/rclone/scripts;
+cp /boot/config/plugins/rclone/install/scripts/* /boot/config/plugins/rclone/scripts/ -R -n;
+
+mkdir -p /mnt/disks/;
+
+echo ""
+echo "-----------------------------------------------------------"
+echo " &name; has been installed."
+echo "-----------------------------------------------------------"
+echo ""
+
+</INLINE>
+</FILE>
+
+<FILE Run="/bin/bash" Method="remove">
+<INLINE>
+rm -rf /boot/config/plugins/&name;/install
+rm -f /usr/sbin/rcloneorig;
+rm -f /usr/sbin/rclone;
+rm -f /etc/ssl/certs/ca-certificates.crt
+
+removepkg rclone-&bundleversion;-bundle >/dev/null
+
+# we keep config and logs
+#rm -f /boot/config/plugins/&name;/.rclone.conf;
+#rm -f /boot/config/plugins/&name;/logs;
+
+echo ""
+echo "-----------------------------------------------------------"
+echo " &name; has been uninstalled."
+echo "-----------------------------------------------------------"
+echo ""
+
+</INLINE>
+</FILE>
+
+<FILE Name="/usr/sbin/rclone" Mode="0755">
+<INLINE>
+#!/bin/bash
+log=false
+args=()
+for i in "$@" ; do
+    if [[ $i = "--log" ]] ; then
+        log=true
+        continue
+    fi
+    if [[ $i = "-l" ]] ; then
+        log=true
+        continue
+    fi
+	args+=($i)
+done
+
+config=/boot/config/plugins/&name;/.rclone.conf
+logfile=/boot/config/plugins/&name;/logs/rclone-$(date "+%Y%m%d").log
+if [ "$log" = true ] &amp;&amp; [ ${#args[@]} -ge 1 ]; then
+	rcloneorig --config $config "${args[@]}" &gt;&gt; $logfile 2&gt;&amp;1
+else
+	rcloneorig --config $config "$@";
+fi;
+</INLINE>
+</FILE>
+
+</PLUGIN>
