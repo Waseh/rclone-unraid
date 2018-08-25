@@ -167,7 +167,7 @@ if [ -d /boot/config/plugins/&name;/install/rclone-v*/ ]; then
   rm -rf /boot/config/plugins/&name;/install/rclone-v*/
 fi;
 
-if [ -d /boot/config/plugins/&name;/install/rclone-&rcloneversion;.zip ]; then
+if [ -f /boot/config/plugins/&name;/install/rclone-&rcloneversion;.zip ]; then
   unzip /boot/config/plugins/&name;/install/rclone-&rcloneversion;.zip -d /boot/config/plugins/&name;/install/
   rm -f $(ls /boot/config/plugins/&name;/install/rclone-&rcloneversion;.old.zip 2>/dev/null)
   mv /boot/config/plugins/&name;/install/rclone-&rcloneversion;.zip /boot/config/plugins/&name;/install/rclone-&rcloneversion;.old.zip
