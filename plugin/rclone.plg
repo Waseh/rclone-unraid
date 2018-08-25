@@ -3,21 +3,24 @@
 <!DOCTYPE PLUGIN [
 <!ENTITY name      		"rclone">
 <!ENTITY author    		"Waseh">
-<!ENTITY version   		"2017.09.23">
-<!ENTITY bundleversion   	"2017.01.05">
+<!ENTITY version   		"2018.08.25">
+<!ENTITY bundleversion   	"2018.08.25">
 <!ENTITY launch    		"Settings/rclone">
 <!ENTITY pluginURL 		"https://raw.githubusercontent.com/Waseh/rclone-unraid/master/plugin/rclone.plg">
-<!ENTITY bundleURL  		"https://raw.githubusercontent.com/Waseh/rclone-unraid/master/archive/rclone-&bundleversion;-x86_64-1.txz">
+<!ENTITY bundleURL  		"https://raw.githubusercontent.com/Waseh/rclone-unraid/Waseh-patch-2/archive/rclone-&bundleversion;-x86_64-1.txz">
 <!ENTITY rcloneversion		"current">
 <!ENTITY rclonefile  		"rclone-&rcloneversion;-linux-amd64">
-<!ENTITY rcloneurl		"http://downloads.rclone.org/&rclonefile;.zip">
-<!ENTITY md5bundle     		"3a2125ad6e70ffbd1f8cad24e27035b2">
+<!ENTITY rcloneurl		"https://downloads.rclone.org/&rclonefile;.zip">
+<!ENTITY md5bundle     		"8119c006144b8368a81d8039545bc341">
 ]>
 
 <PLUGIN name="&name;" author="&author;" version="&version;" launch="&launch;" pluginURL="&pluginURL;">
 
 <CHANGES>
 ##&name;
+
+###2018.08.25
+- Let install survive when no internet connection on boot
 
 ###2017.09.23
 - Always pull newest version on install
@@ -90,14 +93,6 @@ fi
 </FILE>
 
 <!--
-Get the rclone zip.
--->
-<FILE Name="/boot/config/plugins/&name;/install/rclone-&rcloneversion;.zip">
-<URL>&rcloneurl;</URL>
-</FILE>
-
-
-<!--
 Get bundle.
 -->
 <FILE Name="/boot/config/plugins/&name;/install/rclone-&bundleversion;-bundle.txz" Run="upgradepkg --install-new">
@@ -111,26 +106,38 @@ Install script.
 <FILE Run="/bin/bash" Method="install">
 <INLINE>
 
-if [ -f /boot/config/plugins/&name;/install/ca-certificates.crt ]; then
-  rm -f /boot/config/plugins/&name;/install/ca-certificates.crt
+curl -o /boot/config/plugins/&name;/install/rclone-&rcloneversion;.zip &rcloneurl;
+
+curl -o /boot/config/plugins/&name;/install/ca-certificates.new.crt https://raw.githubusercontent.com/bagder/ca-bundle/master/ca-bundle.crt
+if [ -f /boot/config/plugins/&name;/install/ca-certificates.new.crt ]; then
+  rm -f $(ls /boot/config/plugins/&name;/install/ca-certificates.crt 2>/dev/null)
+  mv /boot/config/plugins/&name;/install/ca-certificates.new.crt /boot/config/plugins/&name;/install/ca-certificates.crt
 fi;
-curl -o /boot/config/plugins/&name;/install/ca-certificates.crt https://raw.githubusercontent.com/bagder/ca-bundle/master/ca-bundle.crt
+
+if [ -f /boot/config/plugins/&name;/install/rclone-&rcloneversion;.zip ]; then
+  unzip /boot/config/plugins/&name;/install/rclone-&rcloneversion;.zip -d /boot/config/plugins/&name;/install/
+  rm -f $(ls /boot/config/plugins/&name;/install/rclone-&rcloneversion;.old.zip 2>/dev/null)
+  mv /boot/config/plugins/&name;/install/rclone-&rcloneversion;.zip /boot/config/plugins/&name;/install/rclone-&rcloneversion;.old.zip
+else
+  unzip /boot/config/plugins/&name;/install/rclone-&rcloneversion;.old.zip -d /boot/config/plugins/&name;/install/
+fi;
+
+cp /boot/config/plugins/&name;/install/rclone-v*/rclone  /usr/sbin/rcloneorig
+
+if [ "$?" -ne "0" ]; then
+  echo "Copy failed - rclone running"
+  if [ -d /boot/config/plugins/&name;/install/rclone-v*/ ]; then
+    rm -rf /boot/config/plugins/&name;/install/rclone-v*/
+  fi;
+  rm -f $(ls /boot/config/plugins/&name;/install/rclone*.txz 2>/dev/null | grep -v '&bundleversion;')
+  exit 1
+fi;
+
+rm -f $(ls /boot/config/plugins/&name;/install/rclone*.txz 2>/dev/null | grep -v '&bundleversion;')
 
 if [ -d /boot/config/plugins/&name;/install/rclone-v*/ ]; then
   rm -rf /boot/config/plugins/&name;/install/rclone-v*/
 fi;
-
-unzip /boot/config/plugins/&name;/install/rclone-&rcloneversion;.zip -d /boot/config/plugins/&name;/install/
-
-rm -f $(ls /boot/config/plugins/&name;/install/rclone*.zip 2>/dev/null)
-rm -f $(ls /boot/config/plugins/&name;/install/rclone*.txz 2>/dev/null | grep -v '&bundleversion;')
-
-cp /boot/config/plugins/&name;/install/rclone-v*/rclone /usr/sbin/rcloneorig
-
-if [ "$?" -ne "0" ]; then
-  echo "Copy failed - rclone running"
-  exit 1
-fi
 
 chown root:root /usr/sbin/rcloneorig
 chmod 755 /usr/sbin/rcloneorig
