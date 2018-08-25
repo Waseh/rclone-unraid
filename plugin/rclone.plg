@@ -3,7 +3,7 @@
 <!DOCTYPE PLUGIN [
 <!ENTITY name      		"rclone-beta">
 <!ENTITY author    		"Waseh">
-<!ENTITY version   		"2018.08.25e">
+<!ENTITY version   		"2018.08.25f">
 <!ENTITY bundleversion   	"2016.11.19">
 <!ENTITY launch    		"Settings/rclone-beta">
 <!ENTITY pluginURL 		"https://raw.githubusercontent.com/Waseh/rclone-unraid/beta/plugin/rclone.plg">
@@ -19,7 +19,7 @@
 <CHANGES>
 ##&name;
 
-###2018.08.25b
+###2018.08.25f
 - Let install survive when no internet connection on boot
 
 ###2017.09.23
@@ -179,6 +179,10 @@ cp /boot/config/plugins/&name;/install/rclone-v*/rclone  /usr/sbin/rcloneorig
 
 if [ "$?" -ne "0" ]; then
   echo "Copy failed - rclone running"
+  if [ -d /boot/config/plugins/&name;/install/rclone-v*/ ]; then
+    rm -rf /boot/config/plugins/&name;/install/rclone-v*/
+  fi;
+  rm -f $(ls /boot/config/plugins/&name;/install/rclone*.txz 2>/dev/null | grep -v '&bundleversion;')
   exit 1
 fi;
 
