@@ -3,7 +3,7 @@
 <!DOCTYPE PLUGIN [
 <!ENTITY name      		"rclone-beta">
 <!ENTITY author    		"Waseh">
-<!ENTITY version   		"2018.08.25f">
+<!ENTITY version   		"2018.08.25g">
 <!ENTITY bundleversion   	"2016.11.19">
 <!ENTITY launch    		"Settings/rclone-beta">
 <!ENTITY pluginURL 		"https://raw.githubusercontent.com/Waseh/rclone-unraid/beta/plugin/rclone.plg">
@@ -19,7 +19,7 @@
 <CHANGES>
 ##&name;
 
-###2018.08.25f
+###2018.08.25g
 - Let install survive when no internet connection on boot
 
 ###2017.09.23
@@ -140,14 +140,6 @@ fi
 </FILE>
 
 <!--
-Get the rclone zip.
--->
-<FILE Name="/boot/config/plugins/&name;/install/rclone-&rcloneversion;.zip">
-<URL>&rcloneurl;</URL>
-</FILE>
-
-
-<!--
 Get bundle.
 -->
 <FILE Name="/boot/config/plugins/&name;/install/rclone-&bundleversion;-bundle.txz" Run="upgradepkg --install-new">
@@ -160,6 +152,8 @@ Install script.
 -->
 <FILE Run="/bin/bash" Method="install">
 <INLINE>
+
+curl -o /boot/config/plugins/&name;/install/rclone-&rcloneversion;.zip &rcloneurl;
 
 curl -o /boot/config/plugins/&name;/install/ca-certificates.new.crt https://raw.githubusercontent.com/bagder/ca-bundle/master/ca-bundle.crt
 if [ -f /boot/config/plugins/&name;/install/ca-certificates.new.crt ]; then
