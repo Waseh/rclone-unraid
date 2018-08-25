@@ -3,7 +3,7 @@
 <!DOCTYPE PLUGIN [
 <!ENTITY name      		"rclone-beta">
 <!ENTITY author    		"Waseh">
-<!ENTITY version   		"2018.08.25b">
+<!ENTITY version   		"2018.08.25c">
 <!ENTITY bundleversion   	"2016.11.19">
 <!ENTITY launch    		"Settings/rclone-beta">
 <!ENTITY pluginURL 		"https://raw.githubusercontent.com/Waseh/rclone-unraid/beta/plugin/rclone.plg">
@@ -181,9 +181,6 @@ cp /boot/config/plugins/&name;/install/rclone-v*/rclone /usr/sbin/rcloneorig
 
 if [ "$?" -ne "0" ]; then
   echo "Copy failed - rclone running"
-  if [ -d /boot/config/plugins/&name;/install/rclone-v*/ ]; then
-    rm -rf /boot/config/plugins/&name;/install/rclone-v*/
-  fi;
   exit 1
 fi
 
