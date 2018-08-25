@@ -7,7 +7,7 @@
 <!ENTITY bundleversion   	"2018.08.25">
 <!ENTITY launch    		"Settings/rclone-beta">
 <!ENTITY pluginURL 		"https://raw.githubusercontent.com/Waseh/rclone-unraid/beta/plugin/rclone.plg">
-<!ENTITY bundleURL  		"https://raw.githubusercontent.com/Waseh/rclone-unraid/beta/archive/rclone-beta-&bundleversion;-x86_64-1.txz">
+<!ENTITY bundleURL  		"https://raw.githubusercontent.com/Waseh/rclone-unraid/Waseh-patch-1/archive/rclone-beta-&bundleversion;-x86_64-1.txz">
 <!ENTITY rcloneversion		"beta-latest">
 <!ENTITY rclonefile  		"rclone-&rcloneversion;-linux-amd64">
 <!ENTITY rcloneurl		"https://beta.rclone.org/&rclonefile;.zip">
