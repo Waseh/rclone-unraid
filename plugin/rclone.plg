@@ -7,7 +7,7 @@
 <!ENTITY bundleversion   	"2018.08.25">
 <!ENTITY launch    		"Settings/rclone">
 <!ENTITY pluginURL 		"https://raw.githubusercontent.com/Waseh/rclone-unraid/master/plugin/rclone.plg">
-<!ENTITY bundleURL  		"https://raw.githubusercontent.com/Waseh/rclone-unraid/Waseh-patch-2/archive/rclone-&bundleversion;-x86_64-1.txz">
+<!ENTITY bundleURL  		"https://raw.githubusercontent.com/Waseh/rclone-unraid/master/archive/rclone-&bundleversion;-x86_64-1.txz">
 <!ENTITY rcloneversion		"current">
 <!ENTITY rclonefile  		"rclone-&rcloneversion;-linux-amd64">
 <!ENTITY rcloneurl		"https://downloads.rclone.org/&rclonefile;.zip">
