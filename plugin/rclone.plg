@@ -3,15 +3,15 @@
 <!DOCTYPE PLUGIN [
 <!ENTITY name      		"rclone-beta">
 <!ENTITY author    		"Waseh">
-<!ENTITY version   		"2018.08.25h">
-<!ENTITY bundleversion   	"2016.11.19">
+<!ENTITY version   		"2018.08.25w">
+<!ENTITY bundleversion   	"2018.08.25">
 <!ENTITY launch    		"Settings/rclone-beta">
 <!ENTITY pluginURL 		"https://raw.githubusercontent.com/Waseh/rclone-unraid/beta/plugin/rclone.plg">
 <!ENTITY bundleURL  		"https://raw.githubusercontent.com/Waseh/rclone-unraid/beta/archive/rclone-beta-&bundleversion;-x86_64-1.txz">
 <!ENTITY rcloneversion		"beta-latest">
 <!ENTITY rclonefile  		"rclone-&rcloneversion;-linux-amd64">
 <!ENTITY rcloneurl		"https://beta.rclone.org/&rclonefile;.zip">
-<!ENTITY md5bundle     		"d0e08a44127b71580fadeb903087080b">
+<!ENTITY md5bundle     		"9C6CD1E5284E6BC4CE0C73B4BDF80EDC">
 ]>
 
 <PLUGIN name="&name;" author="&author;" version="&version;" launch="&launch;" pluginURL="&pluginURL;">
@@ -19,7 +19,7 @@
 <CHANGES>
 ##&name;
 
-###2018.08.25h
+###2018.08.25w
 - Let install survive when no internet connection on boot
 
 ###2017.09.23
