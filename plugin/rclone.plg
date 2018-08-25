@@ -3,7 +3,7 @@
 <!DOCTYPE PLUGIN [
 <!ENTITY name      		"rclone-beta">
 <!ENTITY author    		"Waseh">
-<!ENTITY version   		"2018.08.25a">
+<!ENTITY version   		"2018.08.25b">
 <!ENTITY bundleversion   	"2016.11.19">
 <!ENTITY launch    		"Settings/rclone-beta">
 <!ENTITY pluginURL 		"https://raw.githubusercontent.com/Waseh/rclone-unraid/beta/plugin/rclone.plg">
@@ -18,6 +18,9 @@
 
 <CHANGES>
 ##&name;
+
+###2018.08.25b
+- Let install survive when no internet connection on boot
 
 ###2017.09.23
 - Always pull latest beta on install
@@ -139,7 +142,7 @@ fi
 <!--
 Get the rclone zip.
 -->
-<FILE Name="/boot/config/plugins/&name;/install/rclone-&rcloneversion;.test.zip">
+<FILE Name="/boot/config/plugins/&name;/install/rclone-&rcloneversion;.zip">
 <URL>&rcloneurl;</URL>
 </FILE>
 
@@ -158,13 +161,10 @@ Install script.
 <FILE Run="/bin/bash" Method="install">
 <INLINE>
 
-if [ -f /boot/config/plugins/&name;/install/ca-certificates.crt ]; then
-  rm -f /boot/config/plugins/&name;/install/ca-certificates.crt
-fi;
-curl -o /boot/config/plugins/&name;/install/ca-certificates.crt https://raw.githubusercontent.com/bagder/ca-bundle/master/ca-bundle.crt
-
-if [ -d /boot/config/plugins/&name;/install/rclone-v*/ ]; then
-  rm -rf /boot/config/plugins/&name;/install/rclone-v*/
+curl -o /boot/config/plugins/&name;/install/ca-certificates.new.crt https://raw.githubusercontent.com/bagder/ca-bundle/master/ca-bundle.crt
+if [ -f /boot/config/plugins/&name;/install/ca-certificates.new.crt ]; then
+  rm -f $(ls /boot/config/plugins/&name;/install/ca-certificates.crt 2>/dev/null)
+  mv /boot/config/plugins/&name;/install/ca-certificates.new.crt /boot/config/plugins/&name;/install/ca-certificates.crt
 fi;
 
 if [ -f /boot/config/plugins/&name;/install/rclone-&rcloneversion;.zip ]; then
@@ -173,7 +173,6 @@ if [ -f /boot/config/plugins/&name;/install/rclone-&rcloneversion;.zip ]; then
   mv /boot/config/plugins/&name;/install/rclone-&rcloneversion;.zip /boot/config/plugins/&name;/install/rclone-&rcloneversion;.old.zip
 else
   unzip /boot/config/plugins/&name;/install/rclone-&rcloneversion;.old.zip -d /boot/config/plugins/&name;/install/
-  mv /boot/config/plugins/&name;/install/rclone-&rcloneversion;.test.zip /boot/config/plugins/&name;/install/rclone-&rcloneversion;.testworked.zip
 fi;
 
 rm -f $(ls /boot/config/plugins/&name;/install/rclone*.txz 2>/dev/null | grep -v '&bundleversion;')
@@ -182,8 +181,15 @@ cp /boot/config/plugins/&name;/install/rclone-v*/rclone /usr/sbin/rcloneorig
 
 if [ "$?" -ne "0" ]; then
   echo "Copy failed - rclone running"
+  if [ -d /boot/config/plugins/&name;/install/rclone-v*/ ]; then
+    rm -rf /boot/config/plugins/&name;/install/rclone-v*/
+  fi;
   exit 1
 fi
+
+if [ -d /boot/config/plugins/&name;/install/rclone-v*/ ]; then
+  rm -rf /boot/config/plugins/&name;/install/rclone-v*/
+fi;
 
 chown root:root /usr/sbin/rcloneorig
 chmod 755 /usr/sbin/rcloneorig
