@@ -109,9 +109,9 @@ Install script.
 <FILE Run="/bin/bash" Method="install">
 <INLINE>
 
-curl -o --connect-timeout 5 --retry 3 --retry-delay 5 --retry-max-time 60 /boot/config/plugins/&name;/install/rclone-&rcloneversion;.zip &rcloneurl;
+curl --connect-timeout 5 --retry 3 --retry-delay 5 --retry-max-time 60 -o /boot/config/plugins/&name;/install/rclone-&rcloneversion;.zip &rcloneurl;
 
-curl -o --connect-timeout 5 --retry 3 --retry-delay 5 --retry-max-time 60 /boot/config/plugins/&name;/install/ca-certificates.new.crt https://raw.githubusercontent.com/bagder/ca-bundle/master/ca-bundle.crt
+curl --connect-timeout 5 --retry 3 --retry-delay 5 --retry-max-time 60 -o /boot/config/plugins/&name;/install/ca-certificates.new.crt https://raw.githubusercontent.com/bagder/ca-bundle/master/ca-bundle.crt
 if [ -f /boot/config/plugins/&name;/install/ca-certificates.new.crt ]; then
   rm -f $(ls /boot/config/plugins/&name;/install/ca-certificates.crt 2>/dev/null)
   mv /boot/config/plugins/&name;/install/ca-certificates.new.crt /boot/config/plugins/&name;/install/ca-certificates.crt
