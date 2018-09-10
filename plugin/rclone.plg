@@ -20,7 +20,7 @@
 ##&name;
 
 ###2018.09.10
-- Retry mechanism for curl
+- Test for internet connectivity and retry mechanism for curl
 
 ###2018.08.25
 - Let install survive when no internet connection on boot
@@ -109,9 +109,18 @@ Install script.
 <FILE Run="/bin/bash" Method="install">
 <INLINE>
 
-curl --connect-timeout 5 --retry 3 --retry-delay 5 --retry-max-time 60 -o /boot/config/plugins/&name;/install/rclone-&rcloneversion;.zip &rcloneurl;
+ping -q -c2 1.1.1.1 >/dev/null
+if [ $? -eq 0 ]
+then
+  echo "Downloading rclone"
+  curl --connect-timeout 5 --retry 3 --retry-delay 2 --retry-max-time 30 -o /boot/config/plugins/&name;/install/rclone-&rcloneversion;.zip &rcloneurl;
 
-curl --connect-timeout 5 --retry 3 --retry-delay 5 --retry-max-time 60 -o /boot/config/plugins/&name;/install/ca-certificates.new.crt https://raw.githubusercontent.com/bagder/ca-bundle/master/ca-bundle.crt
+  echo "Downloading certs"
+  curl --connect-timeout 5 --retry 3 --retry-delay 2 --retry-max-time 30 -o /boot/config/plugins/&name;/install/ca-certificates.new.crt https://raw.githubusercontent.com/bagder/ca-bundle/master/ca-bundle.crt
+else
+  echo "No internet - Skipping download and using existing archives"
+fi;
+
 if [ -f /boot/config/plugins/&name;/install/ca-certificates.new.crt ]; then
   rm -f $(ls /boot/config/plugins/&name;/install/ca-certificates.crt 2>/dev/null)
   mv /boot/config/plugins/&name;/install/ca-certificates.new.crt /boot/config/plugins/&name;/install/ca-certificates.crt
@@ -124,7 +133,7 @@ if [ -f /boot/config/plugins/&name;/install/rclone-&rcloneversion;.zip ]; then
 elif [ -f /boot/config/plugins/&name;/install/rclone-&rcloneversion;.old.zip ]; then
   unzip /boot/config/plugins/&name;/install/rclone-&rcloneversion;.old.zip -d /boot/config/plugins/&name;/install/
 else
-echo "Download failed - No existing version found - Try again later"
+echo "Download failed - No existing archive found - Try again later"
 exit 1
 fi;
 
