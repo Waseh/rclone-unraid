@@ -204,15 +204,6 @@ else
   exit 1
 fi;
 
-if [ "$?" -ne "0" ]; then
-  echo "Copy failed - rclone running"
-  if [ -d /boot/config/plugins/&name;/install/rclone-v*/ ]; then
-    rm -rf /boot/config/plugins/&name;/install/rclone-v*/
-  fi;
-  rm -f $(ls /boot/config/plugins/&name;/install/rclone*.txz 2>/dev/null | grep -v '&bundleversion;')
-  exit 1
-fi;
-
 rm -f $(ls /boot/config/plugins/&name;/install/rclone*.txz 2>/dev/null | grep -v '&bundleversion;')
 
 if [ -d /boot/config/plugins/&name;/install/rclone-v*/ ]; then
