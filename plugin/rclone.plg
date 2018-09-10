@@ -3,7 +3,7 @@
 <!DOCTYPE PLUGIN [
 <!ENTITY name      		"rclone">
 <!ENTITY author    		"Waseh">
-<!ENTITY version   		"2018.08.25">
+<!ENTITY version   		"2018.09.10">
 <!ENTITY bundleversion   	"2018.08.25">
 <!ENTITY launch    		"Settings/rclone">
 <!ENTITY pluginURL 		"https://raw.githubusercontent.com/Waseh/rclone-unraid/master/plugin/rclone.plg">
@@ -18,6 +18,9 @@
 
 <CHANGES>
 ##&name;
+
+###2018.09.10
+- Test for internet connectivity and retry mechanism for curl
 
 ###2018.08.25
 - Let install survive when no internet connection on boot
@@ -106,9 +109,18 @@ Install script.
 <FILE Run="/bin/bash" Method="install">
 <INLINE>
 
-curl -o /boot/config/plugins/&name;/install/rclone-&rcloneversion;.zip &rcloneurl;
+ping -q -c2 1.1.1.1 >/dev/null
+if [ $? -eq 0 ]
+then
+  echo "Downloading rclone"
+  curl --connect-timeout 5 --retry 3 --retry-delay 2 --retry-max-time 30 -o /boot/config/plugins/&name;/install/rclone-&rcloneversion;.zip &rcloneurl;
 
-curl -o /boot/config/plugins/&name;/install/ca-certificates.new.crt https://raw.githubusercontent.com/bagder/ca-bundle/master/ca-bundle.crt
+  echo "Downloading certs"
+  curl --connect-timeout 5 --retry 3 --retry-delay 2 --retry-max-time 30 -o /boot/config/plugins/&name;/install/ca-certificates.new.crt https://raw.githubusercontent.com/bagder/ca-bundle/master/ca-bundle.crt
+else
+  echo "No internet - Skipping download and using existing archives"
+fi;
+
 if [ -f /boot/config/plugins/&name;/install/ca-certificates.new.crt ]; then
   rm -f $(ls /boot/config/plugins/&name;/install/ca-certificates.crt 2>/dev/null)
   mv /boot/config/plugins/&name;/install/ca-certificates.new.crt /boot/config/plugins/&name;/install/ca-certificates.crt
@@ -118,8 +130,11 @@ if [ -f /boot/config/plugins/&name;/install/rclone-&rcloneversion;.zip ]; then
   unzip /boot/config/plugins/&name;/install/rclone-&rcloneversion;.zip -d /boot/config/plugins/&name;/install/
   rm -f $(ls /boot/config/plugins/&name;/install/rclone-&rcloneversion;.old.zip 2>/dev/null)
   mv /boot/config/plugins/&name;/install/rclone-&rcloneversion;.zip /boot/config/plugins/&name;/install/rclone-&rcloneversion;.old.zip
-else
+elif [ -f /boot/config/plugins/&name;/install/rclone-&rcloneversion;.old.zip ]; then
   unzip /boot/config/plugins/&name;/install/rclone-&rcloneversion;.old.zip -d /boot/config/plugins/&name;/install/
+else
+echo "Download failed - No existing archive found - Try again later"
+exit 1
 fi;
 
 cp /boot/config/plugins/&name;/install/rclone-v*/rclone  /usr/sbin/rcloneorig
