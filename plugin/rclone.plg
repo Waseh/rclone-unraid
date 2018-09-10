@@ -133,7 +133,7 @@ else
     echo "Downloading certs"
     curl --connect-timeout 5 --retry 3 --retry-delay 2 --retry-max-time 30 -o /boot/config/plugins/&name;/install/ca-certificates.new.crt https://raw.githubusercontent.com/bagder/ca-bundle/master/ca-bundle.crt
   else
-  echo "No internet - Skipping download and using existing archives"
+    echo "No internet - Skipping download and using existing archives"
   fi;
 fi;
 
