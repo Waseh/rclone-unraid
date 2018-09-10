@@ -23,7 +23,8 @@
 - Check if unpack was successful
 
 ###2018.09.10
-- Test for internet connectivity and retry mechanism for curl
+- Test for internet connectivity
+- Retry mechanism for curl
 
 ###2018.08.25
 - Let install survive when no internet connection on boot
