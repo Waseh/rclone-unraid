@@ -3,7 +3,7 @@
 <!DOCTYPE PLUGIN [
 <!ENTITY name      		"rclone">
 <!ENTITY author    		"Waseh">
-<!ENTITY version   		"2018.09.10">
+<!ENTITY version   		"2018.09.10a">
 <!ENTITY bundleversion   	"2018.08.25">
 <!ENTITY launch    		"Settings/rclone">
 <!ENTITY pluginURL 		"https://raw.githubusercontent.com/Waseh/rclone-unraid/master/plugin/rclone.plg">
@@ -18,6 +18,9 @@
 
 <CHANGES>
 ##&name;
+
+###2018.09.10a
+- Check if unpack was successful
 
 ###2018.09.10
 - Test for internet connectivity and retry mechanism for curl
@@ -137,14 +140,19 @@ echo "Download failed - No existing archive found - Try again later"
 exit 1
 fi;
 
-cp /boot/config/plugins/&name;/install/rclone-v*/rclone  /usr/sbin/rcloneorig
-
-if [ "$?" -ne "0" ]; then
-  echo "Copy failed - rclone running"
-  if [ -d /boot/config/plugins/&name;/install/rclone-v*/ ]; then
-    rm -rf /boot/config/plugins/&name;/install/rclone-v*/
+if [ -f /boot/config/plugins/&name;/install/rclone-v*/rclone ]; then
+  cp /boot/config/plugins/&name;/install/rclone-v*/rclone  /usr/sbin/rcloneorig
+  if [ "$?" -ne "0" ]; then
+    echo "Copy failed - is rclone running?"
+    if [ -d /boot/config/plugins/&name;/install/rclone-v*/ ]; then
+      rm -rf /boot/config/plugins/&name;/install/rclone-v*/
+    fi;
+    rm -f $(ls /boot/config/plugins/&name;/install/rclone*.txz 2>/dev/null | grep -v '&bundleversion;')
+    exit 1
   fi;
-  rm -f $(ls /boot/config/plugins/&name;/install/rclone*.txz 2>/dev/null | grep -v '&bundleversion;')
+else
+  echo "Unpack failed - Please try installing/updating the plugin again"
+  rm -f $(ls /boot/config/plugins/&name;/install/rclone-&rcloneversion;.old.zip 2>/dev/null)
   exit 1
 fi;
 
