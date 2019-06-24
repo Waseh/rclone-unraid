@@ -3,7 +3,7 @@
 <!DOCTYPE PLUGIN [
 <!ENTITY name      		"rclone-beta">
 <!ENTITY author    		"Waseh">
-<!ENTITY version   		"2019.02.07">
+<!ENTITY version   		"2019.06.24">
 <!ENTITY bundleversion   	"2018.08.25">
 <!ENTITY launch    		"Settings/rclone-beta">
 <!ENTITY pluginURL 		"https://raw.githubusercontent.com/Waseh/rclone-unraid/beta/plugin/rclone.plg">
@@ -19,6 +19,9 @@
 <CHANGES>
 ##&name;
 
+###2019.06.24
+- Bump timeout again to alleviate problem with slow resolvers		
+	
 ###2019.02.07
 - Change timeout to alleviate problem with slow resolvers	
 	
