@@ -1,16 +1,22 @@
 **rclone-beta**
 
-The plugin installs Rclone. Rclone is a command line program to sync files and directories to and from
-* Google Drive
-* Amazon S3
-* Openstack Swift / Rackspace cloud files / Memset Memstore
-* Dropbox
-* Google Cloud Storage
+The plugin installs Rclone. Rclone is a command line program to sync files and directories to and from services such as:
 * Amazon Drive
-* Microsoft One Drive
-* Hubic
+* Amazon S3
 * Backblaze B2
-* Yandex Disk
-* The local filesystem
+* Box
+* Dropbox
+* FTP
+* Google Cloud Storage
+* Google Drive
+* HTTP
+* Microsoft Azure Blob Storage
+* Microsoft OneDrive
+* Nextcloud
+* ownCloud
+* SFTP
+* WebDAV
+* The local filesystem 
+* And many more
 
 Go to http://rclone.org/ for more information.
