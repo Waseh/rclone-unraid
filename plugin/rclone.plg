@@ -3,24 +3,21 @@
 <!DOCTYPE PLUGIN [
 <!ENTITY name      		"rclone-beta">
 <!ENTITY author    		"Waseh">
-<!ENTITY version   		"2019.10.13">
-<!ENTITY bundleversion   	"2019.10.13">
+<!ENTITY version   		"2019.06.24">
+<!ENTITY bundleversion   	"2018.08.25">
 <!ENTITY launch    		"Settings/rclone-beta">
 <!ENTITY pluginURL 		"https://raw.githubusercontent.com/Waseh/rclone-unraid/beta/plugin/rclone.plg">
 <!ENTITY bundleURL  		"https://raw.githubusercontent.com/Waseh/rclone-unraid/beta/archive/rclone-beta-&bundleversion;-x86_64-1.txz">
 <!ENTITY rcloneversion		"beta-latest">
 <!ENTITY rclonefile  		"rclone-&rcloneversion;-linux-amd64">
 <!ENTITY rcloneurl		"https://beta.rclone.org/&rclonefile;.zip">
-<!ENTITY md5bundle     		"b3a0c7d0f4fb18b747f992551c40d019">
+<!ENTITY md5bundle     		"9c6cd1e5284e6bc4ce0c73b4bdf80edc">
 ]>
 
 <PLUGIN name="&name;" author="&author;" version="&version;" launch="&launch;" pluginURL="&pluginURL;">
 
 <CHANGES>
 ##&name;
-
-###2019.10.13
-- Icon change and small corrections
 
 ###2019.06.24
 - Bump timeout again to alleviate problem with slow resolvers		
