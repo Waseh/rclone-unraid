@@ -3,7 +3,7 @@
 <!DOCTYPE PLUGIN [
 <!ENTITY name      		"rclone">
 <!ENTITY author    		"Waseh">
-<!ENTITY version   		"2019.10.13a">
+<!ENTITY version   		"2019.10.13b">
 <!ENTITY bundleversion   	"2019.10.13">
 <!ENTITY launch    		"Settings/rclone">
 <!ENTITY pluginURL 		"https://raw.githubusercontent.com/Waseh/rclone-unraid/master/plugin/rclone.plg">
@@ -19,6 +19,9 @@
 <CHANGES>
 ##&name;
 
+###2019.10.13b
+- Fusermount compatibility fix for future unRaid versions	
+	
 ###2019.10.13a
 - Icon change and small corrections	
 	
@@ -110,6 +113,19 @@ exit 1
 fi
 </INLINE>
 </FILE>
+
+
+<!--
+Check if fusermount is present
+-->
+<FILE Run="/bin/bash">
+<INLINE>
+if ! [ -f /usr/bin/fusermount ]; then
+  ln -s /usr/bin/fusermount3 /usr/bin/fusermount
+fi;
+</INLINE>
+</FILE>
+
 
 <!--
 Get bundle.
