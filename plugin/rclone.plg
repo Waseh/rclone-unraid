@@ -3,15 +3,15 @@
 <!DOCTYPE PLUGIN [
 <!ENTITY name      		"rclone">
 <!ENTITY author    		"Waseh">
-<!ENTITY version   		"2019.06.24">
-<!ENTITY bundleversion   	"2018.08.25">
+<!ENTITY version   		"2019.10.13">
+<!ENTITY bundleversion   	"2018.10.13">
 <!ENTITY launch    		"Settings/rclone">
 <!ENTITY pluginURL 		"https://raw.githubusercontent.com/Waseh/rclone-unraid/master/plugin/rclone.plg">
 <!ENTITY bundleURL  		"https://raw.githubusercontent.com/Waseh/rclone-unraid/master/archive/rclone-&bundleversion;-x86_64-1.txz">
 <!ENTITY rcloneversion		"current">
 <!ENTITY rclonefile  		"rclone-&rcloneversion;-linux-amd64">
 <!ENTITY rcloneurl		"https://downloads.rclone.org/&rclonefile;.zip">
-<!ENTITY md5bundle     		"8119c006144b8368a81d8039545bc341">
+<!ENTITY md5bundle     		"f240277fc3ecbbff7774bb3ee80d695a">
 ]>
 
 <PLUGIN name="&name;" author="&author;" version="&version;" launch="&launch;" pluginURL="&pluginURL;">
