@@ -1,6 +1,6 @@
 #!/bin/bash
 #----------------------------------------------------------------------------
-# This script mounts your remote share with the recommended options.         |
+# This script mounts your remote share with basic options.                   |
 # Just define the remote you wish to mount as well as the local mountpoint.  |
 # The script will create a folder at the mountpoint                          |
 #----------------------------------------------------------------------------
