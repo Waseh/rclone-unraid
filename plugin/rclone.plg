@@ -4,7 +4,7 @@
 <!ENTITY name      		"rclone-beta">
 <!ENTITY author    		"Waseh">
 <!ENTITY version   		"2019.10.13">
-<!ENTITY bundleversion   	"2018.10.13">
+<!ENTITY bundleversion   	"2019.10.13">
 <!ENTITY launch    		"Settings/rclone-beta">
 <!ENTITY pluginURL 		"https://raw.githubusercontent.com/Waseh/rclone-unraid/beta/plugin/rclone.plg">
 <!ENTITY bundleURL  		"https://raw.githubusercontent.com/Waseh/rclone-unraid/beta/archive/rclone-beta-&bundleversion;-x86_64-1.txz">
