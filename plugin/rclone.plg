@@ -19,6 +19,9 @@
 <CHANGES>
 ##&name;
 
+###2019.10.13
+- Icon change and small corrections	
+	
 ###2019.06.24
 - Bump timeout again to alleviate problem with slow resolvers	
 	
