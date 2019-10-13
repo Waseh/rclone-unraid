@@ -11,7 +11,7 @@
 <!ENTITY rcloneversion		"beta-latest">
 <!ENTITY rclonefile  		"rclone-&rcloneversion;-linux-amd64">
 <!ENTITY rcloneurl		"https://beta.rclone.org/&rclonefile;.zip">
-<!ENTITY md5bundle     		"ea59b2e53a03193b27fd1a2a7cda1c90">
+<!ENTITY md5bundle     		"234a132ca7b69c1d01a68bc917f45614">
 ]>
 
 <PLUGIN name="&name;" author="&author;" version="&version;" launch="&launch;" pluginURL="&pluginURL;">
