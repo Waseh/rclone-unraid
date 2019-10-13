@@ -1,6 +1,6 @@
 Menu="Utilities"
 Title="rclone"
-Icon="mixcloud"
+Icon="rclone.png"
 ---
 <?PHP
 /* Copyright 2005-2016, Lime Technology
