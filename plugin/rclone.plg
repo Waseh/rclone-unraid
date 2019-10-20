@@ -2,12 +2,12 @@
 
 <!DOCTYPE PLUGIN [
 <!ENTITY name      		"rclone">
-<!ENTITY author    		"Hareesh">
+<!ENTITY author    		"Waseh">
 <!ENTITY version   		"2019.10.14">
 <!ENTITY bundleversion   	"2019.10.13">
 <!ENTITY launch    		"Settings/rclone">
-<!ENTITY pluginURL 		"https://raw.githubusercontent.com/hareeshbabu82ns/rclone-unraid/master/plugin/rclone.plg">
-<!ENTITY bundleURL  		"https://raw.githubusercontent.com/hareeshbabu82ns/rclone-unraid/master/archive/rclone-&bundleversion;-x86_64-1.txz">
+<!ENTITY pluginURL 		"https://raw.githubusercontent.com/Waseh/rclone-unraid/master/plugin/rclone.plg">
+<!ENTITY bundleURL  		"https://raw.githubusercontent.com/Waseh/rclone-unraid/master/archive/rclone-&bundleversion;-x86_64-1.txz">
 <!ENTITY rcloneversion		"current">
 <!ENTITY rclonefile  		"rclone-&rcloneversion;-linux-amd64">
 <!ENTITY rcloneurl		"https://downloads.rclone.org/&rclonefile;.zip">
@@ -149,20 +149,20 @@ Install script.
 #ping -q -c2 8.8.8.8 >/dev/null
 #if [ $? -eq 0 ]
 #then
-#  echo "Downloading rclone"
-#  curl --connect-timeout 8 --retry 3 --retry-delay 2 --retry-max-time 30 -o /boot/config/plugins/&name;/install/rclone-&rcloneversion;.zip &rcloneurl;
+  echo "Downloading rclone"
+  curl --connect-timeout 8 --retry 3 --retry-delay 2 --retry-max-time 30 -o /boot/config/plugins/&name;/install/rclone-&rcloneversion;.zip &rcloneurl;
 
-#  echo "Downloading certs"
-#  curl --connect-timeout 8 --retry 3 --retry-delay 2 --retry-max-time 30 -o /boot/config/plugins/&name;/install/ca-certificates.new.crt https://raw.githubusercontent.com/bagder/ca-bundle/master/ca-bundle.crt
+  echo "Downloading certs"
+  curl --connect-timeout 8 --retry 3 --retry-delay 2 --retry-max-time 30 -o /boot/config/plugins/&name;/install/ca-certificates.new.crt https://raw.githubusercontent.com/bagder/ca-bundle/master/ca-bundle.crt
 #else
 #  ping -q -c2 1.1.1.1 >/dev/null
 #  if [ $? -eq 0 ]
 #  then
-    echo "Downloading rclone"
-    curl --connect-timeout 15 --retry 3 --retry-delay 2 --retry-max-time 30 -o /boot/config/plugins/&name;/install/rclone-&rcloneversion;.zip &rcloneurl;
-
-    echo "Downloading certs"
-    curl --connect-timeout 15 --retry 3 --retry-delay 2 --retry-max-time 30 -o /boot/config/plugins/&name;/install/ca-certificates.new.crt https://raw.githubusercontent.com/bagder/ca-bundle/master/ca-bundle.crt
+#    echo "Downloading rclone"
+#    curl --connect-timeout 15 --retry 3 --retry-delay 2 --retry-max-time 30 -o /boot/#config/plugins/&name;/install/rclone-&rcloneversion;.zip &rcloneurl;
+#
+#    echo "Downloading certs"
+#    curl --connect-timeout 15 --retry 3 --retry-delay 2 --retry-max-time 30 -o /boot/#config/plugins/&name;/install/ca-certificates.new.crt https://raw.githubusercontent.com/#bagder/ca-bundle/master/ca-bundle.crt
 #  else
 #    echo "No internet - Skipping download and using existing archives"
 #  fi
