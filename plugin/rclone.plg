@@ -256,27 +256,8 @@ echo ""
 <FILE Name="/usr/sbin/rclone" Mode="0755">
 <INLINE>
 #!/bin/bash
-log=false
-args=()
-for i in "$@" ; do
-    if [[ $i = "--log" ]] ; then
-        log=true
-        continue
-    fi
-    if [[ $i = "-l" ]] ; then
-        log=true
-        continue
-    fi
-	args+=($i)
-done
-
-config=/boot/config/plugins/&name;/.rclone.conf
-logfile=/boot/config/plugins/&name;/logs/rclone-$(date "+%Y%m%d").log
-if [ "$log" = true ] &amp;&amp; [ ${#args[@]} -ge 1 ]; then
-	rcloneorig --config $config "${args[@]}" &gt;&gt; $logfile 2&gt;&amp;1
-else
+config=/boot/config/plugins/rclone/.rclone.conf
 	rcloneorig --config $config "$@";
-fi;
 </INLINE>
 </FILE>
 
