@@ -3,7 +3,7 @@
 <!DOCTYPE PLUGIN [
 <!ENTITY name      		"rclone-beta">
 <!ENTITY author    		"Waseh">
-<!ENTITY version   		"2019.10.14">
+<!ENTITY version   		"2019.10.21">
 <!ENTITY bundleversion   	"2019.10.13">
 <!ENTITY launch    		"Settings/rclone-beta">
 <!ENTITY pluginURL 		"https://raw.githubusercontent.com/Waseh/rclone-unraid/beta/plugin/rclone.plg">
@@ -19,6 +19,9 @@
 <CHANGES>
 ##&name;
 
+###2019.10.21
+- Remove poorly documented logging option from rclone wrapper	
+	
 ###2019.10.14
 - Fusermount compatibility fix take two	
 
@@ -303,27 +306,8 @@ echo ""
 <FILE Name="/usr/sbin/rclone" Mode="0755">
 <INLINE>
 #!/bin/bash
-log=false
-args=()
-for i in "$@" ; do
-    if [[ $i = "--log" ]] ; then
-        log=true
-        continue
-    fi
-    if [[ $i = "-l" ]] ; then
-        log=true
-        continue
-    fi
-	args+=($i)
-done
-
-config=/boot/config/plugins/&name;/.rclone.conf
-logfile=/boot/config/plugins/&name;/logs/rclone-$(date "+%Y%m%d").log
-if [ "$log" = true ] &amp;&amp; [ ${#args[@]} -ge 1 ]; then
-	rcloneorig --config $config "${args[@]}" &gt;&gt; $logfile 2&gt;&amp;1
-else
+config=/boot/config/plugins/rclone/.rclone.conf
 	rcloneorig --config $config "$@";
-fi;
 </INLINE>
 </FILE>
 
