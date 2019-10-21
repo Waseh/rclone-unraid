@@ -3,7 +3,7 @@
 <!DOCTYPE PLUGIN [
 <!ENTITY name      		"rclone">
 <!ENTITY author    		"Waseh">
-<!ENTITY version   		"2019.10.14">
+<!ENTITY version   		"2019.10.21">
 <!ENTITY bundleversion   	"2019.10.13">
 <!ENTITY launch    		"Settings/rclone">
 <!ENTITY pluginURL 		"https://raw.githubusercontent.com/Waseh/rclone-unraid/master/plugin/rclone.plg">
@@ -19,6 +19,9 @@
 <CHANGES>
 ##&name;
 
+###2019.10.21
+- Remove poorly documented logging option from rclone wrapper	
+	
 ###2019.10.14
 - Fusermount compatibility fix take two	
 	
