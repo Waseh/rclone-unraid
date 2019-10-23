@@ -20,7 +20,7 @@
 ##&name;
 
 ###2019.10.23
-- Fix wrong path for config	
+- Fix wrong path for config in rclone wrapper. Now branch agnostic	
 	
 ###2019.10.21
 - Remove poorly documented logging option from rclone wrapper	
