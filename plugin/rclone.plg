@@ -195,7 +195,6 @@ fi;
 
 if [ -f /boot/config/plugins/&name;/install/rclone-v*/rclone ]; then
   cp /boot/config/plugins/&name;/install/rclone-v*/rclone  /usr/sbin/rcloneorig
-  rm -f /usr/sbin/rclone
   if [ "$?" -ne "0" ]; then
     echo "Copy failed - is rclone running?"
     if [ -d /boot/config/plugins/&name;/install/rclone-v*/ ]; then
@@ -204,6 +203,7 @@ if [ -f /boot/config/plugins/&name;/install/rclone-v*/rclone ]; then
     rm -f $(ls /boot/config/plugins/&name;/install/rclone*.txz 2>/dev/null | grep -v '&bundleversion;')
     exit 1
   fi;
+  rm -f /usr/sbin/rclone
 else
   echo "Unpack failed - Please try installing/updating the plugin again"
   rm -f $(ls /boot/config/plugins/&name;/install/rclone-&rcloneversion;.old.zip 2>/dev/null)
