@@ -4,12 +4,12 @@
 <!ENTITY name      		"rclone">
 <!ENTITY author    		"Waseh">
 <!ENTITY version   		"2020.09.15">
-<!ENTITY bundleversion   	"2019.10.13">
+<!ENTITY bundleversion   	"2020.09.15">
 <!ENTITY launch    		"Settings/rclone">
 <!ENTITY pluginURL 		"https://raw.githubusercontent.com/Waseh/rclone-unraid/master/plugin/rclone.plg">
 <!ENTITY bundleURL  		"https://raw.githubusercontent.com/Waseh/rclone-unraid/master/archive/rclone-&bundleversion;-x86_64-1.txz">
 <!ENTITY rcloneversion		"current">
-<!ENTITY md5bundle     		"f240277fc3ecbbff7774bb3ee80d695a">
+<!ENTITY md5bundle     		"e993e3329e23bfbefc9a46329f3ea964">
 ]>
 
 <PLUGIN name="&name;" author="&author;" version="&version;" launch="&launch;" pluginURL="&pluginURL;">
