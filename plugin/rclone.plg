@@ -17,6 +17,13 @@
 <CHANGES>
 ##&name;
 
+###2020.09.15
+- Major overhaul!
+- Work towards only maintaing one plugin with the ability to switch between stable and beta branch
+- Settings page update
+- Update rclone directly from the settings page as well as current and newest version of rclone
+- Removal of standard scripts and script editing (Use User Scripts plugin instead)
+	
 ###2019.11.01
 - Ensure wrapper updating
 	
