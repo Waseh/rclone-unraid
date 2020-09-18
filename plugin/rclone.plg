@@ -9,7 +9,7 @@
 <!ENTITY pluginURL 		"https://raw.githubusercontent.com/Waseh/rclone-unraid/master/plugin/rclone.plg">
 <!ENTITY bundleURL  		"https://raw.githubusercontent.com/Waseh/rclone-unraid/master/archive/rclone-&bundleversion;-x86_64-1.txz">
 <!ENTITY rcloneversion		"current">
-<!ENTITY md5bundle     		"1c9e285bd4b366cc88cffb1632eabbbb">
+<!ENTITY md5bundle     		"8f7c451047f620af45127107f380f3c7">
 ]>
 
 <PLUGIN name="&name;" author="&author;" version="&version;" launch="&launch;" pluginURL="&pluginURL;">
@@ -194,9 +194,10 @@ exit 1
 fi;
 
 if [ -f /boot/config/plugins/&name;/install/rclone-v*/rclone ]; then
-  cp /boot/config/plugins/&name;/install/rclone-v*/rclone  /usr/sbin/rcloneorig
+  rm -f $(ls /usr/sbin/rcloneorig 2>/dev/null)
+  cp /boot/config/plugins/rclone/install/rclone-v*/rclone  /usr/sbin/rcloneorig
   if [ "$?" -ne "0" ]; then
-    echo "Copy failed, rclone binary busy. Please close all instances of rclone and try again"
+    echo "Copy failed - Please try installing/updating the plugin again"
     if [ -d /boot/config/plugins/&name;/install/rclone-v*/ ]; then
       rm -rf /boot/config/plugins/&name;/install/rclone-v*/
     fi;

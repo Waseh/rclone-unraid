@@ -30,12 +30,13 @@ if [ -f /boot/config/plugins/rclone/install/rclone-current.zip ]; then
 fi;
 
 if [ -f /boot/config/plugins/rclone/install/rclone-v*/rclone ]; then
+  rm -f $(ls /usr/sbin/rcloneorig 2>/dev/null)
   cp /boot/config/plugins/rclone/install/rclone-v*/rclone  /usr/sbin/rcloneorig
   if [ "$?" -ne "0" ]; then
 	echo ""
-	echo "-----------------------------------------------------------"
-	echo "<font color='red'> Update failed, rclone binary busy. Please close all instances of rclone and try again </font>"
-	echo "-----------------------------------------------------------"
+	echo "-------------------------------------------------------------------"
+	echo "<font color='red'> Update failed, rclone binary couldn't be replaced. Please try again</font>"
+	echo "-------------------------------------------------------------------"
 	echo ""
     if [ -d /boot/config/plugins/rclone/install/rclone-v*/ ]; then
       rm -rf /boot/config/plugins/rclone/install/rclone-v*/
@@ -43,7 +44,11 @@ if [ -f /boot/config/plugins/rclone/install/rclone-v*/rclone ]; then
     exit 1
   fi;
 else
-  echo "Unpack failed - Please try updating again"
+	echo ""
+	echo "-------------------------------------------------------------------"
+	echo "<font color='red'> Unpack failed. Please try again</font>"
+	echo "-------------------------------------------------------------------"
+	echo ""
   rm -f $(ls /boot/config/plugins/rclone/install/rclone-current.old.zip 2>/dev/null)
   exit 1
 fi;
