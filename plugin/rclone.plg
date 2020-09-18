@@ -3,15 +3,13 @@
 <!DOCTYPE PLUGIN [
 <!ENTITY name      		"rclone">
 <!ENTITY author    		"Waseh">
-<!ENTITY version   		"2019.11.01">
-<!ENTITY bundleversion   	"2019.10.13">
+<!ENTITY version   		"2020.09.19">
+<!ENTITY bundleversion   	"2020.09.19">
 <!ENTITY launch    		"Settings/rclone">
 <!ENTITY pluginURL 		"https://raw.githubusercontent.com/Waseh/rclone-unraid/master/plugin/rclone.plg">
 <!ENTITY bundleURL  		"https://raw.githubusercontent.com/Waseh/rclone-unraid/master/archive/rclone-&bundleversion;-x86_64-1.txz">
 <!ENTITY rcloneversion		"current">
-<!ENTITY rclonefile  		"rclone-&rcloneversion;-linux-amd64">
-<!ENTITY rcloneurl		"https://downloads.rclone.org/&rclonefile;.zip">
-<!ENTITY md5bundle     		"f240277fc3ecbbff7774bb3ee80d695a">
+<!ENTITY md5bundle     		"8f7c451047f620af45127107f380f3c7">
 ]>
 
 <PLUGIN name="&name;" author="&author;" version="&version;" launch="&launch;" pluginURL="&pluginURL;">
@@ -19,6 +17,13 @@
 <CHANGES>
 ##&name;
 
+###2020.09.19
+- Major overhaul!
+- Settings page update
+- Switch between stable and beta branch in settings page
+- Update rclone directly from the settings page as well as displaying current and newest version of rclone
+- Removal of standard scripts and script editing (Use User Scripts plugin instead)
+	
 ###2019.11.01
 - Ensure wrapper updating
 	
@@ -103,7 +108,7 @@
 
 <!--
 
-This plugin installs Rclone on unRAID systems.
+This plugin installs rclone on unRAID systems.
 This work is entirely based upon the plugin created by aschamberger: https://lime-technology.com/forum/index.php?topic=46663.msg501372
 Thanks to stignz for his great guide: https://lime-technology.com/forum/index.php?topic=46663.0
 
@@ -155,31 +160,26 @@ Install script.
 <FILE Run="/bin/bash" Method="install">
 <INLINE>
 
+if [ -f /boot/config/plugins/rclone/install/beta ]; then
+   rcloneurl="https://beta.rclone.org/rclone-beta-latest-linux-amd64.zip"
+else
+   rcloneurl="https://downloads.rclone.org/rclone-current-linux-amd64.zip"
+fi;	
+	
 ping -q -c2 8.8.8.8 >/dev/null
 if [ $? -eq 0 ]
 then
   echo "Downloading rclone"
-  curl --connect-timeout 8 --retry 3 --retry-delay 2 --retry-max-time 30 -o /boot/config/plugins/&name;/install/rclone-&rcloneversion;.zip &rcloneurl;
-
-  echo "Downloading certs"
-  curl --connect-timeout 8 --retry 3 --retry-delay 2 --retry-max-time 30 -o /boot/config/plugins/&name;/install/ca-certificates.new.crt https://raw.githubusercontent.com/bagder/ca-bundle/master/ca-bundle.crt
+  curl --connect-timeout 15 --retry 3 --retry-delay 2 --retry-max-time 30 -o /boot/config/plugins/&name;/install/rclone-&rcloneversion;.zip $rcloneurl
 else
   ping -q -c2 1.1.1.1 >/dev/null
   if [ $? -eq 0 ]
   then
     echo "Downloading rclone"
-    curl --connect-timeout 15 --retry 3 --retry-delay 2 --retry-max-time 30 -o /boot/config/plugins/&name;/install/rclone-&rcloneversion;.zip &rcloneurl;
-
-    echo "Downloading certs"
-    curl --connect-timeout 15 --retry 3 --retry-delay 2 --retry-max-time 30 -o /boot/config/plugins/&name;/install/ca-certificates.new.crt https://raw.githubusercontent.com/bagder/ca-bundle/master/ca-bundle.crt
+    curl --connect-timeout 15 --retry 3 --retry-delay 2 --retry-max-time 30 -o /boot/config/plugins/&name;/install/rclone-&rcloneversion;.zip $rcloneurl
   else
     echo "No internet - Skipping download and using existing archives"
   fi
-fi;
-
-if [ -f /boot/config/plugins/&name;/install/ca-certificates.new.crt ]; then
-  rm -f $(ls /boot/config/plugins/&name;/install/ca-certificates.crt 2>/dev/null)
-  mv /boot/config/plugins/&name;/install/ca-certificates.new.crt /boot/config/plugins/&name;/install/ca-certificates.crt
 fi;
 
 if [ -f /boot/config/plugins/&name;/install/rclone-&rcloneversion;.zip ]; then
@@ -194,9 +194,10 @@ exit 1
 fi;
 
 if [ -f /boot/config/plugins/&name;/install/rclone-v*/rclone ]; then
-  cp /boot/config/plugins/&name;/install/rclone-v*/rclone  /usr/sbin/rcloneorig
+  rm -f $(ls /usr/sbin/rcloneorig 2>/dev/null)
+  cp /boot/config/plugins/rclone/install/rclone-v*/rclone  /usr/sbin/rcloneorig
   if [ "$?" -ne "0" ]; then
-    echo "Copy failed - is rclone running?"
+    echo "Copy failed - Please try installing/updating the plugin again"
     if [ -d /boot/config/plugins/&name;/install/rclone-v*/ ]; then
       rm -rf /boot/config/plugins/&name;/install/rclone-v*/
     fi;
@@ -219,18 +220,9 @@ fi;
 chown root:root /usr/sbin/rcloneorig
 chmod 755 /usr/sbin/rcloneorig
 
-mkdir -p /etc/ssl/certs/
-cp /boot/config/plugins/&name;/install/ca-certificates.crt /etc/ssl/certs/
-
 if [ ! -f /boot/config/plugins/&name;/.rclone.conf ]; then
   touch /boot/config/plugins/&name;/.rclone.conf;
 fi;
-
-mkdir -p /boot/config/plugins/&name;/logs;
-mkdir -p /boot/config/plugins/rclone/scripts;
-cp /boot/config/plugins/rclone/install/scripts/* /boot/config/plugins/rclone/scripts/ -R -n;
-
-mkdir -p /mnt/disks/;
 
 echo ""
 echo "-----------------------------------------------------------"
@@ -246,9 +238,9 @@ echo ""
 rm -rf /boot/config/plugins/&name;/install
 rm -f /usr/sbin/rcloneorig;
 rm -f /usr/sbin/rclone;
-rm -f /etc/ssl/certs/ca-certificates.crt
 
 removepkg rclone-&bundleversion;-bundle >/dev/null
+rm -rf /usr/local/emhttp/plugins/rclone
 
 # we keep config and logs
 #rm -f /boot/config/plugins/&name;/.rclone.conf;

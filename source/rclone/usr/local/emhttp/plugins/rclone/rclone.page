@@ -14,65 +14,119 @@ Icon="rclone.png"
  * all copies or substantial portions of the Software.
  */
 ?>
-> Use this page to make changes to your `rclone.conf` file as well as the different included scripts.
+> Use this page to make changes to your `rclone.conf` file as well as update rclone if a newer version is available.
 >
 > To setup rclone for the first time execute the command `rclone config` in command line.
->
-> The **Move to User Scripts** button will move the active script to the User Scripts Plugin overwriting any previous version of the included script.
+
 
 <script>
-function copyscript(path) {
-      $.ajax({
-           type: "POST",
-           url: '/plugins/rclone/copy.php',
-           data:{action:'copy', path:path},
-      });
-alert("Script moved"); 
+function updaterclone(branch) {
+   var path = "/usr/local/emhttp/plugins/rclone/updaterclone.sh"
+   openBox('/usr/local/emhttp/plugins/rclone/startScript.sh&arg1='+path+'&arg2='+branch,"Update rclone",450,800,true);
 }
 </script>
 
 <?
-$choice = "1";
-exec("cp /boot/config/plugins/rclone/install/scripts/* /boot/config/plugins/rclone/scripts/ -R -v -n")
-?>
-
-File to edit:
-<form action="" method="post"> 
-<select name="choice" onchange="this.form.submit();"> 
-<option value="1" <?php echo (isset($_POST['choice']) && $_POST['choice'] == '1') ? 'selected="selected"' : ''; ?>>Config</option>
-<option value="2" <?php echo (isset($_POST['choice']) && $_POST['choice'] == '2') ? 'selected="selected"' : ''; ?>>Rclone Custom Script</option>
-<option value="3" <?php echo (isset($_POST['choice']) && $_POST['choice'] == '3') ? 'selected="selected"' : ''; ?>>Mount Script</option> 
-<option value="4" <?php echo (isset($_POST['choice']) && $_POST['choice'] == '4') ? 'selected="selected"' : ''; ?>>Unmount Script</option>
-</select> 
-</form> 
-
-<?
-if (isset($_POST['choice'])) {$choice = $_POST['choice'];}
-
-if ($choice == "1") {
-    $file = "/boot/config/plugins/rclone/.rclone.conf";
-    $defaultfile = "/boot/config/plugins/rclone/.rclone.conf";
-
-} elseif ($choice == "2") {
-    $file = "/boot/config/plugins/rclone/scripts/rclone_custom_plugin/script";
-    $folderpath = "/boot/config/plugins/rclone/scripts/rclone_custom_plugin";
-    $defaultfile = "/boot/config/plugins/rclone/install/scripts/rclone_custom_plugin/script";
-
-} elseif ($choice == "3") {
-    $file = "/boot/config/plugins/rclone/scripts/rclone_mount_plugin/script";
-    $folderpath = "/boot/config/plugins/rclone/scripts/rclone_mount_plugin";
-    $defaultfile = "/boot/config/plugins/rclone/install/scripts/rclone_mount_plugin/script";
-
-} elseif ($choice == "4") {
-    $file = "/boot/config/plugins/rclone/scripts/rclone_unmount_plugin/script";
-    $folderpath = "/boot/config/plugins/rclone/scripts/rclone_unmount_plugin";
-    $defaultfile = "/boot/config/plugins/rclone/install/scripts/rclone_unmount_plugin/script";
-}
-
+$file = "/boot/config/plugins/rclone/.rclone.conf";
+$defaultfile = "/boot/config/plugins/rclone/.rclone.conf";
 $text = file_get_contents($file);
 $default_text = @file_get_contents($defaultfile);
-if ($default_text === false) $default_text = $text;
 ?>
+
+<?
+exec('rclone version --check | grep -Po "(([a-z])*:( )*)\K( )*([0-9])([^ ])*[0-9]"', $output);
+$currentversion = $output[0];
+?>
+
+<?
+if (file_exists("/boot/config/plugins/rclone/install/beta") == true) {
+  $branch = "2";
+} elseif (strpos($currentversion, 'beta') !== false) {
+  $branch = "2";
+} else {
+  $branch = "1";
+}
+?>
+
+<?
+if (isset($_POST['branch'])) {$branch = $_POST['branch'];}
+
+if ($branch == "1") {
+    exec("rm -f /boot/config/plugins/rclone/install/beta");
+    $latestversion = $output[1];
+    ($latestversion == '') ? $latestversion = "Error fetching version number" : '';
+
+} elseif ($branch == "2") {
+    exec("touch /boot/config/plugins/rclone/install/beta");
+    $latestversion = $output[2];
+    ($latestversion == '') ? $latestversion = "Error fetching version number" : '';
+}
+?>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+
+.row {
+  display: flex;
+}
+
+/* Create two unequal columns that floats next to each other */
+.column {
+  float: left;
+  padding: 10px;
+}
+
+.left {
+  width: 25%;
+}
+
+.right {
+  width: 75%;
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}</style>
+</head>
+<body>
+
+<div class="row">
+  <div class="column left">
+    <h2>Branch</h2>
+
+	<form action="" method="post"> 
+	<select name="branch" onchange="this.form.submit();"> 
+	<option value="1" <?php if($branch == 1) echo("selected")?>>Stable</option>
+	<option value="2" <?php if($branch == 2) echo("selected")?>>Beta</option>
+	</select> 
+	</form> 
+	<?
+	echo "Installed version: $currentversion";
+	echo "<br>";
+	echo "Latest version:&ensp;&ensp;&thinsp;&thinsp;&thinsp;$latestversion";
+	?>
+	<br>
+	<input type="button" value="Update rclone" <?php if ($currentversion == $latestversion){ ?> disabled <?php   } ?> onclick="updaterclone('<?php echo $branch; ?>')">
+
+  </div>
+  <div class="column right">
+    <h2>Edit config</h2>
+	<form markdown="1" method="POST" action="/update.php" target="progressFrame">
+	<input type="hidden" name="#include" value="/webGui/include/update.file.php">
+	<input type="hidden" name="#file" value="<?=$file;?>">
+	<textarea spellcheck="false" cols="80" rows="22" maxlength="8192" name="text" style="font-family:bitstream;width:100%"><?=$text;?></textarea>
+	<br>
+	<input type="submit" value="Apply"/><input type="button" value="Original" onclick="setDefault(this.form)">
+	</form> 
+  </div>
+</div>
+
+</body>
+</html>
 
 <script>
 function setDefault(form) {
@@ -80,20 +134,9 @@ function setDefault(form) {
 }
 </script>
 
-<form markdown="1" method="POST" action="/update.php" target="progressFrame">
-<input type="hidden" name="#include" value="/webGui/include/update.file.php">
-: <input type="hidden" name="#file" value="<?=$file;?>">
-
-<input type="button" value="Move to User Scripts" <?php if ($file == '/boot/config/plugins/rclone/.rclone.conf'){ ?> disabled <?php   } ?> onclick="copyscript('<?php echo $folderpath; ?>')">
-: <textarea spellcheck="false" cols="80" rows="22" maxlength="2048" name="text" style="font-family:bitstream;width:66%"><?=$text;?></textarea>
-
-&nbsp;
-: <input type="submit" value="Apply"/><input type="button" value="Done" onclick="done()"><input type="button" value="Default" onclick="setDefault(this.form)">
-
-> Click the **Apply** button to commit the current edits.  Click **Reset** to
-> undo any changes you make (before Saving). Click **Done** to exit this page.
+> Click the **Apply** button to commit the current edits.
 >
-> Click the **Default** button to initialize the edit box with the
-> factory-default contents.  You still need to click **Apply** in order to
+> Click the **Original** button to initialize the edit box with the
+> original contents.  You still need to click **Apply** in order to
 >commit the change.
 </form>
