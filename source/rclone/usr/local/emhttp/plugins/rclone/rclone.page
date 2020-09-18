@@ -41,13 +41,10 @@ $currentversion = $output[0];
 <?
 if (file_exists("/boot/config/plugins/rclone/install/beta") == true) {
   $branch = "2";
-  $latestversion = $output[2];
 } elseif (strpos($currentversion, 'beta') !== false) {
   $branch = "2";
-  $latestversion = $output[2];
 } else {
   $branch = "1";
-  $latestversion = $output[1];
 }
 ?>
 
@@ -57,10 +54,12 @@ if (isset($_POST['branch'])) {$branch = $_POST['branch'];}
 if ($branch == "1") {
     exec("rm -f /boot/config/plugins/rclone/install/beta");
     $latestversion = $output[1];
+    ($latestversion == '') ? $latestversion = "Error fetching version number" : '';
 
 } elseif ($branch == "2") {
     exec("touch /boot/config/plugins/rclone/install/beta");
     $latestversion = $output[2];
+    ($latestversion == '') ? $latestversion = "Error fetching version number" : '';
 }
 ?>
 <html>
@@ -106,11 +105,9 @@ if ($branch == "1") {
 	</select> 
 	</form> 
 	<?
-	echo "Installed version: ";
-	echo $currentversion;
+	echo "Installed version: $currentversion";
 	echo "<br>";
-	echo "Latest version: ";
-	echo $latestversion;
+	echo "Latest version:&ensp;&ensp;&thinsp;&thinsp;&thinsp;$latestversion";
 	?>
 	<br>
 	<input type="button" value="Update rclone" <?php if ($currentversion == $latestversion){ ?> disabled <?php   } ?> onclick="updaterclone('<?php echo $branch; ?>')">
@@ -121,9 +118,9 @@ if ($branch == "1") {
 	<form markdown="1" method="POST" action="/update.php" target="progressFrame">
 	<input type="hidden" name="#include" value="/webGui/include/update.file.php">
 	<input type="hidden" name="#file" value="<?=$file;?>">
-	<textarea spellcheck="false" cols="80" rows="22" maxlength="4096" name="text" style="font-family:bitstream;width:100%"><?=$text;?></textarea>
+	<textarea spellcheck="false" cols="80" rows="22" maxlength="8192" name="text" style="font-family:bitstream;width:100%"><?=$text;?></textarea>
 	<br>
-	<input type="submit" value="Apply"/><input type="button" value="Default" onclick="setDefault(this.form)">
+	<input type="submit" value="Apply"/><input type="button" value="Original" onclick="setDefault(this.form)">
 	</form> 
   </div>
 </div>
@@ -137,10 +134,9 @@ function setDefault(form) {
 }
 </script>
 
-> Click the **Apply** button to commit the current edits.  Click **Reset** to
-> undo any changes you make (before Saving). Click **Done** to exit this page.
+> Click the **Apply** button to commit the current edits.
 >
-> Click the **Default** button to initialize the edit box with the
-> default contents.  You still need to click **Apply** in order to
+> Click the **Original** button to initialize the edit box with the
+> original contents.  You still need to click **Apply** in order to
 >commit the change.
 </form>

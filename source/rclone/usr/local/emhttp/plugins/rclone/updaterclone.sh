@@ -10,28 +10,17 @@ ping -q -c2 8.8.8.8 >/dev/null
 if [ $? -eq 0 ]
 then
   echo "Downloading rclone"
-  curl --connect-timeout 8 --retry 3 --retry-delay 2 --retry-max-time 30 -o /boot/config/plugins/rclone/install/rclone-current.zip $rcloneurl
-
-  echo "Downloading certs"
-  curl --connect-timeout 8 --retry 3 --retry-delay 2 --retry-max-time 30 -o /boot/config/plugins/rclone/install/ca-certificates.new.crt https://raw.githubusercontent.com/bagder/ca-bundle/master/ca-bundle.crt
+  curl --connect-timeout 15 --retry 3 --retry-delay 2 --retry-max-time 30 -o /boot/config/plugins/rclone/install/rclone-current.zip $rcloneurl
 else
   ping -q -c2 1.1.1.1 >/dev/null
   if [ $? -eq 0 ]
   then
     echo "Downloading rclone"
     curl --connect-timeout 15 --retry 3 --retry-delay 2 --retry-max-time 30 -o /boot/config/plugins/rclone/install/rclone-current.zip $rcloneurl
-
-    echo "Downloading certs"
-    curl --connect-timeout 15 --retry 3 --retry-delay 2 --retry-max-time 30 -o /boot/config/plugins/rclone/install/ca-certificates.new.crt https://raw.githubusercontent.com/bagder/ca-bundle/master/ca-bundle.crt
   else
     echo "No internet - Could not fetch new version"
     exit 1
   fi
-fi;
-
-if [ -f /boot/config/plugins/rclone/install/ca-certificates.new.crt ]; then
-  rm -f $(ls /boot/config/plugins/rclone/install/ca-certificates.crt 2>/dev/null)
-  mv /boot/config/plugins/rclone/install/ca-certificates.new.crt /boot/config/plugins/rclone/install/ca-certificates.crt
 fi;
 
 if [ -f /boot/config/plugins/rclone/install/rclone-current.zip ]; then
@@ -45,17 +34,16 @@ if [ -f /boot/config/plugins/rclone/install/rclone-v*/rclone ]; then
   if [ "$?" -ne "0" ]; then
 	echo ""
 	echo "-----------------------------------------------------------"
-	echo "<font color='red'> Copy failed. Is rclone running? </font>"
+	echo "<font color='red'> Update failed, rclone binary busy. Please close all instances of rclone and try again </font>"
 	echo "-----------------------------------------------------------"
 	echo ""
     if [ -d /boot/config/plugins/rclone/install/rclone-v*/ ]; then
       rm -rf /boot/config/plugins/rclone/install/rclone-v*/
     fi;
-    rm -f $(ls /boot/config/plugins/rclone/install/rclone*.txz 2>/dev/null | grep -v '&bundleversion;')
     exit 1
   fi;
 else
-  echo "Unpack failed - Please try installing/updating the plugin again"
+  echo "Unpack failed - Please try updating again"
   rm -f $(ls /boot/config/plugins/rclone/install/rclone-current.old.zip 2>/dev/null)
   exit 1
 fi;
@@ -66,9 +54,6 @@ fi;
 
 chown root:root /usr/sbin/rcloneorig
 chmod 755 /usr/sbin/rcloneorig
-
-mkdir -p /etc/ssl/certs/
-cp /boot/config/plugins/rclone/install/ca-certificates.crt /etc/ssl/certs/
 
 echo ""
 echo "-----------------------------------------------------------"

@@ -1,6 +1,6 @@
 **rclone**
 
-The plugin installs Rclone. Rclone is a command line program to sync files and directories to and from services such as:
+The plugin installs rclone. rclone is a command line program to sync files and directories to and from services such as:
 * Amazon Drive
 * Amazon S3
 * Backblaze B2
