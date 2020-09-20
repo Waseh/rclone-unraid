@@ -1,17 +1,15 @@
 <?xml version='1.0' standalone='yes'?>
 
 <!DOCTYPE PLUGIN [
-<!ENTITY name      		"rclone-beta">
+<!ENTITY name      		"rclone">
 <!ENTITY author    		"Waseh">
-<!ENTITY version   		"2019.11.01">
-<!ENTITY bundleversion   	"2019.10.13">
-<!ENTITY launch    		"Settings/rclone-beta">
-<!ENTITY pluginURL 		"https://raw.githubusercontent.com/Waseh/rclone-unraid/beta/plugin/rclone.plg">
-<!ENTITY bundleURL  		"https://raw.githubusercontent.com/Waseh/rclone-unraid/beta/archive/rclone-beta-&bundleversion;-x86_64-1.txz">
-<!ENTITY rcloneversion		"beta-latest">
-<!ENTITY rclonefile  		"rclone-&rcloneversion;-linux-amd64">
-<!ENTITY rcloneurl		"https://beta.rclone.org/&rclonefile;.zip">
-<!ENTITY md5bundle     		"234a132ca7b69c1d01a68bc917f45614">
+<!ENTITY version   		"2020.09.19">
+<!ENTITY bundleversion   	"2020.09.19">
+<!ENTITY launch    		"Settings/rclone">
+<!ENTITY pluginURL 		"https://raw.githubusercontent.com/Waseh/rclone-unraid/master/plugin/rclone.plg">
+<!ENTITY bundleURL  		"https://raw.githubusercontent.com/Waseh/rclone-unraid/master/archive/rclone-&bundleversion;-x86_64-1.txz">
+<!ENTITY rcloneversion		"current">
+<!ENTITY md5bundle     		"8f7c451047f620af45127107f380f3c7">
 ]>
 
 <PLUGIN name="&name;" author="&author;" version="&version;" launch="&launch;" pluginURL="&pluginURL;">
@@ -19,26 +17,33 @@
 <CHANGES>
 ##&name;
 
+###2020.09.19
+- Major overhaul!
+- Settings page update
+- Switch between stable and beta branch in settings page
+- Update rclone directly from the settings page as well as displaying current and newest version of rclone
+- Removal of standard scripts and script editing (Use User Scripts plugin instead)
+	
 ###2019.11.01
 - Ensure wrapper updating
 	
 ###2019.10.23
-- Fix wrong path for config in rclone wrapper. Now branch agnostic	
+- Make rclone wrapper branch agnostic	
 	
 ###2019.10.21
 - Remove poorly documented logging option from rclone wrapper	
 	
 ###2019.10.14
 - Fusermount compatibility fix take two	
-
+	
 ###2019.10.13b
 - Fusermount compatibility fix for future unRaid versions	
 
 ###2019.10.13a
-- Icon change and small corrections
-
+- Icon change and small corrections	
+	
 ###2019.06.24
-- Bump timeout again to alleviate problem with slow resolvers		
+- Bump timeout again to alleviate problem with slow resolvers	
 	
 ###2019.02.07
 - Change timeout to alleviate problem with slow resolvers	
@@ -53,122 +58,98 @@
 - Test for internet connectivity
 - Retry mechanism for curl
 
-###2018.08.25w
+###2018.08.25
 - Let install survive when no internet connection on boot
 
 ###2017.09.23
-- Always pull latest beta on install
+- Always pull newest version on install
 
 ###2017.08.16
-- New beta version of rclone (v1.37-093-gb510c70c)
+- New version of rclone (v1.37)
 
 ###2017.03.19
-- New beta version of rclone (v1.36-05-g216499d)
-
-###2017.03.02
-- New beta version of rclone (v1.35-151-g1d42a34) with buffer support. See: https://forum.rclone.org/t/new-feature-buffer-size/1083
-
-###2017.02.19a
-- New beta version of rclone (v1.35-123-g6e0e1ad)
+- New version of rclone (v1.36)
 
 ###2017.01.17a
-- New beta version of rclone (v1.35-33-g47ebd07)
 - Reverting previous patch
 
 ###2017.01.17
-- New beta version of rclone (v1.35-33-g47ebd07)
-- Wrapper removed
+- Removed Wrapper
 
 ###2017.01.05
-- New beta version of rclone (v1.35-13-ge1a49ca)
-
-###2017.01.03
-- New beta version of rclone (v1.35-10-g3b0f944)
-
-###2016.12.05
-- New beta version of rclone (v1.34-49-ge79a5de)
-
-###2016.11.28
-- New beta version of rclone (v1.34-38-g7929b6e)
-
-###2016.11.21
-- New beta version of rclone (v1.34-23-gc41b67e)
-- /mnt/disks folder now created on install
-
-###2016.11.19
-- New beta version of rclone (v1.34-22-g0b562bc)
-- Default button in GUI to return scripts to default state
-
-###2016.11.15
-- New beta version of rclone (v1.34-11-gbf243f3)
-
-###2016.11.14a
-- Go to webgui from plugin page
+- New version of rclone (v1.35)
 
 ###2016.11.14
 - Beta version of webgui
 - Beta version of included template scripts
-- New beta version of rclone (v1.34-11-gbf243f3)
 
 ###2016.11.08
 - Fixed update routine
 
-###2016.11.07
-- New beta version of rclone (v1.34-04-g4105da2)
-
 ###2016.11.06
-- New beta version of rclone (v1.34-02-g5f320cc)
-- Check to see if stable branch installed
-
-###2016.11.05a
-- New beta version of rclone (v1.33-107-gff41b0d)
-
-###2016.11.05
-- New beta version of rclone (v1.33-106-ge162377)
-- MD5 check of rclone zip
-
-###2016.11.04
-- New beta version of rclone (v1.33-99-g452c681)
-
-###2016.11.03
-- First official release
-- New beta version of rclone
+- First release of plugin for rclone stable branch
+- New version of rclone (v1.34)
+- Check to see if Beta branch installed 
 
 ###2016.11.02
 - More intuitive calling of rclone - Use rclone instead of myrclone
 - More minor changes in preperation of official release
 
 ###2016.10.31
-- New beta version of rclone
-- Other minor improvements
+- Minor improvements
+
+###2016.10.28
+- Removed cronjob
 
 ###2016.10.27
-- Changed version to latest beta
 - Small modifications to make the plugin work again, and updateable from unraid interface
 
 </CHANGES>
 
 <!--
 
-This plugin installs Rclone on unRAID systems.
+This plugin installs rclone on unRAID systems.
 This work is entirely based upon the plugin created by aschamberger: https://lime-technology.com/forum/index.php?topic=46663.msg501372
 Thanks to stignz for his great guide: https://lime-technology.com/forum/index.php?topic=46663.0
 
 -->
 
 <!--
-Check if stable is installed.
+Check if beta plugin is installed.
 -->
 <FILE Run="/bin/bash">
 <INLINE>
-if [ -d /usr/local/emhttp/plugins/rclone ]; then
+if [ -d /usr/local/emhttp/plugins/rclone-beta ]; then
+echo "-----------------------------------------------------------------------------"
+echo "Migration update - Will remove old beta branch and install new unified plugin"
+echo "----------------- All config files and scripts will be kept -----------------"
+echo "-----------------------------------------------------------------------------"
 echo ""
+echo "-----------------------------------------------------------------------------"
+echo "Move Beta Config"
+echo "-----------------------------------------------------------------------------"
+mkdir -p /boot/config/plugins/rclone/install
+if [ -f /boot/config/plugins/rclone/.rclone.conf ]; then
+  mv /boot/config/plugins/rclone/.rclone.conf /boot/config/plugins/rclone/.rclone.conf.stable_rename
+fi;
+cp /boot/config/plugins/rclone-beta/.rclone.conf /boot/config/plugins/rclone/.rclone.conf
+
 echo ""
-echo "----------Stable Branch installed----------"
-echo "Uninstall Stable branch to install Beta!"
+echo "-----------------------------------------------------------------------------"
+echo "Set Beta flag for new plugin"
+echo "-----------------------------------------------------------------------------"
+touch /boot/config/plugins/rclone/install/beta
+
 echo ""
-echo ""
-exit 1
+echo "-----------------------------------------------------------------------------"
+echo "Remove old beta plugin"
+echo "-----------------------------------------------------------------------------"
+rm -rf /boot/config/plugins/rclone-beta/install
+rm -f /usr/sbin/rcloneorig;
+rm -f /usr/sbin/rclone;
+rm -f /etc/ssl/certs/ca-certificates.crt
+removepkg 'rclone*'
+rm -rf /usr/local/emhttp/plugins/rclone-beta
 fi
 </INLINE>
 </FILE>
@@ -202,31 +183,26 @@ Install script.
 <FILE Run="/bin/bash" Method="install">
 <INLINE>
 
+if [ -f /boot/config/plugins/rclone/install/beta ]; then
+   rcloneurl="https://beta.rclone.org/rclone-beta-latest-linux-amd64.zip"
+else
+   rcloneurl="https://downloads.rclone.org/rclone-current-linux-amd64.zip"
+fi;	
+	
 ping -q -c2 8.8.8.8 >/dev/null
 if [ $? -eq 0 ]
 then
   echo "Downloading rclone"
-  curl --connect-timeout 5 --retry 3 --retry-delay 2 --retry-max-time 30 -o /boot/config/plugins/&name;/install/rclone-&rcloneversion;.zip &rcloneurl;
-
-  echo "Downloading certs"
-  curl --connect-timeout 5 --retry 3 --retry-delay 2 --retry-max-time 30 -o /boot/config/plugins/&name;/install/ca-certificates.new.crt https://raw.githubusercontent.com/bagder/ca-bundle/master/ca-bundle.crt
+  curl --connect-timeout 15 --retry 3 --retry-delay 2 --retry-max-time 30 -o /boot/config/plugins/&name;/install/rclone-&rcloneversion;.zip $rcloneurl
 else
   ping -q -c2 1.1.1.1 >/dev/null
   if [ $? -eq 0 ]
   then
     echo "Downloading rclone"
-    curl --connect-timeout 5 --retry 3 --retry-delay 2 --retry-max-time 30 -o /boot/config/plugins/&name;/install/rclone-&rcloneversion;.zip &rcloneurl;
-
-    echo "Downloading certs"
-    curl --connect-timeout 5 --retry 3 --retry-delay 2 --retry-max-time 30 -o /boot/config/plugins/&name;/install/ca-certificates.new.crt https://raw.githubusercontent.com/bagder/ca-bundle/master/ca-bundle.crt
+    curl --connect-timeout 15 --retry 3 --retry-delay 2 --retry-max-time 30 -o /boot/config/plugins/&name;/install/rclone-&rcloneversion;.zip $rcloneurl
   else
     echo "No internet - Skipping download and using existing archives"
   fi
-fi;
-
-if [ -f /boot/config/plugins/&name;/install/ca-certificates.new.crt ]; then
-  rm -f $(ls /boot/config/plugins/&name;/install/ca-certificates.crt 2>/dev/null)
-  mv /boot/config/plugins/&name;/install/ca-certificates.new.crt /boot/config/plugins/&name;/install/ca-certificates.crt
 fi;
 
 if [ -f /boot/config/plugins/&name;/install/rclone-&rcloneversion;.zip ]; then
@@ -241,9 +217,10 @@ exit 1
 fi;
 
 if [ -f /boot/config/plugins/&name;/install/rclone-v*/rclone ]; then
-  cp /boot/config/plugins/&name;/install/rclone-v*/rclone  /usr/sbin/rcloneorig
+  rm -f $(ls /usr/sbin/rcloneorig 2>/dev/null)
+  cp /boot/config/plugins/rclone/install/rclone-v*/rclone  /usr/sbin/rcloneorig
   if [ "$?" -ne "0" ]; then
-    echo "Copy failed - is rclone running?"
+    echo "Copy failed - Please try installing/updating the plugin again"
     if [ -d /boot/config/plugins/&name;/install/rclone-v*/ ]; then
       rm -rf /boot/config/plugins/&name;/install/rclone-v*/
     fi;
@@ -266,18 +243,9 @@ fi;
 chown root:root /usr/sbin/rcloneorig
 chmod 755 /usr/sbin/rcloneorig
 
-mkdir -p /etc/ssl/certs/
-cp /boot/config/plugins/&name;/install/ca-certificates.crt /etc/ssl/certs/
-
 if [ ! -f /boot/config/plugins/&name;/.rclone.conf ]; then
   touch /boot/config/plugins/&name;/.rclone.conf;
 fi;
-
-mkdir -p /boot/config/plugins/&name;/logs;
-mkdir -p /boot/config/plugins/rclone-beta/scripts;
-cp /boot/config/plugins/rclone-beta/install/scripts/* /boot/config/plugins/rclone-beta/scripts/ -R -n;
-
-mkdir -p /mnt/disks/;
 
 echo ""
 echo "-----------------------------------------------------------"
@@ -293,9 +261,9 @@ echo ""
 rm -rf /boot/config/plugins/&name;/install
 rm -f /usr/sbin/rcloneorig;
 rm -f /usr/sbin/rclone;
-rm -f /etc/ssl/certs/ca-certificates.crt
 
 removepkg rclone-&bundleversion;-bundle >/dev/null
+rm -rf /usr/local/emhttp/plugins/&name;
 
 # we keep config and logs
 #rm -f /boot/config/plugins/&name;/.rclone.conf;
