@@ -109,28 +109,10 @@
 <!--
 
 This plugin installs rclone on unRAID systems.
-This work is entirely based upon the plugin created by aschamberger: https://lime-technology.com/forum/index.php?topic=46663.msg501372
-Thanks to stignz for his great guide: https://lime-technology.com/forum/index.php?topic=46663.0
+This work is based upon the plugin created by aschamberger: https://lime-technology.com/forum/index.php?topic=46663.msg501372
+Thanks to stignz for his original guide: https://lime-technology.com/forum/index.php?topic=46663.0
 
 -->
-
-<!--
-Check if beta is installed.
--->
-<FILE Run="/bin/bash">
-<INLINE>
-if [ -d /usr/local/emhttp/plugins/rclone-beta ]; then
-echo ""
-echo ""
-echo "----------Beta Branch installed----------"
-echo "Uninstall Beta branch to install Stable!"
-echo ""
-echo ""
-exit 1
-fi
-</INLINE>
-</FILE>
-
 
 <!--
 Check if fusermount is present
@@ -144,7 +126,6 @@ if ! [ -f /bin/fusermount ]; then
 fi;
 </INLINE>
 </FILE>
-
 
 <!--
 Get bundle.
