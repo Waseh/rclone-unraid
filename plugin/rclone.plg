@@ -141,7 +141,7 @@ Install script.
 <FILE Run="/bin/bash" Method="install">
 <INLINE>
 
-if [ -f /boot/config/plugins/rclone/install/beta ]; then
+if [ -f /boot/config/plugins/&name;/install/beta ]; then
    rcloneurl="https://beta.rclone.org/rclone-beta-latest-linux-amd64.zip"
 else
    rcloneurl="https://downloads.rclone.org/rclone-current-linux-amd64.zip"
@@ -176,7 +176,7 @@ fi;
 
 if [ -f /boot/config/plugins/&name;/install/rclone-v*/rclone ]; then
   rm -f $(ls /usr/sbin/rcloneorig 2>/dev/null)
-  cp /boot/config/plugins/rclone/install/rclone-v*/rclone  /usr/sbin/rcloneorig
+  cp /boot/config/plugins/&name;/install/rclone-v*/rclone  /usr/sbin/rcloneorig
   if [ "$?" -ne "0" ]; then
     echo "Copy failed - Please try installing/updating the plugin again"
     if [ -d /boot/config/plugins/&name;/install/rclone-v*/ ]; then
