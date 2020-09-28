@@ -30,8 +30,7 @@ if [ -f /boot/config/plugins/rclone/install/rclone-current.zip ]; then
 fi;
 
 if [ -f /boot/config/plugins/rclone/install/rclone-v*/rclone ]; then
-  rm -f $(ls /usr/sbin/rcloneorig 2>/dev/null)
-  cp /boot/config/plugins/rclone/install/rclone-v*/rclone  /usr/sbin/rcloneorig
+  mv /boot/config/plugins/rclone/install/rclone-v*/rclone  /usr/sbin/rcloneorig
   if [ "$?" -ne "0" ]; then
 	echo ""
 	echo "-------------------------------------------------------------------"
