@@ -175,10 +175,9 @@ exit 1
 fi;
 
 if [ -f /boot/config/plugins/&name;/install/rclone-v*/rclone ]; then
-  rm -f $(ls /usr/sbin/rcloneorig 2>/dev/null)
-  cp /boot/config/plugins/&name;/install/rclone-v*/rclone  /usr/sbin/rcloneorig
+  mv /boot/config/plugins/&name;/install/rclone-v*/rclone  /usr/sbin/rcloneorig
   if [ "$?" -ne "0" ]; then
-    echo "Copy failed - Please try installing/updating the plugin again"
+    echo "Install failed - Please try installing/updating the plugin again"
     if [ -d /boot/config/plugins/&name;/install/rclone-v*/ ]; then
       rm -rf /boot/config/plugins/&name;/install/rclone-v*/
     fi;
