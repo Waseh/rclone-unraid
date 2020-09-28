@@ -1,21 +1,24 @@
 <?xml version='1.0' standalone='yes'?>
 
 <!DOCTYPE PLUGIN [
-<!ENTITY name      		"rclone">
-<!ENTITY author    		"Waseh">
-<!ENTITY version   		"2020.09.19">
-<!ENTITY bundleversion   	"2020.09.19">
-<!ENTITY launch    		"Settings/rclone">
-<!ENTITY pluginURL 		"https://raw.githubusercontent.com/Waseh/rclone-unraid/master/plugin/rclone.plg">
-<!ENTITY bundleURL  		"https://raw.githubusercontent.com/Waseh/rclone-unraid/master/archive/rclone-&bundleversion;-x86_64-1.txz">
-<!ENTITY rcloneversion		"current">
-<!ENTITY md5bundle     		"8f7c451047f620af45127107f380f3c7">
+<!ENTITY name				"rclone">
+<!ENTITY author				"Waseh">
+<!ENTITY version			"2020.09.29">
+<!ENTITY bundleversion			"2020.09.29">
+<!ENTITY launch				"Settings/rclone">
+<!ENTITY pluginURL			"https://raw.githubusercontent.com/Waseh/rclone-unraid/master/plugin/rclone.plg">
+<!ENTITY bundleURL			"https://raw.githubusercontent.com/Waseh/rclone-unraid/master/archive/rclone-&bundleversion;-x86_64-1.txz">
+<!ENTITY md5bundle			"e3203fbc4f905b7cd5789174947fe997">
 ]>
 
 <PLUGIN name="&name;" author="&author;" version="&version;" launch="&launch;" pluginURL="&pluginURL;">
 
 <CHANGES>
 ##&name;
+
+###2020.09.29
+- Plugin now only fetches rclone if new version is available
+- Code cleanup and various optimizations
 
 ###2020.09.19
 - Major overhaul!
@@ -130,7 +133,7 @@ fi;
 <!--
 Get bundle.
 -->
-<FILE Name="/boot/config/plugins/&name;/install/rclone-&bundleversion;-bundle.txz" Run="upgradepkg --install-new">
+<FILE Name="/boot/config/plugins/rclone/install/rclone-&bundleversion;-bundle.txz" Run="upgradepkg --install-new">
 <URL>&bundleURL;</URL>
 <MD5>&md5bundle;</MD5>
 </FILE>
@@ -140,73 +143,57 @@ Install script.
 -->
 <FILE Run="/bin/bash" Method="install">
 <INLINE>
-
-if [ -f /boot/config/plugins/&name;/install/beta ]; then
+if [ -f /boot/config/plugins/rclone/install/beta ]; then
    rcloneurl="https://beta.rclone.org/rclone-beta-latest-linux-amd64.zip"
+   versionurl="https://beta.rclone.org/version.txt"
 else
    rcloneurl="https://downloads.rclone.org/rclone-current-linux-amd64.zip"
+   versionurl="https://downloads.rclone.org/version.txt"
 fi;	
+
+if [ -f /boot/config/plugins/rclone/install/rclone ]; then 
+  cp /boot/config/plugins/rclone/install/rclone /usr/sbin/rcloneorig.new
+  mv /usr/sbin/rcloneorig.new /usr/sbin/rcloneorig
+  chown root:root /usr/sbin/rcloneorig
+  chmod 755 /usr/sbin/rcloneorig
+  version=`rcloneorig --version | head -n 1`
+fi
 	
-ping -q -c2 8.8.8.8 >/dev/null
+ping -q -c3 8.8.8.8 >/dev/null || ping -q -c3 1.1.1.1 >/dev/null
 if [ $? -eq 0 ]
 then
-  echo "Downloading rclone"
-  curl --connect-timeout 15 --retry 3 --retry-delay 2 --retry-max-time 30 -o /boot/config/plugins/&name;/install/rclone-&rcloneversion;.zip $rcloneurl
-else
-  ping -q -c2 1.1.1.1 >/dev/null
-  if [ $? -eq 0 ]
-  then
-    echo "Downloading rclone"
-    curl --connect-timeout 15 --retry 3 --retry-delay 2 --retry-max-time 30 -o /boot/config/plugins/&name;/install/rclone-&rcloneversion;.zip $rcloneurl
+  current_version=`curl $versionurl`
+  if [[ $version = $current_version ]]; then
+    echo "Local rclone binary up-to-date - Skipping download - Installing existing binary"  
   else
-    echo "No internet - Skipping download and using existing archives"
+    echo "Downloading and installing rclone"
+    curl --connect-timeout 15 --retry 3 --retry-delay 2 --retry-max-time 30 -o /boot/config/plugins/rclone/install/rclone.zip $rcloneurl
+    unzip -o -j "/boot/config/plugins/rclone/install/rclone.zip" "*/rclone" -d "/boot/config/plugins/rclone/install"
+    rm -f /boot/config/plugins/rclone/install/*.zip
+    cp /boot/config/plugins/rclone/install/rclone /usr/sbin/rcloneorig.new
+    mv /usr/sbin/rcloneorig.new /usr/sbin/rcloneorig
+    chown root:root /usr/sbin/rcloneorig
+    chmod 755 /usr/sbin/rcloneorig
   fi
+else
+  echo "No internet - Skipping download - Trying to install existing binary"
 fi;
 
-if [ -f /boot/config/plugins/&name;/install/rclone-&rcloneversion;.zip ]; then
-  unzip /boot/config/plugins/&name;/install/rclone-&rcloneversion;.zip -d /boot/config/plugins/&name;/install/
-  rm -f $(ls /boot/config/plugins/&name;/install/rclone-&rcloneversion;.old.zip 2>/dev/null)
-  mv /boot/config/plugins/&name;/install/rclone-&rcloneversion;.zip /boot/config/plugins/&name;/install/rclone-&rcloneversion;.old.zip
-elif [ -f /boot/config/plugins/&name;/install/rclone-&rcloneversion;.old.zip ]; then
-  unzip /boot/config/plugins/&name;/install/rclone-&rcloneversion;.old.zip -d /boot/config/plugins/&name;/install/
-else
-echo "Download failed - No existing archive found - Try again later"
-exit 1
-fi;
+rm -f $(ls /boot/config/plugins/rclone/install/rclone*.txz 2>/dev/null | grep -v '&bundleversion;')
+rm -f /usr/sbin/rclone
 
-if [ -f /boot/config/plugins/&name;/install/rclone-v*/rclone ]; then
-  mv /boot/config/plugins/&name;/install/rclone-v*/rclone  /usr/sbin/rcloneorig
-  if [ "$?" -ne "0" ]; then
-    echo "Install failed - Please try installing/updating the plugin again"
-    if [ -d /boot/config/plugins/&name;/install/rclone-v*/ ]; then
-      rm -rf /boot/config/plugins/&name;/install/rclone-v*/
-    fi;
-    rm -f $(ls /boot/config/plugins/&name;/install/rclone*.txz 2>/dev/null | grep -v '&bundleversion;')
-    exit 1
-  fi;
-  rm -f /usr/sbin/rclone
-else
-  echo "Unpack failed - Please try installing/updating the plugin again"
-  rm -f $(ls /boot/config/plugins/&name;/install/rclone-&rcloneversion;.old.zip 2>/dev/null)
+if [ ! -f /usr/sbin/rcloneorig ]; then
+  echo "Install failed - No binary found - Please try installing/updating the plugin again"
   exit 1
 fi;
 
-rm -f $(ls /boot/config/plugins/&name;/install/rclone*.txz 2>/dev/null | grep -v '&bundleversion;')
-
-if [ -d /boot/config/plugins/&name;/install/rclone-v*/ ]; then
-  rm -rf /boot/config/plugins/&name;/install/rclone-v*/
-fi;
-
-chown root:root /usr/sbin/rcloneorig
-chmod 755 /usr/sbin/rcloneorig
-
-if [ ! -f /boot/config/plugins/&name;/.rclone.conf ]; then
-  touch /boot/config/plugins/&name;/.rclone.conf;
+if [ ! -f /boot/config/plugins/rclone/.rclone.conf ]; then
+  touch /boot/config/plugins/rclone/.rclone.conf;
 fi;
 
 echo ""
 echo "-----------------------------------------------------------"
-echo " &name; has been installed."
+echo " rclone has been installed."
 echo "-----------------------------------------------------------"
 echo ""
 
@@ -215,20 +202,16 @@ echo ""
 
 <FILE Run="/bin/bash" Method="remove">
 <INLINE>
-rm -rf /boot/config/plugins/&name;/install
+rm -rf /boot/config/plugins/rclone/install
 rm -f /usr/sbin/rcloneorig;
 rm -f /usr/sbin/rclone;
 
 removepkg rclone-&bundleversion;-bundle >/dev/null
 rm -rf /usr/local/emhttp/plugins/rclone
 
-# we keep config and logs
-#rm -f /boot/config/plugins/&name;/.rclone.conf;
-#rm -f /boot/config/plugins/&name;/logs;
-
 echo ""
 echo "-----------------------------------------------------------"
-echo " &name; has been uninstalled."
+echo " rclone has been uninstalled."
 echo "-----------------------------------------------------------"
 echo ""
 
@@ -238,7 +221,7 @@ echo ""
 <FILE Name="/usr/sbin/rclone" Mode="0755">
 <INLINE>
 #!/bin/bash
-config=/boot/config/plugins/&name;/.rclone.conf
+config=/boot/config/plugins/rclone/.rclone.conf
 	rcloneorig --config $config "$@";
 </INLINE>
 </FILE>
