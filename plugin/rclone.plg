@@ -172,7 +172,7 @@ fi;
 
 echo ""
 echo "-----------------------------------------------------------"
-echo " rclone has been installed."
+echo " rclone binary has been installed. Fetching bundle."
 echo "-----------------------------------------------------------"
 echo ""
 
