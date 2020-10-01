@@ -118,25 +118,16 @@ Thanks to stignz for his original guide: https://lime-technology.com/forum/index
 -->
 
 <!--
-Get bundle.
--->
-<FILE Name="/boot/config/plugins/rclone/install/rclone-&bundleversion;-bundle.txz" Run="upgradepkg --install-new">
-<URL>&bundleURL;</URL>
-<MD5>&md5bundle;</MD5>
-</FILE>
-	
-
-<!--
 Install script.
 -->
 <FILE Run="/bin/bash" Method="install">
 <INLINE>
 if [ -f /boot/config/plugins/rclone/install/beta ]; then
-   rcloneurl="https://beta.rclone.org/rclone-beta-latest-linux-amd64.zip"
-   versionurl="https://beta.rclone.org/version.txt"
+  rcloneurl="https://beta.rclone.org/rclone-beta-latest-linux-amd64.zip"
+  versionurl="https://beta.rclone.org/version.txt"
 else
-   rcloneurl="https://downloads.rclone.org/rclone-current-linux-amd64.zip"
-   versionurl="https://downloads.rclone.org/version.txt"
+  rcloneurl="https://downloads.rclone.org/rclone-current-linux-amd64.zip"
+  versionurl="https://downloads.rclone.org/version.txt"
 fi;	
 
 if [ -f /boot/config/plugins/rclone/install/rclone ]; then 
@@ -145,24 +136,23 @@ if [ -f /boot/config/plugins/rclone/install/rclone ]; then
   chown root:root /usr/sbin/rcloneorig
   chmod 755 /usr/sbin/rcloneorig
   version=`rcloneorig --version | head -n 1`
-fi
+fi;
 	
 ping -q -c2 8.8.8.8 >/dev/null || ping -q -c2 1.1.1.1 >/dev/null || ping -q -c2 $rcloneurl >/dev/null
-if [ $? -eq 0 ]
-then
+if [ $? -eq 0 ]; then
   current_version=`curl $versionurl`
   if [[ $version = $current_version ]]; then
     echo "Local rclone binary up-to-date - Skipping download - Installing existing binary"  
   else
     echo "Downloading and installing rclone"
-    curl --connect-timeout 15 --retry 3 --retry-delay 2 --retry-max-time 30 -o /boot/config/plugins/rclone/install/rclone.zip $rcloneurl
+    curl --connect-timeout 15 --retry 3 --retry-delay 2 --retry-max-time 30 -o /boot/config/plugins/rclone/install/rclone.zip --create-dirs $rcloneurl
     unzip -o -j "/boot/config/plugins/rclone/install/rclone.zip" "*/rclone" -d "/boot/config/plugins/rclone/install"
     rm -f /boot/config/plugins/rclone/install/*.zip
     cp /boot/config/plugins/rclone/install/rclone /usr/sbin/rcloneorig.new
     mv /usr/sbin/rcloneorig.new /usr/sbin/rcloneorig
     chown root:root /usr/sbin/rcloneorig
     chmod 755 /usr/sbin/rcloneorig
-  fi
+  fi;
 else
   echo "No internet - Skipping download - Trying to install existing binary"
 fi;
@@ -189,7 +179,14 @@ echo ""
 </INLINE>
 </FILE>
 
-	
+<!--
+Get bundle.
+-->
+<FILE Name="/boot/config/plugins/rclone/install/rclone-&bundleversion;-bundle.txz" Run="upgradepkg --install-new">
+<URL>&bundleURL;</URL>
+<MD5>&md5bundle;</MD5>
+</FILE>
+
 <!--
 Check if fusermount is present
 -->
@@ -202,14 +199,28 @@ if ! [ -f /bin/fusermount ]; then
 fi;
 </INLINE>
 </FILE>
-	
 
+<!--
+Create wrapper
+-->
+<FILE Name="/usr/sbin/rclone" Mode="0755">
+<INLINE>
+#!/bin/bash
+config=/boot/config/plugins/rclone/.rclone.conf
+	rcloneorig --config $config "$@";
+</INLINE>
+</FILE>
+
+<!--
+Uninstall script
+-->
 <FILE Run="/bin/bash" Method="remove">
 <INLINE>
 rm -rf /boot/config/plugins/rclone/install
-rm -f /usr/sbin/rcloneorig;
-rm -f /usr/sbin/rclone;
+rm -f /usr/sbin/rcloneorig
+rm -f /usr/sbin/rclone
 removepkg rclone-&bundleversion;-bundle >/dev/null
+rm -f /var/lib/pkgtools/packages/rclone-*-bundle
 rm -rf /usr/local/emhttp/plugins/rclone
 
 echo ""
@@ -218,14 +229,6 @@ echo " rclone has been uninstalled."
 echo "-----------------------------------------------------------"
 echo ""
 
-</INLINE>
-</FILE>
-
-<FILE Name="/usr/sbin/rclone" Mode="0755">
-<INLINE>
-#!/bin/bash
-config=/boot/config/plugins/rclone/.rclone.conf
-	rcloneorig --config $config "$@";
 </INLINE>
 </FILE>
 
