@@ -118,6 +118,15 @@ Thanks to stignz for his original guide: https://lime-technology.com/forum/index
 -->
 
 <!--
+Get bundle.
+-->
+<FILE Name="/boot/config/plugins/rclone/install/rclone-&bundleversion;-bundle.txz" Run="upgradepkg --install-new">
+<URL>&bundleURL;</URL>
+<MD5>&md5bundle;</MD5>
+</FILE>
+	
+
+<!--
 Install script.
 -->
 <FILE Run="/bin/bash" Method="install">
@@ -181,15 +190,6 @@ echo ""
 </FILE>
 
 	
-<!--
-Get bundle.
--->
-<FILE Name="/boot/config/plugins/rclone/install/rclone-&bundleversion;-bundle.txz" Run="upgradepkg --install-new">
-<URL>&bundleURL;</URL>
-<MD5>&md5bundle;</MD5>
-</FILE>
-	
-
 <!--
 Check if fusermount is present
 -->
