@@ -118,27 +118,6 @@ Thanks to stignz for his original guide: https://lime-technology.com/forum/index
 -->
 
 <!--
-Check if fusermount is present
--->
-<FILE Run="/bin/bash">
-<INLINE>
-if ! [ -f /bin/fusermount ]; then
-  if [ -f /usr/bin/fusermount3 ]; then
-    ln -s /usr/bin/fusermount3 /bin/fusermount
-  fi;
-fi;
-</INLINE>
-</FILE>
-
-<!--
-Get bundle.
--->
-<FILE Name="/boot/config/plugins/rclone/install/rclone-&bundleversion;-bundle.txz" Run="upgradepkg --install-new">
-<URL>&bundleURL;</URL>
-<MD5>&md5bundle;</MD5>
-</FILE>
-
-<!--
 Install script.
 -->
 <FILE Run="/bin/bash" Method="install">
@@ -159,7 +138,7 @@ if [ -f /boot/config/plugins/rclone/install/rclone ]; then
   version=`rcloneorig --version | head -n 1`
 fi
 	
-ping -q -c3 8.8.8.8 >/dev/null || ping -q -c3 1.1.1.1 >/dev/null
+ping -q -c2 8.8.8.8 >/dev/null || ping -q -c2 1.1.1.1 >/dev/null || ping -q -c2 $rcloneurl >/dev/null
 if [ $? -eq 0 ]
 then
   current_version=`curl $versionurl`
@@ -184,6 +163,7 @@ rm -f /usr/sbin/rclone
 
 if [ ! -f /usr/sbin/rcloneorig ]; then
   echo "Install failed - No binary found - Please try installing/updating the plugin again"
+  removepkg 'rclone-*-bundle' >/dev/null
   exit 1
 fi;
 
@@ -200,12 +180,35 @@ echo ""
 </INLINE>
 </FILE>
 
+	
+<!--
+Get bundle.
+-->
+<FILE Name="/boot/config/plugins/rclone/install/rclone-&bundleversion;-bundle.txz" Run="upgradepkg --install-new">
+<URL>&bundleURL;</URL>
+<MD5>&md5bundle;</MD5>
+</FILE>
+	
+
+<!--
+Check if fusermount is present
+-->
+<FILE Run="/bin/bash">
+<INLINE>
+if ! [ -f /bin/fusermount ]; then
+  if [ -f /usr/bin/fusermount3 ]; then
+    ln -s /usr/bin/fusermount3 /bin/fusermount
+  fi;
+fi;
+</INLINE>
+</FILE>
+	
+
 <FILE Run="/bin/bash" Method="remove">
 <INLINE>
 rm -rf /boot/config/plugins/rclone/install
 rm -f /usr/sbin/rcloneorig;
 rm -f /usr/sbin/rclone;
-
 removepkg rclone-&bundleversion;-bundle >/dev/null
 rm -rf /usr/local/emhttp/plugins/rclone
 
