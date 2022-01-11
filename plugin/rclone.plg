@@ -3,7 +3,7 @@
 <!DOCTYPE PLUGIN [
 <!ENTITY name				"rclone">
 <!ENTITY author				"Waseh">
-<!ENTITY version			"2021.08.25">
+<!ENTITY version			"2022.01.11">
 <!ENTITY bundleversion			"2020.09.29">
 <!ENTITY launch				"Settings/rclone">
 <!ENTITY pluginURL			"https://raw.githubusercontent.com/Waseh/rclone-unraid/master/plugin/rclone.plg">
@@ -16,6 +16,9 @@
 <CHANGES>
 ##&name;
 
+###2022.01.11
+- Fix incomplete cleanup after failed install
+	
 ###2021.08.25
 - Exclude rclone config from being backed up by the My Servers Plugin flash backup feature to minimize flash writes
 - Make sure to have an alternative backup procedure in place!
@@ -174,7 +177,9 @@ rm -f /usr/sbin/rclone
 
 if [ ! -f /usr/sbin/rcloneorig ]; then
   echo "Install failed - No binary found - Please try installing/updating the plugin again"
-  removepkg 'rclone-*-bundle' >/dev/null
+  removepkg rclone-&bundleversion;-bundle >/dev/null
+  rm -f /var/lib/pkgtools/packages/rclone-*-bundle
+  rm -rf /usr/local/emhttp/plugins/rclone
   exit 1
 fi;
 
