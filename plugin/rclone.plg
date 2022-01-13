@@ -169,7 +169,7 @@ if [ $? -eq 0 ]; then
     chmod 755 /usr/sbin/rcloneorig
   fi;
 else
-  echo "No internet - Skipping download - Trying to install existing binary"
+  echo "Connection error - Skipping download - Trying to install existing binary"
 fi;
 
 rm -f $(ls /boot/config/plugins/rclone/install/rclone*.txz 2>/dev/null | grep -v '&bundleversion;')
