@@ -152,12 +152,15 @@ if [ -f /boot/config/plugins/rclone/install/rclone ]; then
   chmod 755 /usr/sbin/rcloneorig
   version=`rcloneorig --version | head -n 1`
 fi;
-	
+
+rm -f $(ls /boot/config/plugins/rclone/install/rclone*.txz 2>/dev/null | grep -v '&bundleversion;')
+rm -f /usr/sbin/rclone
+
 ping -q -c2 8.8.8.8 >/dev/null || ping -q -c2 1.1.1.1 >/dev/null || ping -q -c2 $rcloneurl >/dev/null
 if [ $? -eq 0 ]; then
   current_version=`curl $versionurl`
   if [[ $version = $current_version ]]; then
-    echo "Local rclone binary up-to-date - Skipping download - Installing existing binary"  
+    echo "Local rclone binary up-to-date"  
   else
     echo "Downloading and installing rclone"
     curl --connect-timeout 15 --retry 3 --retry-delay 2 --retry-max-time 30 -o /boot/config/plugins/rclone/install/rclone.zip --create-dirs $rcloneurl
@@ -169,18 +172,14 @@ if [ $? -eq 0 ]; then
     chmod 755 /usr/sbin/rcloneorig
   fi;
 else
-  echo "Connection error - Skipping download - Trying to install existing binary"
-fi;
-
-rm -f $(ls /boot/config/plugins/rclone/install/rclone*.txz 2>/dev/null | grep -v '&bundleversion;')
-rm -f /usr/sbin/rclone
-
-if [ ! -f /usr/sbin/rcloneorig ]; then
-  echo "Install failed - No binary found - Please try installing/updating the plugin again"
-  removepkg rclone-&bundleversion;-bundle >/dev/null
-  rm -f /var/lib/pkgtools/packages/rclone-*-bundle
-  rm -rf /usr/local/emhttp/plugins/rclone
-  exit 1
+  echo "Connection error - Check firewall or dns settings"
+  if [ ! -f /usr/sbin/rcloneorig ]; then
+    echo "Install failed - No binary found"
+    removepkg rclone-&bundleversion;-bundle >/dev/null
+    rm -f /var/lib/pkgtools/packages/rclone-*-bundle
+    rm -rf /usr/local/emhttp/plugins/rclone
+    exit 1
+  fi;
 fi;
 
 if [ ! -f /boot/config/plugins/rclone/.rclone.conf ]; then
