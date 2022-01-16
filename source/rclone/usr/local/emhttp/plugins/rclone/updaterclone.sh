@@ -8,7 +8,7 @@ fi;
 
 version=`rcloneorig --version | head -n 1`
 
-ping -q -c3 8.8.8.8 >/dev/null || ping -q -c3 1.1.1.1 >/dev/null
+ping -q -c2 8.8.8.8 >/dev/null || ping -q -c2 1.1.1.1 >/dev/null || ping -q -c2 $rcloneurl >/dev/null
 if [ $? -eq 0 ]
 then
   echo "Updating rclone"
@@ -22,7 +22,7 @@ then
 else
   echo ""
   echo "-------------------------------------------------------------------"
-  echo "<font color='red'> No internet - Can't fetch new version </font>"
+  echo "<font color='red'> Connection error - Can't fetch new version </font>"
   echo "-------------------------------------------------------------------"
   echo ""
   exit 1
