@@ -8,7 +8,7 @@ fi;
 
 version=`rcloneorig --version | head -n 1`
 
-ping -q -c2 8.8.8.8 >/dev/null || ping -q -c2 1.1.1.1 >/dev/null || ping -q -c2 $rcloneurl >/dev/null
+ping -q -c2 downloads.rclone.org >/dev/null || ping -q -c2 1.1.1.1 >/dev/null || ping -q -c2 8.8.8.8 >/dev/null
 if [ $? -eq 0 ]
 then
   echo "Updating rclone"

@@ -3,18 +3,22 @@
 <!DOCTYPE PLUGIN [
 <!ENTITY name				"rclone">
 <!ENTITY author				"Waseh">
-<!ENTITY version			"2022.01.11">
-<!ENTITY bundleversion			"2020.09.29">
+<!ENTITY version			"2022.01.20">
+<!ENTITY bundleversion			"2022.01.20">
 <!ENTITY launch				"Settings/rclone">
 <!ENTITY pluginURL			"https://raw.githubusercontent.com/Waseh/rclone-unraid/master/plugin/rclone.plg">
 <!ENTITY bundleURL			"https://raw.githubusercontent.com/Waseh/rclone-unraid/master/archive/rclone-&bundleversion;-x86_64-1.txz">
-<!ENTITY md5bundle			"1db9a4fc351c78887e4c5d590fc8526d">
+<!ENTITY md5bundle			"3848b4f81542f9435725102219765e65">
 ]>
 
 <PLUGIN name="&name;" author="&author;" version="&version;" launch="&launch;" pluginURL="&pluginURL;">
 
 <CHANGES>
 ##&name;
+
+###2022.01.20
+- Fix ping to rclone download server
+- Change wording in error messages
 
 ###2022.01.11
 - Fix incomplete cleanup after failed install
@@ -156,7 +160,7 @@ fi;
 rm -f $(ls /boot/config/plugins/rclone/install/rclone*.txz 2>/dev/null | grep -v '&bundleversion;')
 rm -f /usr/sbin/rclone
 
-ping -q -c2 8.8.8.8 >/dev/null || ping -q -c2 1.1.1.1 >/dev/null || ping -q -c2 $rcloneurl >/dev/null
+ping -q -c2 downloads.rclone.org >/dev/null || ping -q -c2 1.1.1.1 >/dev/null || ping -q -c2 8.8.8.8 >/dev/null
 if [ $? -eq 0 ]; then
   current_version=`curl $versionurl`
   if [[ $version = $current_version ]]; then
