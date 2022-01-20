@@ -7,11 +7,15 @@ else
 fi;
 
 version=`rcloneorig --version | head -n 1`
-
+  echo "-------------------------------------------------------------------"
+  echo "Validating connection to internet"
+  echo "-------------------------------------------------------------------"
 ping -q -c2 downloads.rclone.org >/dev/null || ping -q -c2 1.1.1.1 >/dev/null || ping -q -c2 8.8.8.8 >/dev/null
 if [ $? -eq 0 ]
 then
+  echo "-------------------------------------------------------------------"
   echo "Updating rclone"
+  echo "-------------------------------------------------------------------"
   curl --connect-timeout 15 --retry 3 --retry-delay 2 --retry-max-time 30 -o /boot/config/plugins/rclone/install/rclone.zip $rcloneurl
   unzip -o -j "/boot/config/plugins/rclone/install/rclone.zip" "*/rclone" -d "/boot/config/plugins/rclone/install"
   rm -f /boot/config/plugins/rclone/install/*.zip
@@ -40,7 +44,7 @@ if [[ $version = $current_version ]]; then
 fi;
 
 echo ""
-echo "-----------------------------------------------------------"
+echo "-------------------------------------------------------------------"
 echo " rclone has been successfully updated "
-echo "-----------------------------------------------------------"
+echo "-------------------------------------------------------------------"
 echo ""
