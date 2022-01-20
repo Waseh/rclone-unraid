@@ -107,7 +107,7 @@ if ($branch == "1") {
 	<?
 	echo "Installed version: $currentversion";
 	echo "<br>";
-	echo "Latest version:&ensp;&ensp;&thinsp;&thinsp;&thinsp;$latestversion";
+	echo "Latest version:&emsp;&ensp;$latestversion";
 	?>
 	<br>
 	<input type="button" value="Update rclone" <?php if ($currentversion == $latestversion){ ?> disabled <?php   } ?> onclick="updaterclone('<?php echo $branch; ?>')">
