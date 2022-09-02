@@ -3,7 +3,7 @@
 <!DOCTYPE PLUGIN [
 <!ENTITY name				"rclone">
 <!ENTITY author				"Waseh">
-<!ENTITY version			"2022.01.20">
+<!ENTITY version			"2022.09.02">
 <!ENTITY bundleversion			"2022.01.20">
 <!ENTITY launch				"Settings/rclone">
 <!ENTITY pluginURL			"https://raw.githubusercontent.com/Waseh/rclone-unraid/master/plugin/rclone.plg">
@@ -15,7 +15,10 @@
 
 <CHANGES>
 ##&name;
-
+	
+###2022.09.02
+- Fix incomplete cleanup after failed install (take two)
+	
 ###2022.01.20
 - Fix ping to rclone download server
 - Change wording in error messages
@@ -175,6 +178,14 @@ if [ $? -eq 0 ]; then
     mv /usr/sbin/rcloneorig.new /usr/sbin/rcloneorig
     chown root:root /usr/sbin/rcloneorig
     chmod 755 /usr/sbin/rcloneorig
+	
+    if [ ! -f /usr/sbin/rcloneorig ]; then
+      echo "Install failed - No binary found - Check firewall or dns settings"
+      removepkg rclone-&bundleversion;-bundle >/dev/null
+      rm -f /var/lib/pkgtools/packages/rclone-*-bundle
+      rm -rf /usr/local/emhttp/plugins/rclone
+      exit 1
+    fi;
   fi;
 else
   echo "Connection error - Check firewall or dns settings"
