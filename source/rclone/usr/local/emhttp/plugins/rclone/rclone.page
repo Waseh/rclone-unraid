@@ -71,26 +71,19 @@ if ($branch == "1") {
   display: flex;
 }
 
-/* Create two unequal columns that floats next to each other */
+/* Create two unequal columns */
 .column {
-  float: left;
   padding: 10px;
 }
 
 .left {
-  width: 25%;
+  flex: 1; /* Represents 25% of the container */
 }
 
 .right {
-  width: 75%;
+  flex: 3; /* Represents 75% of the container */
 }
-
-/* Clear floats after the columns */
-.row:after {
-  content: "";
-  display: table;
-  clear: both;
-}</style>
+</style>
 </head>
 <body>
 
