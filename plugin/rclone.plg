@@ -3,8 +3,8 @@
 <!DOCTYPE PLUGIN [
 <!ENTITY name				"rclone">
 <!ENTITY author				"Waseh">
-<!ENTITY version			"2022.05.27">
-<!ENTITY bundleversion			"2022.05.27">
+<!ENTITY version			"2024.05.27">
+<!ENTITY bundleversion			"2024.05.27">
 <!ENTITY launch				"Settings/rclone">
 <!ENTITY pluginURL			"https://raw.githubusercontent.com/Waseh/rclone-unraid/master/plugin/rclone.plg">
 <!ENTITY bundleURL			"https://raw.githubusercontent.com/Waseh/rclone-unraid/master/archive/rclone-&bundleversion;-x86_64-1.txz">
