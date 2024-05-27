@@ -3,18 +3,23 @@
 <!DOCTYPE PLUGIN [
 <!ENTITY name				"rclone">
 <!ENTITY author				"Waseh">
-<!ENTITY version			"2022.09.02">
-<!ENTITY bundleversion			"2022.01.20">
+<!ENTITY version			"2022.05.27">
+<!ENTITY bundleversion			"2022.05.27">
 <!ENTITY launch				"Settings/rclone">
 <!ENTITY pluginURL			"https://raw.githubusercontent.com/Waseh/rclone-unraid/master/plugin/rclone.plg">
 <!ENTITY bundleURL			"https://raw.githubusercontent.com/Waseh/rclone-unraid/master/archive/rclone-&bundleversion;-x86_64-1.txz">
-<!ENTITY md5bundle			"e0bf7caa90d9eec0ba30beaf403a5854">
+<!ENTITY md5bundle			"c42c1f917547d6d7f539c8fff7d155bf">
 ]>
 
 <PLUGIN name="&name;" author="&author;" version="&version;" launch="&launch;" pluginURL="&pluginURL;">
 
 <CHANGES>
 ##&name;
+
+###2024.05.27
+- Fix visual error on settings page
+- Removes character limit from config editor
+- Hopefully alieviate some of the problems with hanging during boot when rclone servers can't be reached
 	
 ###2022.09.02
 - Fix incomplete cleanup after failed install (take two)
@@ -164,7 +169,7 @@ fi;
 rm -f $(ls /boot/config/plugins/rclone/install/rclone*.txz 2>/dev/null | grep -v '&bundleversion;')
 rm -f /usr/sbin/rclone
 
-ping -q -c2 downloads.rclone.org >/dev/null || ping -q -c2 1.1.1.1 >/dev/null || ping -q -c2 8.8.8.8 >/dev/null
+ping -q -c6 downloads.rclone.org >/dev/null
 if [ $? -eq 0 ]; then
   current_version=`curl $versionurl`
   if [[ $version = $current_version ]]; then
@@ -180,7 +185,7 @@ if [ $? -eq 0 ]; then
     chmod 755 /usr/sbin/rcloneorig
   fi;
 else
-  echo "Connection error - Check firewall or dns settings"
+  echo "Connection error - Could not reach rclone servers - Will try fallback to existing binary"
   if [ ! -f /usr/sbin/rcloneorig ]; then
     echo "Install failed - No binary found"
     removepkg rclone-&bundleversion;-bundle >/dev/null
@@ -191,7 +196,7 @@ else
 fi;
 
 if [ ! -f /usr/sbin/rcloneorig ]; then
-  echo "Install failed - No binary found - Check firewall or dns settings"
+  echo "Install failed - No binary found"
   removepkg rclone-&bundleversion;-bundle >/dev/null
   rm -f /var/lib/pkgtools/packages/rclone-*-bundle
   rm -rf /usr/local/emhttp/plugins/rclone

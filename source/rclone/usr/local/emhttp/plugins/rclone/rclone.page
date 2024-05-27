@@ -111,7 +111,7 @@ if ($branch == "1") {
 	<form markdown="1" method="POST" action="/update.php" target="progressFrame">
 	<input type="hidden" name="#include" value="/webGui/include/update.file.php">
 	<input type="hidden" name="#file" value="<?=$file;?>">
-	<textarea spellcheck="false" cols="80" rows="22" maxlength="8192" name="text" style="font-family:bitstream;width:100%"><?=$text;?></textarea>
+	<textarea spellcheck="false" cols="80" rows="22" name="text" style="font-family:bitstream;width:100%"><?=$text;?></textarea>
 	<br>
 	<input type="submit" value="Apply"/><input type="button" value="Original" onclick="setDefault(this.form)">
 	</form> 
