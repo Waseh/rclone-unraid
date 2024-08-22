@@ -3,18 +3,21 @@
 <!DOCTYPE PLUGIN [
 <!ENTITY name				"rclone">
 <!ENTITY author				"Waseh">
-<!ENTITY version			"2024.05.27">
-<!ENTITY bundleversion			"2024.05.27">
+<!ENTITY version			"2024.08.22">
+<!ENTITY bundleversion			"2024.08.22">
 <!ENTITY launch				"Settings/rclone">
 <!ENTITY pluginURL			"https://raw.githubusercontent.com/Waseh/rclone-unraid/master/plugin/rclone.plg">
 <!ENTITY bundleURL			"https://raw.githubusercontent.com/Waseh/rclone-unraid/master/archive/rclone-&bundleversion;-x86_64-1.txz">
-<!ENTITY md5bundle			"c42c1f917547d6d7f539c8fff7d155bf">
+<!ENTITY md5bundle			"f4c0f43455090dc2b49330dbd47ea682">
 ]>
 
 <PLUGIN name="&name;" author="&author;" version="&version;" launch="&launch;" pluginURL="&pluginURL;">
 
 <CHANGES>
 ##&name;
+
+###2024.08.22
+- Add rclone WebUI (optional) - ich777
 
 ###2024.05.27
 - Fix visual error on settings page
@@ -166,6 +169,14 @@ if [ -f /boot/config/plugins/rclone/install/rclone ]; then
   version=`rcloneorig --version | head -n 1`
 fi;
 
+if [ ! -f /boot/config/plugins/rclone/settings.cfg ]; then
+  echo "WEBUI_ENABLED=false
+WEBUI_START_PARAMS=--rc-no-auth
+WEBUI_PORT=5572" > /boot/config/plugins/rclone/settings.cfg
+fi
+
+/usr/local/emhttp/plugins/rclone/webuiScript.sh "VERSION"
+
 rm -f $(ls /boot/config/plugins/rclone/install/rclone*.txz 2>/dev/null | grep -v '&bundleversion;')
 rm -f /usr/sbin/rclone
 
@@ -206,6 +217,10 @@ fi;
 if [ ! -f /boot/config/plugins/rclone/.rclone.conf ]; then
   touch /boot/config/plugins/rclone/.rclone.conf;
 fi;
+
+if [ "$(cat /boot/config/plugins/rclone/settings.cfg | grep -n "^WEBUI_ENABLED=" | cut -d '=' -f2 | sed 's/\"//g')" == "true" ]; then
+  /usr/local/emhttp/plugins/rclone/webuiScript.sh "true"
+fi
 
 echo ""
 echo "-----------------------------------------------------------"
@@ -254,6 +269,7 @@ Uninstall script
 -->
 <FILE Run="/bin/bash" Method="remove">
 <INLINE>
+kill -SIGINT $(pgrep -f "rcloneorig.*--rc-web-gui")
 rm -rf /boot/config/plugins/rclone/install
 rm -f /usr/sbin/rcloneorig
 rm -f /usr/sbin/rclone
