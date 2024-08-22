@@ -8,7 +8,7 @@
 <!ENTITY launch				"Settings/rclone">
 <!ENTITY pluginURL			"https://raw.githubusercontent.com/Waseh/rclone-unraid/master/plugin/rclone.plg">
 <!ENTITY bundleURL			"https://raw.githubusercontent.com/Waseh/rclone-unraid/master/archive/rclone-&bundleversion;-x86_64-1.txz">
-<!ENTITY md5bundle			"f4c0f43455090dc2b49330dbd47ea682">
+<!ENTITY md5bundle			"051920efd86b03fc856bfe0b55a8a0fb">
 ]>
 
 <PLUGIN name="&name;" author="&author;" version="&version;" launch="&launch;" pluginURL="&pluginURL;">
@@ -17,7 +17,7 @@
 ##&name;
 
 ###2024.08.22
-- Add rclone WebUI (optional) - ich777
+- Add rclone WebUI (optional) - by ich777
 
 ###2024.05.27
 - Fix visual error on settings page
