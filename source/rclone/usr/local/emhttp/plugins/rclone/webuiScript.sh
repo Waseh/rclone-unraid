@@ -42,6 +42,7 @@ if [ ! -f /boot/config/plugins/rclone/webui/latest ]; then
   echo "${API_RESULT}" | jq -r '.assets[].browser_download_url' >> /boot/config/plugins/rclone/webui/latest
   LAT_V="$(cat /boot/config/plugins/rclone/webui/latest | head -1)"
   DL_URL="$(cat /boot/config/plugins/rclone/webui/latest | head -2 | tail -1)"
+  CUR_V="$(ls -1 /boot/config/plugins/rclone/webui/*.zip 2>/dev/null | rev | cut -d '/' -f1 | cut -d '.' -f2- | rev | sort -V | head -1 | sed 's/^v//')"
   if [ -z "${LAT_V}" ] || [ "${LAT_V}" == "null" ]; then
     rm -f /boot/config/plugins/rclone/webui/latest
     if [ -z "${CUR_V}" ]; then
@@ -55,9 +56,8 @@ if [ ! -f /boot/config/plugins/rclone/webui/latest ]; then
 else
   LAT_V="$(cat /boot/config/plugins/rclone/webui/latest | head -1)"
   DL_URL="$(cat /boot/config/plugins/rclone/webui/latest | head -2 | tail -1)"
+  CUR_V="$(ls -1 /boot/config/plugins/rclone/webui/*.zip 2>/dev/null | rev | cut -d '/' -f1 | cut -d '.' -f2- | rev | sort -V | head -1 | sed 's/^v//')"
 fi
-
-CUR_V="$(ls -1 /boot/config/plugins/rclone/webui/*.zip 2>/dev/null | rev | cut -d '/' -f1 | cut -d '.' -f2- | rev | sort -V | head -1 | sed 's/^v//')"
 
 if [ ! -d /root/.cache/rclone/webui ]; then
   mkdir -p /root/.cache/rclone/webui
