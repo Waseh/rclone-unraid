@@ -24,6 +24,11 @@ function updaterclone(branch) {
    var path = "/usr/local/emhttp/plugins/rclone/updaterclone.sh"
    openBox('/usr/local/emhttp/plugins/rclone/startScript.sh&arg1='+path+'&arg2='+branch,"Update rclone",450,800,true);
 }
+
+function webui(form) {
+   var state = form.webui_status.value;
+   openBox('/usr/local/emhttp/plugins/rclone/webuiScript.sh&arg1='+state,"rclone WebUI",450,800,true);
+}
 </script>
 
 <?
@@ -31,11 +36,30 @@ $file = "/boot/config/plugins/rclone/.rclone.conf";
 $defaultfile = "/boot/config/plugins/rclone/.rclone.conf";
 $text = file_get_contents($file);
 $default_text = @file_get_contents($defaultfile);
+$settings = parse_ini_file('/boot/config/plugins/rclone/settings.cfg');
 ?>
 
 <?
 exec('rclone version --check | grep -Po "(([a-z])*:( )*)\K( )*([0-9])([^ ])*[0-9]"', $output);
 $currentversion = $output[0];
+
+if (!file('/boot/config/plugins/rclone/webui/latest')) {
+  exec('/usr/local/emhttp/plugins/rclone/webuiScript.sh "VERSION"');
+  if (!file_exists('/boot/config/plugins/rclone/webui/latest')) {
+    $webui_latest = "Error fetching version number";
+  } else {
+    $webui_latest = exec('cat /boot/config/plugins/rclone/webui/latest | head -1');
+  }
+} else {
+  $webui_latest = exec('cat /boot/config/plugins/rclone/webui/latest | head -1');
+}
+
+$webui_local = exec("ls -1 /boot/config/plugins/rclone/webui/*.zip 2>/dev/null | rev | cut -d '/' -f1 | cut -d '.' -f2- | rev | sort -V | head -1");
+if (empty($webui_local)) {
+  $webui_local = "not installed";
+}
+
+$webui_pid = exec('pgrep -f "rcloneorig.*--rc-web-gui"');
 ?>
 
 <?
@@ -104,6 +128,29 @@ if ($branch == "1") {
 	?>
 	<br>
 	<input type="button" value="Update rclone" <?php if ($currentversion == $latestversion){ ?> disabled <?php   } ?> onclick="updaterclone('<?php echo $branch; ?>')">
+
+  <h2>WebUI<span style="font-size:0.6em; <? echo (!empty($webui_pid)) ? 'color:green;">&nbsp;&nbsp;&nbsp;running' : 'color:red;">&nbsp;&nbsp;&nbsp;stopped' ?></span></h2>
+
+	<form action="" method="post"> 
+	<select name="webui_status"> 
+	<option value="false" <?php if($settings['WEBUI_ENABLED'] == false) echo("selected")?>>Disabled</option>
+	<option value="true" <?php if($settings['WEBUI_ENABLED'] == true) echo("selected")?>>Enabled</option>
+	</select> 
+
+	<?
+  echo "<br>";
+	echo "Installed version: $webui_local";
+	echo "<br>";
+	echo "Latest version:&emsp;&ensp;$webui_latest";
+	?>
+	<br>
+	<input type="button" value="Update" onclick="webui(this.form)">
+  <?
+  if (!empty($webui_pid)) {
+    echo '<a href="http://' . $_SERVER['SERVER_ADDR'] . ':' . $settings['WEBUI_PORT'] . '" class="button" target="_blank">Open WebUI</a>';
+  }
+  ?>
+	</form> 
 
   </div>
   <div class="column right">
