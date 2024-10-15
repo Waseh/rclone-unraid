@@ -171,7 +171,7 @@ fi;
 
 if [ ! -f /boot/config/plugins/rclone/settings.cfg ]; then
   echo "WEBUI_ENABLED=false
-WEBUI_START_PARAMS=--rc-no-auth
+WEBUI_START_PARAMS=--rc-no-auth --rc-serve
 WEBUI_PORT=5572" > /boot/config/plugins/rclone/settings.cfg
 fi
 
