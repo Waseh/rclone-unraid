@@ -147,7 +147,7 @@ if ($branch == "1") {
 	<input type="button" value="Update" onclick="webui(this.form)">
   <?
   if (!empty($webui_pid)) {
-    echo '<a href="http://' . $_SERVER['SERVER_ADDR'] . ':' . $settings['WEBUI_PORT'] . '" class="button" target="_blank">Open WebUI</a>';
+    echo '<input type="button" class="localURL" value="Open WebUI" onclick="window.open(\'http://' . $_SERVER['SERVER_ADDR'] . ':' . $settings['WEBUI_PORT'] . '\', \'_blank\')" />';
   }
   ?>
 	</form> 
