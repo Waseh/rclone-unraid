@@ -98,7 +98,7 @@ START_PARAMS="$(cat /boot/config/plugins/rclone/settings.cfg | grep -n "^WEBUI_S
 PORT="$(cat /boot/config/plugins/rclone/settings.cfg | grep -n "^WEBUI_PORT=" | cut -d '=' -f2- | sed 's/\"//g')"
 
 echo "Starting rclone WebUI"
-echo "rclone rcd --rc-web-gui --rc-web-gui-no-open-browser --rc-addr=0.0.0.0:${PORT} --rc-files /root/.cache/rclone/webui/build ${START_PARAMS}" | at now -M > /dev/null 2>&1
+echo "rclone rcd --rc-web-gui --rc-serve --rc-web-gui-no-open-browser --rc-addr=0.0.0.0:${PORT} --rc-files /root/.cache/rclone/webui/build ${START_PARAMS}" | at now -M > /dev/null 2>&1
 
 if pgrep -f "rcloneorig.*--rc-web-gui" > /dev/null 2>&1 ; then
   echo
