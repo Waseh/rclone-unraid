@@ -10,7 +10,7 @@ version=`rcloneorig --version | head -n 1`
   echo "-------------------------------------------------------------------"
   echo "Validating connection to internet"
   echo "-------------------------------------------------------------------"
-ping -q -c2 downloads.rclone.org >/dev/null || ping -q -c2 1.1.1.1 >/dev/null || ping -q -c2 8.8.8.8 >/dev/null
+ping -q -c3 downloads.rclone.org >/dev/null
 if [ $? -eq 0 ]
 then
   echo "-------------------------------------------------------------------"
