@@ -169,6 +169,9 @@ if [ -f /boot/config/plugins/rclone/install/rclone ]; then
   version=`rcloneorig --version | head -n 1`
 fi;
 
+# Make sure that --rc-serve is in the settings.cfg
+sed -i '/^WEBUI_START_PARAMS=/ { /--rc-serve/! s/$/ --rc-serve/; }' /boot/config/plugins/rclone/settings.cfg
+
 if [ ! -f /boot/config/plugins/rclone/settings.cfg ]; then
   echo "WEBUI_ENABLED=false
 WEBUI_START_PARAMS=--rc-no-auth --rc-serve
