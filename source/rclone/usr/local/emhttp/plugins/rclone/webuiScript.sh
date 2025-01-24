@@ -100,8 +100,6 @@ PORT="$(cat /boot/config/plugins/rclone/settings.cfg | grep -n "^WEBUI_PORT=" | 
 echo "Starting rclone WebUI"
 echo "rclone rcd --rc-web-gui --rc-web-gui-no-open-browser --rc-addr=0.0.0.0:${PORT} --rc-files /root/.cache/rclone/webui/build ${START_PARAMS}" | at now -M > /dev/null 2>&1
 
-sleep 2
-
 if pgrep -f "rcloneorig.*--rc-web-gui" > /dev/null 2>&1 ; then
   echo
   echo "rclone WebUI started, you can now connect to the WebUI through Port: ${PORT}"
