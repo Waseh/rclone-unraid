@@ -40,8 +40,8 @@ $settings = parse_ini_file('/boot/config/plugins/rclone/settings.cfg');
 ?>
 
 <?
-exec('rclone version --check | grep -Po "(([a-z])*:( )*)\K( )*([0-9])([^ ])*[0-9]"', $output);
-$currentversion = $output[0];
+exec('rclone version --check | grep -Po "(([a-z])*:( )*)\K( )*([0-9])([^ ])*[0-9]"', $rclone_version);
+$currentversion = $rclone_version[0];
 
 if (!file('/boot/config/plugins/rclone/webui/latest')) {
   exec('/usr/local/emhttp/plugins/rclone/webuiScript.sh "VERSION"');
@@ -77,12 +77,12 @@ if (isset($_POST['branch'])) {$branch = $_POST['branch'];}
 
 if ($branch == "1") {
     exec("rm -f /boot/config/plugins/rclone/install/beta");
-    $latestversion = $output[1];
+    $latestversion = $rclone_version[1];
     ($latestversion == '') ? $latestversion = "Error fetching version number" : '';
 
 } elseif ($branch == "2") {
     exec("touch /boot/config/plugins/rclone/install/beta");
-    $latestversion = $output[2];
+    $latestversion = $rclone_version[2];
     ($latestversion == '') ? $latestversion = "Error fetching version number" : '';
 }
 ?>
