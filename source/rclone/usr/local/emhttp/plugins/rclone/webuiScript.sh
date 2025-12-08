@@ -77,7 +77,7 @@ elif [ "$CUR_V" != "$LAT_V" ]; then
     rm -rf /root/.cache/rclone/webui/build
   fi
   if ! wget -q -O /boot/config/plugins/rclone/webui/${LAT_V}.zip "${DL_URL}" ; then
-    echo "rclone WebUI ownload failed!"
+    echo "rclone WebUI download failed!"
     LAT_V="${CUR_V}"
     rm -f /boot/config/plugins/rclone/webui/${LAT_V}.zip
     EXIT_STATUS=1
@@ -98,7 +98,7 @@ START_PARAMS="$(cat /boot/config/plugins/rclone/settings.cfg | grep -n "^WEBUI_S
 PORT="$(cat /boot/config/plugins/rclone/settings.cfg | grep -n "^WEBUI_PORT=" | cut -d '=' -f2- | sed 's/\"//g')"
 
 echo "Starting rclone WebUI"
-echo "rclone rcd --rc-web-gui --rc-web-gui-no-open-browser --rc-addr=0.0.0.0:${PORT} --rc-files /root/.cache/rclone/webui/build ${START_PARAMS}" | at now -M > /dev/null 2>&1
+echo "rcloneorig rcd --rc-web-gui --rc-web-gui-no-open-browser --rc-addr=0.0.0.0:${PORT} --rc-files /root/.cache/rclone/webui/build ${START_PARAMS}" | at now -M > /dev/null 2>&1
 
 sleep 2
 
