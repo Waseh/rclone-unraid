@@ -3,18 +3,21 @@
 <!DOCTYPE PLUGIN [
 <!ENTITY name				"rclone">
 <!ENTITY author				"Waseh">
-<!ENTITY version			"2025.12.08a">
-<!ENTITY bundleversion			"2025.12.08a">
+<!ENTITY version			"2025.12.08b">
+<!ENTITY bundleversion			"2025.12.08b">
 <!ENTITY launch				"Settings/rclone">
 <!ENTITY pluginURL			"https://raw.githubusercontent.com/Waseh/rclone-unraid/master/plugin/rclone.plg">
 <!ENTITY bundleURL			"https://raw.githubusercontent.com/Waseh/rclone-unraid/master/archive/rclone-&bundleversion;-x86_64-1.txz">
-<!ENTITY md5bundle			"5d0c59da267158e354954668dcbda562">
+<!ENTITY md5bundle			"ce77ff96a2c468887f56dc46b292cca5">
 ]>
 
 <PLUGIN name="&name;" author="&author;" version="&version;" launch="&launch;" pluginURL="&pluginURL;">
 
 <CHANGES>
 ##&name;
+
+###2025.12.08a
+- WebUI config fix
 
 ###2025.12.08a
 - 7.2+ compatibility fix including WebUI
