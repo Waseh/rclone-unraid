@@ -229,9 +229,24 @@ if [ ! -f /usr/sbin/rcloneorig ]; then
   rm -rf /usr/local/emhttp/plugins/rclone
   exit 1
 fi;	
-	
-if [ ! -f /boot/config/plugins/rclone/.rclone.conf ]; then
-  touch /boot/config/plugins/rclone/.rclone.conf;
+
+if [ -f /boot/config/plugins/rclone/.rclone.conf ]; then
+  echo ""
+  echo "-----------------------------------------------------------"
+  echo " Try to change rclone config file path."
+  echo " mv -n /boot/config/plugins/rclone/.rclone.conf /boot/config/plugins/rclone/rclone.conf "
+
+  if ! mv -n /boot/config/plugins/rclone/.rclone.conf /boot/config/plugins/rclone/rclone.conf; then
+    echo " Cannot rename '.rclone.conf' to 'rclone.conf' (permission denied or other error)."
+    echo " Please move your config file manually."
+  fi
+
+  echo "-----------------------------------------------------------"
+  echo ""
+fi
+
+if [ ! -f /boot/config/plugins/rclone/rclone.conf ]; then
+  touch /boot/config/plugins/rclone/rclone.conf;
 fi;
 
 if [ "$(cat /boot/config/plugins/rclone/settings.cfg | grep -n "^WEBUI_ENABLED=" | cut -d '=' -f2 | sed 's/\"//g')" == "true" ]; then
@@ -266,7 +281,7 @@ Create wrapper
 <FILE Name="/usr/sbin/rclone" Mode="0755">
 <INLINE>
 #!/bin/bash
-config=/boot/config/plugins/rclone/.rclone.conf
+config=/boot/config/plugins/rclone/rclone.conf
 	rcloneorig --config $config "$@";
 </INLINE>
 </FILE>
@@ -276,7 +291,7 @@ Create gitignore
 -->
 <FILE Name="/boot/config/plugins/rclone/.gitignore" Mode="0600">
 <INLINE>
-.rclone.conf
+rclone.conf
 </INLINE>
 </FILE>
 

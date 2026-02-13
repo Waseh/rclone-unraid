@@ -32,8 +32,8 @@ function webui(form) {
 </script>
 
 <?
-$file = "/boot/config/plugins/rclone/.rclone.conf";
-$defaultfile = "/boot/config/plugins/rclone/.rclone.conf";
+$file = "/boot/config/plugins/rclone/rclone.conf";
+$defaultfile = "/boot/config/plugins/rclone/rclone.conf";
 $text = file_get_contents($file);
 $default_text = @file_get_contents($defaultfile);
 $settings = parse_ini_file('/boot/config/plugins/rclone/settings.cfg');
